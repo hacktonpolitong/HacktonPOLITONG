@@ -773,5 +773,266 @@
     ],
     "outreach_angle": "CEDI is a good pilot target because industrial distribution and auxiliary-material warehouse management create repeatable picking, replenishment and inventory-control workflows.",
     "source_note": "Official CEDI company page: https://www.cedi.it/home/?lang=en"
+  },
+  {
+    "company_name": "Rhenus Logistics Italy",
+    "website": "https://www.rhenus.group/it/en/rhenus-in-italy/",
+    "hq_region": "other",
+    "logistics_category": "3PL and e-commerce fulfilment",
+    "warehouse_signals": [
+      "logistics and transport provider with a decades-long presence throughout Italy",
+      "41 warehouses located throughout the country",
+      "warehousing services and warehouse logistics for material flow optimization",
+      "supply chain, overland, air and ocean freight services"
+    ],
+    "likely_process_fit": [
+      "internal transport",
+      "picking support",
+      "pallet movement",
+      "inventory scanning"
+    ],
+    "recommended_buyer_roles": [
+      "Contract Logistics Director",
+      "Operations Director",
+      "Warehouse Manager",
+      "Continuous Improvement Manager"
+    ],
+    "outreach_angle": "Rhenus Logistics Italy is a strong AMR/AGV pilot candidate because its Italian warehouse network creates repeatable internal movement and picking workflows across multiple sites.",
+    "source_note": "Official Rhenus Italy and warehousing pages: https://www.rhenus.group/it/en/rhenus-in-italy/ and https://www.rhenus.group/it/fr/"
+  },
+  {
+    "company_name": "GEODIS Italy",
+    "website": "https://geodis.com/it-it",
+    "hq_region": "other",
+    "logistics_category": "3PL and e-commerce fulfilment",
+    "warehouse_signals": [
+      "transport, logistics and supply chain operator in Italy",
+      "warehousing and value-added logistics services",
+      "contract logistics locations in Italy",
+      "warehouse and fulfilment-oriented service pages"
+    ],
+    "likely_process_fit": [
+      "internal transport",
+      "picking support",
+      "pallet movement",
+      "inventory scanning"
+    ],
+    "recommended_buyer_roles": [
+      "Contract Logistics Director",
+      "Operations Director",
+      "Warehouse Manager",
+      "Process Improvement Manager"
+    ],
+    "outreach_angle": "GEODIS Italy is relevant for AMR/AGV pilots because its warehousing and value-added logistics services create measurable picking, storage and internal transport use cases.",
+    "source_note": "Official GEODIS Italy and warehousing pages: https://geodis.com/it-it and https://geodis.com/it-it/magazzinaggio-e-logistica-valore-aggiunto/magazzinaggio"
+  },
+  {
+    "company_name": "Kuehne+Nagel Italia",
+    "website": "https://it.kuehne-nagel.com/",
+    "hq_region": "Lombardy",
+    "logistics_category": "3PL and e-commerce fulfilment",
+    "warehouse_signals": [
+      "Italian organization with Air, Sea, Road, Contract and Project Logistics business units",
+      "over 20 contract logistics warehouses in Italy",
+      "operations across consumer, pharma, food and beverage, industrial and high-tech sectors",
+      "large automotive warehouse operation in Turin"
+    ],
+    "likely_process_fit": [
+      "internal transport",
+      "picking support",
+      "pallet movement",
+      "line-side replenishment",
+      "inventory scanning"
+    ],
+    "recommended_buyer_roles": [
+      "Contract Logistics Director",
+      "Operations Director",
+      "Warehouse Manager",
+      "Innovation Manager"
+    ],
+    "outreach_angle": "Kuehne+Nagel Italia is a credible AMR/AGV pilot target because its contract logistics footprint includes large warehouse operations where bounded internal transport pilots can be measured.",
+    "source_note": "Official Kuehne+Nagel Italy careers/company page describing Italian contract logistics operations: https://jobs.kuehne-nagel.com/global/en/italy"
+  },
+  {
+    "company_name": "Due Torri",
+    "website": "https://www.duetorrispa.com",
+    "hq_region": "Emilia-Romagna",
+    "logistics_category": "3PL and e-commerce fulfilment",
+    "warehouse_signals": [
+      "Italian integrated logistics company",
+      "warehouse logistics and distribution activities for e-commerce",
+      "fulfillment service and returns management",
+      "outsourced warehouse logistics for multiple product sectors"
+    ],
+    "likely_process_fit": [
+      "internal transport",
+      "picking support",
+      "pallet movement",
+      "inventory scanning"
+    ],
+    "recommended_buyer_roles": [
+      "Logistics Director",
+      "Operations Director",
+      "Warehouse Manager",
+      "E-commerce Logistics Manager"
+    ],
+    "outreach_angle": "Due Torri is a strong pilot target because its e-commerce and outsourced warehouse logistics create picking, storage, returns and internal movement workflows suited to a limited AMR pilot.",
+    "source_note": "Official Due Torri e-commerce and outsourcing logistics pages: https://www.duetorrispa.com/en/servizi/logistics-for-e-commerce/ and https://www.duetorrispa.com/servizi/logistica-outsourcing/"
+  },
+  {
+    "company_name": "Brivio & Vigano",
+    "website": "https://brivioevigano.com",
+    "hq_region": "Lombardy",
+    "logistics_category": "Food and beverage logistics",
+    "warehouse_signals": [
+      "temperature-controlled logistics and transport company",
+      "services for GDO, Ho.Re.Ca., industry and e-commerce channels",
+      "warehouse activities managed with WMS systems",
+      "order picking, storage, cross-docking, palletizing, labeling and repackaging"
+    ],
+    "likely_process_fit": [
+      "picking support",
+      "pallet movement",
+      "internal transport",
+      "inventory scanning"
+    ],
+    "recommended_buyer_roles": [
+      "Operations Director",
+      "Warehouse Manager",
+      "Cold Chain Logistics Manager",
+      "Continuous Improvement Manager"
+    ],
+    "outreach_angle": "Brivio & Vigano is a good AMR/AGV target because its temperature-controlled handling operations include picking, cross-docking and pallet movement that can be piloted in bounded warehouse zones.",
+    "source_note": "Official Brivio & Vigano homepage and handling page: https://brivioevigano.com/ and https://brivioevigano.com/en/services/handling/"
+  },
+  {
+    "company_name": "Cab Log",
+    "website": "https://www.cab-log.it",
+    "hq_region": "other",
+    "logistics_category": "Food and beverage logistics",
+    "warehouse_signals": [
+      "integrated logistics operator for food, beverages and grocery channels",
+      "services for dry and temperature-controlled food logistics",
+      "outsourcing logistics projects",
+      "GDO, grocery, retail and Ho.Re.Ca. distribution channels"
+    ],
+    "likely_process_fit": [
+      "pallet movement",
+      "internal transport",
+      "picking support",
+      "inventory scanning"
+    ],
+    "recommended_buyer_roles": [
+      "Operations Director",
+      "Warehouse Manager",
+      "Food Logistics Manager",
+      "Continuous Improvement Manager"
+    ],
+    "outreach_angle": "Cab Log is relevant for AMR/AGV pilots because food and beverage outsourcing logistics can benefit from bounded pallet movement, picking and warehouse flow tests.",
+    "source_note": "Official Cab Log homepage describing integrated logistics for food, beverages, grocery and temperature-controlled operations: https://www.cab-log.it/"
+  },
+  {
+    "company_name": "Logista Pharma Italia",
+    "website": "https://www.logista.it",
+    "hq_region": "Lazio",
+    "logistics_category": "Pharma logistics",
+    "warehouse_signals": [
+      "Logista Pharma Italia specializes in pharmaceutical distribution",
+      "distribution to hospitals, pharmacies, wholesalers, clinics and other healthcare-sector agents",
+      "GDP certification for good distribution practices in Italy",
+      "pharma logistics operations including Italian sites and distribution networks"
+    ],
+    "likely_process_fit": [
+      "inventory scanning",
+      "internal transport",
+      "picking support",
+      "pallet movement"
+    ],
+    "recommended_buyer_roles": [
+      "Pharma Logistics Director",
+      "Operations Director",
+      "Warehouse Manager",
+      "Quality Manager"
+    ],
+    "outreach_angle": "Logista Pharma Italia is a strong trust-sensitive target because pharmaceutical distribution requires traceable warehouse operations where inventory scanning and controlled internal movement can be tested.",
+    "source_note": "Official Logista Italia and Logista Pharma pages: https://www.logista.it/ and https://www.logista.it/it/home/soluzioni/logista-pharma.html"
+  },
+  {
+    "company_name": "Neologistica",
+    "website": "https://www.neologistica.it",
+    "hq_region": "Lombardy",
+    "logistics_category": "Pharma logistics",
+    "warehouse_signals": [
+      "specialized in storage and distribution for pharmaceutical, chemical, cosmetic, e-commerce, food and hi-tech products",
+      "automated warehouse in Origgio",
+      "130,000 pallet places",
+      "miniload warehouse for cartons and smaller units"
+    ],
+    "likely_process_fit": [
+      "inventory scanning",
+      "internal transport",
+      "picking support",
+      "pallet movement"
+    ],
+    "recommended_buyer_roles": [
+      "Operations Director",
+      "Warehouse Manager",
+      "Automation Manager",
+      "Quality Manager"
+    ],
+    "outreach_angle": "Neologistica is a strong automation-aware target because its automated warehouse and pharma-oriented storage flows create concrete use cases for inventory scanning, pallet movement and internal transport optimization.",
+    "source_note": "Official Neologistica homepage describing automated warehouses, storage and distribution services: https://www.neologistica.it/"
+  },
+  {
+    "company_name": "Codognotto",
+    "website": "https://www.codognotto.eu",
+    "hq_region": "Veneto",
+    "logistics_category": "Manufacturing and industrial distribution",
+    "warehouse_signals": [
+      "Italian logistics company with offices across multiple countries",
+      "freight transportation and integrated logistics",
+      "operations management for leading EU businesses",
+      "warehousing, labelling, packaging and assembly activities"
+    ],
+    "likely_process_fit": [
+      "internal transport",
+      "pallet movement",
+      "line-side replenishment",
+      "inventory scanning"
+    ],
+    "recommended_buyer_roles": [
+      "Operations Director",
+      "Warehouse Manager",
+      "Industrial Logistics Manager",
+      "Supply Chain Manager"
+    ],
+    "outreach_angle": "Codognotto is a plausible AMR/AGV target because integrated logistics for industrial customers includes warehousing, packaging and assembly flows where internal movement can be piloted.",
+    "source_note": "Official Codognotto company page: https://www.codognotto.eu/"
+  },
+  {
+    "company_name": "Multilog",
+    "website": "https://www.multilogspa.com/it/",
+    "hq_region": "Piedmont",
+    "logistics_category": "Manufacturing and industrial distribution",
+    "warehouse_signals": [
+      "integrated logistics provider for automotive, industrial, retail, manufacturing, aerospace and railway sectors",
+      "contract logistics services",
+      "over 100,000 square meters of warehouses",
+      "new logistics warehouse in Candiolo"
+    ],
+    "likely_process_fit": [
+      "line-side replenishment",
+      "internal transport",
+      "pallet movement",
+      "inventory scanning"
+    ],
+    "recommended_buyer_roles": [
+      "Operations Director",
+      "Warehouse Manager",
+      "Industrial Logistics Manager",
+      "Continuous Improvement Manager"
+    ],
+    "outreach_angle": "Multilog is a strong industrial pilot candidate because its contract logistics and manufacturing-sector warehouse flows can support line-side replenishment and internal transport pilots.",
+    "source_note": "Official Multilog website describing sectors, contract logistics, warehouses and Candiolo warehouse news: https://www.multilogspa.com/it/"
   }
 ]

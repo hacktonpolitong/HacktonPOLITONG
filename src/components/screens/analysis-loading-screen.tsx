@@ -6,8 +6,8 @@ const modules = [
   "Parsing product profile",
   "Matching Italian warehouse segments",
   "Selecting pilot workflow",
+  "Ranking target account shortlist",
   "Identifying buyer trust gaps",
-  "Ranking curated target accounts",
   "Generating pilot offer",
   "Preparing sales pack"
 ];
@@ -31,9 +31,13 @@ export function AnalysisLoadingScreen() {
             <div key={module} className="flex items-center justify-between rounded-md border border-border bg-[#f8faf7] px-4 py-3">
               <div>
                 <p className="font-semibold text-foreground">{module}</p>
-                <p className="text-sm text-muted">Structured output module {index + 1}</p>
+                <p className="text-sm text-muted">
+                  {module === "Ranking target account shortlist"
+                    ? "Company-level matching from curated Italian logistics accounts"
+                    : `Structured output module ${index + 1}`}
+                </p>
               </div>
-              {index < 3 ? (
+              {index < 4 ? (
                 <CheckCircle2 className="text-accent" size={20} aria-hidden="true" />
               ) : (
                 <Loader2 className="animate-spin text-amber" size={20} aria-hidden="true" />
