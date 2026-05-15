@@ -1,72 +1,72 @@
-# Task Split Operativo — Market Entry Decision Engine
+# Operational Task Split - Market Entry Decision Engine
 
-## Obiettivo del documento
+## Document Objective
 
-Questo documento divide il lavoro tra **Matteo**, **Francesco** e **Jacopo** per trasformare l'app attuale da demo precompilata AMR/3PL a un vero **Market Entry Segment Decision Engine**.
+This document splits the work between **Matteo**, **Francesco**, and **Jacopo** to turn the current app from a prefilled AMR/3PL demo into a real **Market Entry Segment Decision Engine**.
 
-L'obiettivo dell'MVP è permettere a una startup cinese di warehouse automation di inserire un profilo prodotto reale, incollare evidenze/documentazione, e ottenere una raccomandazione concreta sul primo segmento italiano dove può realisticamente vincere un pilot.
+The MVP objective is to let a Chinese warehouse automation startup enter a real product profile, paste evidence/documentation, and receive a concrete recommendation on the first Italian segment where it can realistically win a pilot.
 
-Il prodotto finale deve rispondere a questa promessa:
+The final product must deliver on this promise:
 
-> Incollo un prodotto cinese di warehouse automation → l'AI capisce categoria, proof e vincoli → confronta i segmenti italiani → sceglie il primo wedge realistico → genera pilot package, trust gaps, target accounts e sales pack.
+> I paste a Chinese warehouse automation product -> the AI understands category, proof, and constraints -> compares Italian segments -> chooses the first realistic wedge -> generates pilot package, trust gaps, target accounts, and sales pack.
 
 ---
 
-## 1. Diagnosi dello stato attuale
+## 1. Diagnosis Of The Current State
 
-L'app ha già una buona base tecnica:
+The app already has a solid technical base:
 
-- Flow Next.js già esistente.
-- API `POST /api/analyze` già presente.
-- Integrazione OpenRouter già presente.
-- Fallback deterministico già presente.
-- Validazione runtime già presente.
-- Dashboard già capace di mostrare:
-  - segmento consigliato;
-  - processo warehouse;
+- Existing Next.js flow.
+- Existing `POST /api/analyze` API.
+- Existing OpenRouter integration.
+- Existing deterministic fallback.
+- Existing runtime validation.
+- Dashboard already able to show:
+  - recommended segment;
+  - warehouse process;
   - trust gaps;
   - pilot offer;
   - target accounts;
   - proof checklist;
   - sales pack;
   - next actions.
-- Seed data già presenti.
-- `npm run lint` e `npm run build` risultano già passanti.
+- Existing seed data.
+- `npm run lint` and `npm run build` are already passing.
 
-Il problema principale è che l'app è ancora troppo demo-oriented:
+The main problem is that the app is still too demo-oriented:
 
-- fallback hardcoded su AMR, 3PL/e-commerce e internal transport;
-- intake quasi bloccato;
-- nessuna vera estrazione di evidenze dal testo incollato;
-- nessuno scoring reale dei segmenti;
-- nessuna decision matrix visibile;
-- OpenRouter prompt ancora troppo vincolato alla demo AMR/3PL;
-- rischio di mismatch tra schema, tipi e validator.
+- fallback is hardcoded around AMR, 3PL/e-commerce, and internal transport;
+- intake is almost fixed;
+- no real evidence extraction from pasted text;
+- no real segment scoring;
+- no visible decision matrix;
+- OpenRouter prompt is still too tied to the AMR/3PL demo;
+- risk of mismatch between schema, types, and validator.
 
 ---
 
 ## 2. Target MVP
 
-Il target MVP non deve essere un generatore generico di market report.
+The target MVP must not be a generic market report generator.
 
-Deve essere un **Market Entry Segment Decision Engine**.
+It must be a **Market Entry Segment Decision Engine**.
 
-### Flow ideale
+### Ideal Flow
 
-1. L'utente inserisce o modifica un profilo prodotto.
-2. L'utente incolla evidenze/documentazione:
-   - documentazione cinese;
-   - testo da sito o product page;
-   - specifiche tecniche;
-   - note su certificazioni/proof;
-   - case study, ROI, deployment o vincoli.
-3. Il backend estrae un profilo evidenze leggero.
-4. Il backend mappa le capability del prodotto ai processi warehouse.
-5. Il backend valuta i segmenti italiani usando i seed dataset.
-6. Il backend sceglie il primo market entry wedge.
-7. Il backend spiega perché il segmento vincente batte le alternative.
-8. Il backend genera il Pilot Control Room output.
-9. Il frontend mostra:
+1. The user enters or edits a product profile.
+2. The user pastes evidence/documentation:
+   - Chinese documentation;
+   - website or product page text;
+   - technical specifications;
+   - notes on certifications/proof;
+   - case studies, ROI, deployment, or constraints.
+3. The backend extracts a lightweight evidence profile.
+4. The backend maps product capabilities to warehouse processes.
+5. The backend evaluates Italian segments using the seed datasets.
+6. The backend chooses the first market entry wedge.
+7. The backend explains why the winning segment beats the alternatives.
+8. The backend generates the Pilot Control Room output.
+9. The frontend shows:
    - product evidence summary;
    - segment decision matrix;
    - why this segment wins;
@@ -76,50 +76,50 @@ Deve essere un **Market Entry Segment Decision Engine**.
    - target account shortlist;
    - sales pack.
 
-### Fuori scope per questo sprint
+### Out Of Scope For This Sprint
 
-Non devono essere implementati ora:
+Do not implement now:
 
 - OCR;
-- parsing PDF complesso;
+- complex PDF parsing;
 - live web scraping;
 - CRM enrichment;
-- raccolta di contatti personali;
+- personal contact collection;
 - autonomous outreach;
-- claim di compliance certificata;
-- RAG complesso;
-- market report generici.
+- certified compliance claims;
+- complex RAG;
+- generic market reports.
 
 ---
 
-## 3. Divisione dei task
+## 3. Task Split
 
-# Francesco — Backend Decision Engine, Contract e Pipeline Deterministica
+# Francesco - Backend Decision Engine, Contract, And Deterministic Pipeline
 
-## Obiettivo
+## Objective
 
-Francesco deve trasformare `/api/analyze` nel cuore reale del prodotto.
+Francesco must turn `/api/analyze` into the real core of the product.
 
-Il backend deve ricevere input veri, leggere le evidenze, usare i dataset locali, scegliere segmento/processo/pilot e restituire un `PilotAnalysis` valido.
+The backend must receive real inputs, read the evidence, use local datasets, choose segment/process/pilot, and return a valid `PilotAnalysis`.
 
-OpenRouter deve essere opzionale. Se manca la API key o l'output AI non è valido, il sistema deve usare la pipeline deterministica locale, non tornare al vecchio fallback fisso AMR/3PL.
+OpenRouter must be optional. If the API key is missing or the AI output is invalid, the system must use the local deterministic pipeline instead of falling back to the old fixed AMR/3PL fallback.
 
 ---
 
-## Task P0 — Da fare subito
+## Task P0 - Do Immediately
 
-### 1. Aggiornare il contratto API
+### 1. Update The API Contract
 
-Creare o aggiornare i tipi:
+Create or update the types:
 
 ```ts
 EvidenceInputs
 AnalyzeRequestBody
-ProductEvidenceProfile // opzionale
-SegmentScoreCard       // opzionale
+ProductEvidenceProfile // optional
+SegmentScoreCard       // optional
 ```
 
-La request deve accettare almeno:
+The request must accept at least:
 
 ```json
 {
@@ -146,17 +146,17 @@ La request deve accettare almeno:
 
 ---
 
-### 2. Implementare gli stage deterministici
+### 2. Implement Deterministic Stages
 
-Creare funzioni reali, anche semplici ma funzionanti:
+Create real functions, even if simple:
 
 ```ts
 parseProductProfile(input): ProductSummary
 ```
 
-Deve:
+It must:
 
-- classificare categoria prodotto:
+- classify product category:
   - AMR;
   - AGV;
   - sorting automation;
@@ -164,81 +164,81 @@ Deve:
   - picking robot;
   - inventory scanning;
   - WMS/AI orchestration;
-- identificare use case operativo;
-- estrarre vincoli, infrastruttura, integration needs, safety assumptions, support model;
-- separare proof disponibili e proof mancanti;
-- stimare `pilot_complexity`.
+- identify the operational use case;
+- extract constraints, infrastructure, integration needs, safety assumptions, and support model;
+- separate available proof from missing proof;
+- estimate `pilot_complexity`.
 
 ```ts
 matchItalianSegment(productSummary, italianSegments): BuyerSegmentRecommendation
 ```
 
-Deve:
+It must:
 
-- leggere davvero `data/italian_segments.json`;
-- confrontare categoria/use case/processi con i segmenti;
-- considerare proof burden e support risk;
-- scegliere il segmento più pilotabile;
-- generare alternative con tradeoff.
+- actually read `data/italian_segments.json`;
+- compare category/use case/processes with the segments;
+- consider proof burden and support risk;
+- choose the most pilotable segment;
+- generate alternatives with tradeoffs.
 
 ```ts
 selectWarehouseProcess(productSummary, segment, warehouseProcesses): WarehouseProcessRecommendation
 ```
 
-Deve:
+It must:
 
-- leggere `data/warehouse_processes.json`;
-- fare match tra prodotto e `suitable_product_categories`;
-- scegliere un processo misurabile e limitato;
-- generare KPI e operational boundaries.
+- read `data/warehouse_processes.json`;
+- match the product against `suitable_product_categories`;
+- choose a measurable and limited process;
+- generate KPIs and operational boundaries.
 
 ```ts
 analyzeTrustGaps(productSummary, segment, process, trustGaps, proofChecklist): TrustGap[]
 ```
 
-Deve:
+It must:
 
-- confrontare proof disponibili e proof richiesti;
-- se manca CE/safety, generare rischio high/critical;
-- se manca manutenzione locale, generare rischio high;
-- se manca ROI localizzato, generare rischio medium/high;
-- se manca referenza italiana, generare rischio high;
-- produrre mitigation concrete.
+- compare available proof with required proof;
+- if CE/safety proof is missing, generate a high/critical risk;
+- if local maintenance is missing, generate a high risk;
+- if localized ROI is missing, generate a medium/high risk;
+- if Italian reference is missing, generate a high risk;
+- produce concrete mitigations.
 
 ```ts
 generatePilotPackage(productSummary, segment, process, trustGaps): PilotOffer
 ```
 
-Deve generare:
+It must generate:
 
-- durata;
+- duration;
 - scope;
-- setup richiesto;
-- KPI;
+- required setup;
+- KPIs;
 - exit clause;
 - next commercial step.
 
-Il pilot deve essere limitato, misurabile e realistico. Evitare “full warehouse transformation”.
+The pilot must be limited, measurable, and realistic. Avoid "full warehouse transformation".
 
 ```ts
 findTargetAccounts(segment, process, regionPreference, italianTargetAccounts): TargetAccount[]
 ```
 
-Deve:
+It must:
 
-- filtrare per `logistics_category`;
-- boostare `likely_process_fit`;
-- boostare `hq_region`, se presente;
-- boostare `warehouse_signals` coerenti;
-- restituire 5-10 aziende;
-- non fare scraping;
-- non inventare contatti personali.
+- filter by `logistics_category`;
+- boost `likely_process_fit`;
+- boost `hq_region`, if present;
+- boost coherent `warehouse_signals`;
+- return 5-10 companies;
+- avoid scraping;
+- avoid inventing personal contacts.
 
 ```ts
 generateSalesPack(productSummary, segment, process, pilotOffer, trustGaps, shortlist): SalesPack
 ```
 
-Deve produrre:
+It must produce:
 
 - outreach email;
 - meeting pitch;
@@ -251,17 +251,17 @@ Deve produrre:
 assemblePilotAnalysis(stages): PilotAnalysis
 ```
 
-Deve:
+It must:
 
-- comporre l'oggetto finale;
-- includere metadata, assumptions e dataset versions;
-- garantire shape conforme allo schema;
-- validare con `isPilotAnalysisUsable`;
-- usare fallback solo se manca qualcosa di essenziale.
+- compose the final object;
+- include metadata, assumptions, and dataset versions;
+- guarantee a shape compliant with the schema;
+- validate with `isPilotAnalysisUsable`;
+- use fallback only if something essential is missing.
 
 ---
 
-## File principali Francesco
+## Main Files For Francesco
 
 ```txt
 src/app/api/analyze/route.ts
@@ -276,11 +276,11 @@ schemas/pilot_analysis.schema.json
 
 ---
 
-## Regola importante per Francesco
+## Important Rule For Francesco
 
-Attenzione al rischio schema/type/validator drift.
+Watch the risk of schema/type/validator drift.
 
-Se vengono aggiunti nuovi campi top-level, ad esempio:
+If new top-level fields are added, for example:
 
 ```json
 {
@@ -289,7 +289,7 @@ Se vengono aggiunti nuovi campi top-level, ad esempio:
 }
 ```
 
-allora bisogna aggiornare insieme:
+then all of these must be updated together:
 
 ```txt
 TypeScript types
@@ -299,10 +299,10 @@ fallback
 frontend usage
 ```
 
-Se il rischio è troppo alto, usare la soluzione sicura:
+If the risk is too high, use the safer solution:
 
-- non aggiungere nuovi top-level fields;
-- inserire le nuove informazioni dentro campi già validati come:
+- do not add new top-level fields;
+- put the new information inside already validated fields such as:
   - `product_summary`;
   - `buyer_segment_recommendation`;
   - `warehouse_process_recommendation`;
@@ -311,55 +311,55 @@ Se il rischio è troppo alto, usare la soluzione sicura:
 
 ---
 
-## Definition of Done Francesco
+## Definition Of Done For Francesco
 
-Francesco ha finito quando:
+Francesco is done when:
 
-- `/api/analyze` usa davvero input e `evidence_inputs`;
-- funziona senza `OPENROUTER_API_KEY`;
-- se OpenRouter fallisce, usa la pipeline deterministica;
-- cambiando product category cambia output;
-- cambiando proof cambiano trust gaps/proof checklist;
-- l'output rimane schema-valid;
-- `npm run lint` passa;
-- `npm run build` passa.
-
----
-
-# Matteo — Intake Reale, Dashboard e Decision Matrix
-
-## Obiettivo
-
-Matteo deve far percepire all'utente che sta usando un vero motore di analisi.
-
-La UI deve smettere di sembrare una demo precompilata e deve mostrare chiaramente:
-
-- cosa è stato estratto dal prodotto;
-- quale segmento vince;
-- perché quel segmento vince;
-- quali alternative sono state scartate;
-- quale pilot package proporre;
-- quali trust gaps bloccano la vendita.
+- `/api/analyze` actually uses input and `evidence_inputs`;
+- it works without `OPENROUTER_API_KEY`;
+- if OpenRouter fails, it uses the deterministic pipeline;
+- changing product category changes the output;
+- changing proof changes trust gaps/proof checklist;
+- the output remains schema-valid;
+- `npm run lint` passes;
+- `npm run build` passes.
 
 ---
 
-## Task P0 — Da fare subito
+# Matteo - Real Intake, Dashboard, And Decision Matrix
 
-### 1. Rendere reale l'intake
+## Objective
 
-Aggiungere o rendere editabili i campi:
+Matteo must make the user feel they are using a real analysis engine.
+
+The UI must stop feeling like a prefilled demo and must clearly show:
+
+- what was extracted from the product;
+- which segment wins;
+- why that segment wins;
+- which alternatives were rejected;
+- which pilot package should be proposed;
+- which trust gaps block the sale.
+
+---
+
+## Task P0 - Do Immediately
+
+### 1. Make Intake Real
+
+Add or make editable the fields:
 
 - company name;
 - product category;
 - product description;
-- target market fisso su Italy;
+- target market fixed to Italy;
 - benefits;
 - current proof;
 - documentation status;
 - desired pilot ambition;
 - known constraints.
 
-Aggiungere textarea per:
+Add textareas for:
 
 - Chinese documentation text;
 - website/product page text;
@@ -369,9 +369,9 @@ Aggiungere textarea per:
 
 ---
 
-### 2. Mandare il body corretto a `/api/analyze`
+### 2. Send The Correct Body To `/api/analyze`
 
-La UI deve inviare:
+The UI must send:
 
 ```json
 {
@@ -380,15 +380,15 @@ La UI deve inviare:
 }
 ```
 
-Anche se il backend non è ancora completo, Matteo può già preparare questa struttura.
+Even if the backend is not complete yet, Matteo can already prepare this structure.
 
 ---
 
-### 3. Aggiornare loading screen
+### 3. Update The Loading Screen
 
-Il loading non deve dire solo che sta “analizzando”.
+The loading screen should not only say it is "analyzing".
 
-Deve comunicare gli step del prodotto:
+It must communicate the product steps:
 
 - extracting product evidence;
 - scoring Italian buyer segments;
@@ -398,27 +398,27 @@ Deve comunicare gli step del prodotto:
 
 ---
 
-## Task P1 — Dopo stabilizzazione backend
+## Task P1 - After Backend Stabilization
 
-Aggiungere nella Control Room sezioni in alto:
+Add top sections to the Control Room:
 
 ## Product Evidence Extracted
 
-Mostrare:
+Show:
 
-- categoria rilevata;
+- detected category;
 - capabilities;
-- processi supportati;
-- proof disponibili;
-- proof mancanti;
-- vincoli;
-- confidence score, se disponibile.
+- supported processes;
+- available proof;
+- missing proof;
+- constraints;
+- confidence score, if available.
 
 ## Segment Decision Matrix
 
-Mostrare:
+Show:
 
-- segmento;
+- segment;
 - total score;
 - process fit;
 - pain intensity;
@@ -428,7 +428,7 @@ Mostrare:
 - support risk;
 - tradeoff.
 
-Se il backend non restituisce ancora `segment_scorecards`, derivare una matrix semplificata da:
+If the backend does not yet return `segment_scorecards`, derive a simplified matrix from:
 
 ```txt
 buyer_segment_recommendation
@@ -440,16 +440,16 @@ product_summary.missing_proof
 
 ## Why This Segment Wins
 
-Mostrare vicino all'inizio:
+Show near the top:
 
-- perché è il primo wedge migliore;
-- perché è più pilotabile delle alternative;
-- quale rischio rimane;
-- quale proof serve per chiudere il pilot.
+- why it is the best first wedge;
+- why it is more pilotable than the alternatives;
+- which risk remains;
+- which proof is needed to close the pilot.
 
 ---
 
-## File principali Matteo
+## Main Files For Matteo
 
 ```txt
 src/components/pilot-ops-app.tsx
@@ -458,7 +458,7 @@ src/components/screens/control-room-screen.tsx
 src/components/screens/analysis-loading-screen.tsx
 ```
 
-File opzionali:
+Optional files:
 
 ```txt
 src/components/dashboard/segment-decision-matrix.tsx
@@ -467,9 +467,9 @@ src/components/dashboard/product-evidence-card.tsx
 
 ---
 
-## Regole importanti per Matteo
+## Important Rules For Matteo
 
-Matteo deve evitare di toccare:
+Matteo should avoid touching:
 
 ```txt
 src/app/api/analyze/route.ts
@@ -478,58 +478,58 @@ data/
 schemas/
 ```
 
-La sua area è frontend.
+His area is frontend.
 
-La UI non deve promettere:
+The UI must not promise:
 
-- scraping live;
-- buyer garantiti;
-- contatti personali;
-- compliance certificata;
-- lead esaustivi;
-- automazione outreach autonoma.
+- live scraping;
+- guaranteed buyers;
+- personal contacts;
+- certified compliance;
+- exhaustive leads;
+- autonomous outreach automation.
 
-Il messaggio deve restare:
+The message must remain:
 
 > first Italian pilot package, not generic market report.
 
 ---
 
-## Definition of Done Matteo
+## Definition Of Done For Matteo
 
-Matteo ha finito quando:
+Matteo is done when:
 
-- l'utente può incollare documentazione/proof/specs;
-- la request include `profile` + `evidence_inputs`;
-- la Control Room mostra chiaramente il first market entry wedge;
-- la dashboard sembra dinamica, non precompilata;
-- la decision matrix è visibile o derivata in modo sicuro;
-- la UI funziona anche se il backend usa fallback deterministico;
-- `npm run lint` passa;
-- `npm run build` passa.
-
----
-
-# Jacopo — Data Quality, OpenRouter Prompting, QA e Docs
-
-## Obiettivo
-
-Jacopo deve rendere credibile l'intelligenza del prodotto.
-
-Il suo lavoro è assicurarsi che:
-
-- i seed dataset permettano davvero una decisione;
-- il prompt OpenRouter non inventi cose;
-- la QA dimostri che il prodotto non è hardcoded su AMR/3PL;
-- i documenti finali descrivano il comportamento reale, non quello pianificato.
+- the user can paste documentation/proof/specs;
+- the request includes `profile` + `evidence_inputs`;
+- the Control Room clearly shows the first market entry wedge;
+- the dashboard feels dynamic, not prefilled;
+- the decision matrix is visible or safely derived;
+- the UI works even if the backend uses deterministic fallback;
+- `npm run lint` passes;
+- `npm run build` passes.
 
 ---
 
-## Task P0 — Da fare subito
+# Jacopo - Data Quality, OpenRouter Prompting, QA, And Docs
 
-### 1. Review dei seed data
+## Objective
 
-Controllare:
+Jacopo must make the product intelligence credible.
+
+His work is to ensure that:
+
+- seed datasets truly support a decision;
+- the OpenRouter prompt does not invent things;
+- QA proves that the product is not hardcoded to AMR/3PL;
+- final documents describe real behavior, not planned behavior.
+
+---
+
+## Task P0 - Do Immediately
+
+### 1. Review Seed Data
+
+Check:
 
 ```txt
 data/italian_segments.json
@@ -539,69 +539,69 @@ data/proof_checklist.json
 data/italian_target_accounts.json
 ```
 
-Verificare che:
+Verify that:
 
-- ogni segmento abbia segnali utili allo scoring;
-- ogni processo abbia categorie prodotto coerenti;
-- `likely_process_fit` sia utile per ranking;
-- le categorie target account combacino con i segmenti;
-- non ci siano dati personali;
-- i source notes siano prudenti.
+- every segment has useful scoring signals;
+- every process has coherent product categories;
+- `likely_process_fit` is useful for ranking;
+- target account categories match the segments;
+- there is no personal data;
+- source notes are prudent.
 
 ---
 
-### 2. Preparare QA fixtures
+### 2. Prepare QA Fixtures
 
-Creare casi manuali per testare almeno:
+Create manual cases to test at least:
 
 1. AMR;
 2. parcel sorting automation;
 3. inventory scanning robot;
 4. palletizing automation.
 
-Ogni fixture dovrebbe contenere:
+Each fixture should contain:
 
 - product category;
 - product description;
-- proof disponibili;
-- proof mancanti;
-- vincoli;
-- output atteso;
-- cosa controllare nella dashboard.
+- available proof;
+- missing proof;
+- constraints;
+- expected output;
+- what to check in the dashboard.
 
 ---
 
-## Task P1 — Dopo Francesco
+## Task P1 - After Francesco
 
-Aggiornare `src/lib/openrouter-client.ts`.
+Update `src/lib/openrouter-client.ts`.
 
-Il prompt deve smettere di essere un generatore AMR/3PL.
+The prompt must stop being an AMR/3PL generator.
 
-Deve comportarsi come decision engine:
+It must behave like a decision engine:
 
-- leggere product evidence;
-- valutare segment fit;
-- valutare process fit;
-- produrre trust gaps;
-- generare pilot package;
-- generare sales pack;
-- usare solo target accounts curati.
+- read product evidence;
+- evaluate segment fit;
+- evaluate process fit;
+- produce trust gaps;
+- generate pilot package;
+- generate sales pack;
+- use only curated target accounts.
 
-Il prompt deve vietare esplicitamente:
+The prompt must explicitly forbid:
 
-- compliance certificata se non provata;
+- certified compliance unless proven;
 - live scraping;
 - personal contact harvesting;
-- buyer garantiti;
-- aziende inventate;
-- lead list esaustive;
-- claim non supportati.
+- guaranteed buyers;
+- invented companies;
+- exhaustive lead lists;
+- unsupported claims.
 
 ---
 
-## Task P2 — Fine sprint
+## Task P2 - End Of Sprint
 
-Aggiornare i documenti finali:
+Update the final documents:
 
 ```txt
 docs/ai-pipeline.md
@@ -609,21 +609,21 @@ docs/testing-and-evals.md
 docs/parallel-implementation-plan.md
 ```
 
-I docs vanno aggiornati solo dopo l'implementazione reale.
+Docs should be updated only after the real implementation.
 
-Devono descrivere:
+They must describe:
 
-- cosa fa davvero la pipeline;
-- cosa è deterministico;
-- cosa fa OpenRouter;
-- cosa succede se OpenRouter fallisce;
-- quali dataset sono usati;
-- quali guardrail sono implementate;
-- quali test manuali sono passati.
+- what the pipeline actually does;
+- what is deterministic;
+- what OpenRouter does;
+- what happens if OpenRouter fails;
+- which datasets are used;
+- which guardrails are implemented;
+- which manual tests passed.
 
 ---
 
-## File principali Jacopo
+## Main Files For Jacopo
 
 ```txt
 data/italian_segments.json
@@ -639,32 +639,32 @@ docs/parallel-implementation-plan.md
 
 ---
 
-## Definition of Done Jacopo
+## Definition Of Done For Jacopo
 
-Jacopo ha finito quando:
+Jacopo is done when:
 
-- il prompt supporta più product categories;
-- i seed data sono coerenti con scoring e shortlist;
-- i test QA dimostrano che il prodotto non resta bloccato su AMR/3PL;
-- nessun output promette certificazioni, contatti, buyer o compliance non verificati;
-- i documenti sono aggiornati al comportamento reale;
-- `npm run lint` passa;
-- `npm run build` passa.
+- the prompt supports multiple product categories;
+- seed data is coherent with scoring and shortlist;
+- QA tests prove the product is not stuck on AMR/3PL;
+- no output promises unverified certifications, contacts, buyers, or compliance;
+- docs are updated to match real behavior;
+- `npm run lint` passes;
+- `npm run build` passes.
 
 ---
 
-# 4. Ordine di integrazione consigliato
+# 4. Recommended Integration Order
 
-## Branch
+## Branches
 
-Da `main` aggiornato:
+From updated `main`:
 
 ```bash
 git checkout main
 git pull --rebase origin main
 ```
 
-Creare i branch:
+Create the branches:
 
 ```bash
 # Francesco
@@ -679,27 +679,27 @@ git checkout -b feature/jacopo-market-data-ai-prompting
 
 ---
 
-## Merge order consigliato
+## Recommended Merge Order
 
 ```txt
 1. Francesco -> main
-2. Matteo rebase su main -> merge
-3. Jacopo rebase su main -> merge
+2. Matteo rebase onto main -> merge
+3. Jacopo rebase onto main -> merge
 ```
 
-Motivo:
+Reason:
 
-- Francesco definisce contratto API e output reale.
-- Matteo dipende da quei dati per la dashboard.
-- Jacopo aggiorna prompt/docs/QA sul comportamento finale.
+- Francesco defines the API contract and real output.
+- Matteo depends on those data points for the dashboard.
+- Jacopo updates prompts/docs/QA around the final behavior.
 
 ---
 
-# 5. Test manuali minimi
+# 5. Minimum Manual Tests
 
-Il prodotto può essere considerato davvero dinamico solo se questi test passano.
+The product can be considered genuinely dynamic only if these tests pass.
 
-## Test 1 — Parcel sorting automation
+## Test 1 - Parcel Sorting Automation
 
 Input:
 
@@ -707,15 +707,15 @@ Input:
 Product category: parcel sorting automation
 ```
 
-Output atteso:
+Expected output:
 
-- processo consigliato legato al parcel sorting;
-- shortlist coerente con parcel/courier/logistics hub;
-- KPI legati a sorting throughput, mis-sort rate, parcels/hour.
+- recommended process related to parcel sorting;
+- shortlist coherent with parcel/courier/logistics hubs;
+- KPIs related to sorting throughput, mis-sort rate, and parcels/hour.
 
 ---
 
-## Test 2 — Inventory scanning robot
+## Test 2 - Inventory Scanning Robot
 
 Input:
 
@@ -723,31 +723,31 @@ Input:
 Product category: inventory scanning robot
 ```
 
-Output atteso:
+Expected output:
 
-- processo consigliato legato a inventory scanning/cycle counting;
-- KPI legati ad accuracy, scan coverage, cycle count time;
-- segmenti compatibili con magazzini dove l'inventory accuracy conta.
+- recommended process related to inventory scanning/cycle counting;
+- KPIs related to accuracy, scan coverage, and cycle count time;
+- segments compatible with warehouses where inventory accuracy matters.
 
 ---
 
-## Test 3 — Missing CE/safety proof
+## Test 3 - Missing CE/Safety Proof
 
 Input:
 
 ```txt
-CE/safety proof mancante o parziale
+CE/safety proof missing or partial
 ```
 
-Output atteso:
+Expected output:
 
-- trust gap safety high/critical;
-- proof checklist mostra missing proof;
-- sales pack non dichiara compliance verificata.
+- safety trust gap is high/critical;
+- proof checklist shows missing proof;
+- sales pack does not claim verified compliance.
 
 ---
 
-## Test 4 — Missing local maintenance
+## Test 4 - Missing Local Maintenance
 
 Input:
 
@@ -755,10 +755,10 @@ Input:
 No local maintenance partner identified
 ```
 
-Output atteso:
+Expected output:
 
-- trust gap support/local maintenance high;
-- mitigation concreta:
+- support/local maintenance trust gap is high;
+- concrete mitigation:
   - remote diagnostics;
   - spare parts plan;
   - named local response partner;
@@ -766,7 +766,7 @@ Output atteso:
 
 ---
 
-## Test 5 — Strong proof inserted
+## Test 5 - Strong Proof Inserted
 
 Input:
 
@@ -774,32 +774,32 @@ Input:
 Strong technical specs, Chinese case study, ROI notes, partial CE summary, support plan
 ```
 
-Output atteso:
+Expected output:
 
-- proof readiness migliora;
-- alcuni gap diminuiscono;
-- confidence/fit migliora, se implementato.
+- proof readiness improves;
+- some gaps decrease;
+- confidence/fit improves, if implemented.
 
 ---
 
-## Test 6 — Region preference
+## Test 6 - Region Preference
 
 Input:
 
 ```txt
-Region preference: Lombardy oppure Emilia-Romagna
+Region preference: Lombardy or Emilia-Romagna
 ```
 
-Output atteso:
+Expected output:
 
-- shortlist boosta aziende in quella regione;
-- se non ci sono abbastanza match, mantiene caveat chiaro.
+- shortlist boosts companies in that region;
+- if there are not enough matches, it keeps a clear caveat.
 
 ---
 
-# 6. Comandi di verifica per ogni PR
+# 6. Verification Commands For Each PR
 
-Prima di aprire o aggiornare una PR:
+Before opening or updating a PR:
 
 ```bash
 git status --short
@@ -807,7 +807,7 @@ npm run lint
 npm run build
 ```
 
-Se vengono aggiunti test:
+If tests are added:
 
 ```bash
 npm test
@@ -815,69 +815,69 @@ npm test
 
 ---
 
-# 7. Criteri finali di accettazione demo
+# 7. Final Demo Acceptance Criteria
 
-La demo è pronta quando:
+The demo is ready when:
 
-- l'app parte localmente con `npm run dev`;
-- `npm run lint` passa;
-- `npm run build` passa;
-- l'intake accetta descrizione prodotto e testo evidenze;
-- `/api/analyze` risponde anche senza API key;
-- con API key, OpenRouter viene tentato ma non è necessario per il funzionamento;
-- se OpenRouter fallisce, il fallback deterministico produce comunque un output credibile;
-- la dashboard mostra il primo market entry wedge;
-- la dashboard mostra segment scores o decision matrix derivata;
-- la dashboard spiega perché il segmento scelto batte le alternative;
-- la dashboard mostra pilot package, trust gaps, proof checklist, target accounts e sales pack;
-- non ci sono claim di scraping live, buyer garantiti, contatti personali o compliance certificata;
-- target accounts arrivano solo dal seed dataset curato;
-- il messaggio resta: `first Italian pilot package`, non `generic market report`.
+- the app starts locally with `npm run dev`;
+- `npm run lint` passes;
+- `npm run build` passes;
+- intake accepts product description and evidence text;
+- `/api/analyze` responds even without an API key;
+- with an API key, OpenRouter is attempted but is not required for the product to work;
+- if OpenRouter fails, the deterministic fallback still produces credible output;
+- the dashboard shows the first market entry wedge;
+- the dashboard shows segment scores or a derived decision matrix;
+- the dashboard explains why the chosen segment beats the alternatives;
+- the dashboard shows pilot package, trust gaps, proof checklist, target accounts, and sales pack;
+- there are no claims about live scraping, guaranteed buyers, personal contacts, or certified compliance;
+- target accounts come only from the curated seed dataset;
+- the message remains: `first Italian pilot package`, not `generic market report`.
 
 ---
 
-# 8. Priorità strategica
+# 8. Strategic Priority
 
-La priorità non è aggiungere tante feature.
+The priority is not adding many features.
 
-La priorità è far vedere ai giudici un comportamento chiaro:
+The priority is showing judges one clear behavior:
 
-> Il prodotto prende un profilo reale, legge evidenze, ragiona sui segmenti italiani, sceglie un primo pilot realistico e genera un pacchetto operativo per entrare nel mercato.
+> The product takes a real profile, reads evidence, reasons across Italian segments, chooses a realistic first pilot, and generates an operational market entry package.
 
-Questo è più forte di una dashboard generica perché risponde direttamente ai criteri dell'hackathon:
+This is stronger than a generic dashboard because it directly answers the hackathon criteria:
 
-- chiarezza dell'idea;
-- utilità reale;
+- clarity of the idea;
+- real usefulness;
 - execution;
 - AI integration;
 - pitch quality.
 
 ---
 
-# 9. Riassunto finale per il team
+# 9. Final Summary For The Team
 
 ## Francesco
 
-Costruisce il motore.
+Builds the engine.
 
 ```txt
-Input reale -> parser -> scoring -> segment/process/pilot -> PilotAnalysis valido
+Real input -> parser -> scoring -> segment/process/pilot -> valid PilotAnalysis
 ```
 
 ## Matteo
 
-Costruisce l'esperienza utente.
+Builds the user experience.
 
 ```txt
-Intake reale -> evidence text -> decision matrix -> Control Room credibile
+Real intake -> evidence text -> decision matrix -> credible Control Room
 ```
 
 ## Jacopo
 
-Rende il sistema credibile e sicuro.
+Makes the system credible and safe.
 
 ```txt
-Seed data -> prompt guardrails -> QA fixtures -> docs finali
+Seed data -> prompt guardrails -> QA fixtures -> final docs
 ```
 
-Il team lavora in parallelo, ma il merge deve rispettare il contratto API: prima backend, poi UI, poi prompt/docs/QA finali.
+The team works in parallel, but the merge must respect the API contract: backend first, then UI, then final prompt/docs/QA.
