@@ -10,6 +10,7 @@ import { demoProductProfile, mockPilotAnalysis } from "@/lib/mock-pilot-analysis
 import type { PilotAnalysis } from "@/lib/pilot-analysis-types";
 
 type FlowStep = "start" | "intake" | "analysis" | "control-room";
+const ANALYSIS_REQUEST_TIMEOUT_MS = 8000;
 
 export function PilotOpsApp() {
   const [step, setStep] = useState<FlowStep>("start");
@@ -23,6 +24,9 @@ export function PilotOpsApp() {
 
     let isCancelled = false;
     const controller = new AbortController();
+    const requestTimeoutId = window.setTimeout(() => {
+      controller.abort();
+    }, ANALYSIS_REQUEST_TIMEOUT_MS);
 
     async function runAnalysis() {
       let nextAnalysis = mockPilotAnalysis;
@@ -47,6 +51,8 @@ export function PilotOpsApp() {
         }
       } catch {
         nextAnalysis = mockPilotAnalysis;
+      } finally {
+        window.clearTimeout(requestTimeoutId);
       }
 
       await minimumLoadingTime;
@@ -63,6 +69,7 @@ export function PilotOpsApp() {
 
     return () => {
       isCancelled = true;
+      window.clearTimeout(requestTimeoutId);
       controller.abort();
     };
   }, [productProfile, step]);
