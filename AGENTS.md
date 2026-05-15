@@ -54,6 +54,12 @@ Initial setup ownership:
 - Jacopo: AI pipeline, output schema, prompt strategy, seed data, evaluation fixtures.
 - Matteo: frontend scaffold, UI system, app screens, dashboard layout.
 
+File and directory ownership:
+
+- Francesco owns `README.md`, `AGENTS.md`, `docs/project-brief.md`, `docs/architecture.md`, `docs/code-map.md`, and `docs/decisions/`.
+- Jacopo owns `docs/ai-pipeline.md`, `docs/data-model.md`, `docs/testing-and-evals.md`, `data/`, and `schemas/`.
+- Matteo owns `docs/ui-system.md` and the future Next.js application files, including app routes, reusable UI components, dashboard screens, styles, and frontend mock data.
+
 Agents should stay inside the ownership scope of the active branch. Do not rewrite another teammate's files unless the user explicitly asks or the change is required for consistency.
 
 ## Coding Conventions
@@ -100,4 +106,3 @@ Every PR should explain:
 - screenshots only if UI was touched.
 
 Review should prioritize correctness, scope control, and alignment with the product spec.
-
