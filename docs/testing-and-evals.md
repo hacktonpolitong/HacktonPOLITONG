@@ -292,7 +292,7 @@ These outputs should fail review:
 1. Run the demo AMR fixture through the pipeline.
 2. Validate the output against `schemas/pilot_analysis.schema.json`.
 3. Compare selected segment and process against expected behavior.
-4. Review Target Account Shortlist for segment/process fit, company-level public contact method, source notes, and absence of private personal data.
+4. Review Target Account Shortlist for segment/process fit, company-level public website/source notes, and absence of private personal data.
 5. Review trust gaps for buyer realism and missing proof.
 6. Review pilot offer for operational boundaries and KPIs.
 7. Review sales pack for immediate usability by the Head of International Expansion.

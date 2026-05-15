@@ -25,23 +25,17 @@ Shape:
   "segments": [
     {
       "id": "it_3pl_ecommerce",
-      "name": "Mid-size 3PL and e-commerce fulfilment warehouses",
-      "typical_buyer_profile": {
-        "decision_makers": ["Operations Director", "Warehouse Manager"],
-        "company_profile": "Italian or Italy-based logistics operator serving e-commerce and retail clients.",
-        "warehouse_context": "Multi-client fulfilment sites with picking, packing, dispatch, and returns flows.",
-        "regions": ["Lombardy", "Veneto", "Emilia-Romagna", "Piedmont"]
+      "segment_name": "Mid-size 3PL and e-commerce fulfilment warehouses",
+      "buyer_profile": {
+        "decision_maker_titles": ["Operations Director", "Warehouse Manager"],
+        "summary": "Italian or Italy-based logistics operator serving e-commerce and retail clients."
       },
-      "common_warehouse_processes": ["internal_transport_picking_to_packing"],
+      "warehouse_context": "Multi-client fulfilment sites with picking, packing, dispatch, and returns flows.",
+      "plausible_italian_regions": ["Lombardy", "Veneto", "Emilia-Romagna", "Piedmont"],
+      "common_warehouse_processes": ["internal transport between picking and packing"],
       "key_objections": ["local maintenance", "WMS integration"],
-      "proof_requirements": ["technical_specs", "support_sla"],
-      "fit_score_weight_rationale": {
-        "process_fit": 0.3,
-        "pain_intensity": 0.25,
-        "pilotability": 0.2,
-        "proof_burden": 0.15,
-        "sales_cycle_practicality": 0.1
-      }
+      "proof_requirements": ["technical specifications", "support SLA"],
+      "fit_score_rationale": "Strong first-pilot fit because AMR/AGV workflows can be bounded to one route or zone."
     }
   ]
 }
@@ -50,8 +44,8 @@ Shape:
 Notes:
 
 - `id` is stable and should be used in pipeline outputs.
-- `fit_score_weight_rationale` documents how the segment should be scored, but it is not itself the final score.
-- `proof_requirements` values should match proof IDs from `proof_checklist.json` where possible.
+- `fit_score_rationale` documents why the segment is suitable for a first pilot; it is not a final numeric score.
+- `proof_requirements` values should match buyer-readable proof item names from `proof_checklist.json` where possible.
 
 ## `warehouse_processes.json`
 
@@ -62,19 +56,21 @@ Shape:
   "version": "1.0",
   "processes": [
     {
-      "id": "internal_transport_picking_to_packing",
-      "name": "Internal transport between picking and packing",
-      "description": "Move totes or carts from picking aisles to packing benches.",
+      "id": "internal_transport",
+      "process_name": "Internal transport between picking and packing",
+      "operational_description": "Move totes or carts from picking aisles to packing benches.",
       "suitable_product_categories": ["AMR", "AGV"],
-      "segment_fit": ["it_3pl_ecommerce", "it_retail_logistics"],
-      "pilot_suitability_score": 91,
-      "score_rationale": "Bounded, repetitive, measurable, and deployable without full warehouse redesign.",
-      "kpis": ["manual_walking_time_reduction"],
-      "constraints": ["Clear route", "Wi-Fi coverage"],
+      "compatible_buyer_segments": ["3PL and e-commerce fulfilment", "retail logistics"],
+      "pilot_suitability_score": 9,
+      "score_rationale": "Heuristic score: bounded, repetitive, measurable, and deployable without full warehouse redesign.",
+      "measurable_kpis": ["manual walking time reduced on the selected route"],
+      "constraints": ["clear route", "Wi-Fi coverage"],
       "recommended_pilot_shape": {
         "duration_days": 45,
-        "systems": "2 AMRs",
-        "scope": "One mapped route"
+        "number_of_systems": "2 AMRs",
+        "scope": "one mapped route",
+        "initial_shift": "day shift during week 1",
+        "risk_reducer": "manual fallback remains available"
       }
     }
   ]
@@ -83,7 +79,7 @@ Shape:
 
 Notes:
 
-- `pilot_suitability_score` is a seed score from 0 to 100.
+- `pilot_suitability_score` is a heuristic seed score from 1 to 10.
 - The AI may adjust the final recommendation score based on product evidence, but must preserve the rationale.
 
 ## `trust_gaps.json`
@@ -98,10 +94,10 @@ Shape:
       "id": "local_maintenance_unclear",
       "title": "Local maintenance and response model unclear",
       "risk_level": "high",
-      "applies_to": ["AMR", "AGV", "sorting automation"],
+      "product_categories_affected": ["AMR", "AGV", "sorting automation"],
       "buyer_concern": "Italian warehouse operators need confidence that downtime will not block dispatch.",
       "recommended_mitigation": "Prepare an Italian or EU support response plan with spare parts availability.",
-      "proof_to_prepare": ["support_sla", "spare_parts_plan"]
+      "proof_to_prepare": ["support SLA", "maintenance plan and spare parts"]
     }
   ]
 }
@@ -122,12 +118,12 @@ Shape:
   "status_options": ["available", "partial", "missing", "recommended"],
   "items": [
     {
-      "id": "technical_specs",
-      "name": "Technical specifications",
+      "id": "technical_specifications",
+      "proof_item_name": "technical specifications",
       "category": "technical",
       "why_italian_buyer_needs_it": "Operations and engineering teams need operating limits before accepting a pilot.",
-      "minimum_content": ["Payload", "Speed", "Battery runtime"],
-      "required_for_pilot": true,
+      "minimum_content_expected": "Payload, dimensions, speed, battery runtime, charging requirements, operating environment, floor requirements, connectivity, and known operating limits.",
+      "required_for_pilot_launch": true,
       "buyer_confidence_impact": "high"
     }
   ]
@@ -145,19 +141,16 @@ Shape:
 
 ```json
 {
-  "company": {
-    "name": "Shenzhen MovePilot Robotics",
-    "country": "China",
-    "buyer_user": "Head of International Expansion"
+  "vendor": {
+    "fictional_name": "Shenzhen Northstar Mobility",
+    "short_description": "Fictional Chinese warehouse robotics vendor preparing its first Italian pilot."
   },
-  "product": {
-    "name": "MP-800 Autonomous Mobile Robot",
-    "category": "AMR",
-    "description": "Autonomous mobile robot for warehouse internal transport."
-  },
+  "product_category": "AMR",
+  "product_name": "NSM-300 Autonomous Mobile Robot",
+  "product_description": "Mid-range autonomous mobile robot for warehouse internal transport.",
   "target_market": {
     "country": "Italy",
-    "entry_goal": "Win first paid pilot"
+    "target_segment": "mid-size 3PL or e-commerce fulfilment"
   }
 }
 ```
