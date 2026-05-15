@@ -27,11 +27,12 @@ export const demoProductProfile: ProductProfile = {
   ]
 };
 
-export const mockPilotAnalysis: PilotAnalysis = {
+export function buildDemoPilotAnalysis(profile: ProductProfile): PilotAnalysis {
+  return {
   product_summary: {
-    company_name: "Shenzhen MovePilot Robotics",
+    company_name: profile.companyName,
     product_name: "MP-800 Autonomous Mobile Robot",
-    product_category: "AMR",
+    product_category: profile.productCategory,
     target_market: "Italy",
     confidence_score: 82
   },
@@ -290,3 +291,6 @@ export const mockPilotAnalysis: PilotAnalysis = {
     }
   ]
 };
+}
+
+export const mockPilotAnalysis: PilotAnalysis = buildDemoPilotAnalysis(demoProductProfile);

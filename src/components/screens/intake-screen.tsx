@@ -18,16 +18,6 @@ export function IntakeScreen({ profile, onAnalyze, onBack }: IntakeScreenProps) 
     setDraft((current) => ({ ...current, [field]: value }));
   }
 
-  function updateList(field: "benefits" | "currentProof" | "constraints", value: string) {
-    setDraft((current) => ({
-      ...current,
-      [field]: value
-        .split("\n")
-        .map((item) => item.trim())
-        .filter(Boolean)
-    }));
-  }
-
   return (
     <main className="mx-auto min-h-screen w-full max-w-6xl px-5 py-8">
       <header className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-border pb-5">
@@ -49,35 +39,35 @@ export function IntakeScreen({ profile, onAnalyze, onBack }: IntakeScreenProps) 
             </div>
             <div>
               <h2 className="text-lg font-semibold text-foreground">{draft.companyName}</h2>
-              <p className="text-sm text-muted">{draft.productCategory}</p>
+              <p className="text-sm text-muted">Demo AMR profile for Italian 3PL fulfilment pilots</p>
             </div>
           </div>
 
           <div className="grid gap-4">
             <EditableField label="Company name" value={draft.companyName} onChange={(value) => updateField("companyName", value)} />
-            <EditableField label="Product category" value={draft.productCategory} onChange={(value) => updateField("productCategory", value)} />
+            <LockedField label="Product category" value={draft.productCategory} />
             <LockedField label="Target market" value={draft.targetMarket} />
-            <EditableField label="Pilot ambition" value={draft.pilotAmbition} onChange={(value) => updateField("pilotAmbition", value)} />
-            <EditableField
-              label="Documentation status"
-              value={draft.documentationStatus}
-              onChange={(value) => updateField("documentationStatus", value)}
-            />
+            <LockedField label="Pilot ambition" value={draft.pilotAmbition} />
+            <LockedField label="Documentation status" value={draft.documentationStatus} />
           </div>
         </div>
 
         <div className="rounded-lg border border-border bg-panel p-5 shadow-panel">
           <h2 className="text-lg font-semibold text-foreground">Product description</h2>
           <textarea
-            className="mt-3 min-h-32 w-full resize-none rounded-md border border-border bg-[#f8faf7] p-3 text-sm leading-6 text-foreground"
+            className="mt-3 min-h-32 w-full resize-none rounded-md border border-border bg-[#eef2ec] p-3 text-sm leading-6 text-muted"
             value={draft.description}
-            onChange={(event) => updateField("description", event.target.value)}
+            readOnly
           />
+          <p className="mt-2 text-xs leading-5 text-muted">
+            Demo-safe mode: the analysis below is calibrated to this AMR/3PL profile. Rename the vendor if needed, but the product category,
+            proof inputs, and constraints stay locked so the Pilot Control Room remains coherent.
+          </p>
 
           <div className="mt-5 grid gap-5 md:grid-cols-3">
-            <ListEditor title="Benefits" items={draft.benefits} onChange={(value) => updateList("benefits", value)} />
-            <ListEditor title="Proof available" items={draft.currentProof} onChange={(value) => updateList("currentProof", value)} />
-            <ListEditor title="Known constraints" items={draft.constraints} onChange={(value) => updateList("constraints", value)} />
+            <ListViewer title="Benefits" items={draft.benefits} />
+            <ListViewer title="Proof available" items={draft.currentProof} />
+            <ListViewer title="Known constraints" items={draft.constraints} />
           </div>
 
           <div className="mt-6 flex justify-end">
@@ -118,15 +108,15 @@ function LockedField({ label, value }: { label: string; value: string }) {
   );
 }
 
-function ListEditor({ title, items, onChange }: { title: string; items: string[]; onChange: (value: string) => void }) {
+function ListViewer({ title, items }: { title: string; items: string[] }) {
   return (
-    <label className="block">
+    <div>
       <h3 className="text-sm font-semibold text-foreground">{title}</h3>
-      <textarea
-        className="mt-2 min-h-40 w-full resize-none rounded-md border border-border bg-[#f8faf7] px-3 py-2 text-sm leading-6 text-muted"
-        value={items.join("\n")}
-        onChange={(event) => onChange(event.target.value)}
-      />
-    </label>
+      <div className="mt-2 min-h-40 rounded-md border border-border bg-[#eef2ec] px-3 py-2 text-sm leading-6 text-muted">
+        {items.map((item) => (
+          <p key={item}>{item}</p>
+        ))}
+      </div>
+    </div>
   );
 }

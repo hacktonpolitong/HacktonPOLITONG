@@ -33,7 +33,8 @@ export function ControlRoomScreen({ profile, analysis, onRestart }: ControlRoomS
           <p className="text-sm font-semibold uppercase tracking-wide text-accent">Pilot Control Room</p>
           <h1 className="mt-1 text-3xl font-bold text-foreground">{profile.companyName}</h1>
           <p className="mt-2 max-w-3xl text-sm leading-6 text-muted">
-            {profile.productCategory} entering {profile.targetMarket}. Structured pilot strategy for the first credible Italian buyer conversation.
+            Demo pilot strategy for a prefilled {profile.productCategory} profile entering {profile.targetMarket}. The package is calibrated to the
+            AMR/3PL scenario used for the hackathon flow.
           </p>
         </div>
         <div className="flex gap-3">
@@ -142,7 +143,7 @@ export function ControlRoomScreen({ profile, analysis, onRestart }: ControlRoomS
                       className="mt-1 inline-flex items-center gap-1 text-sm font-semibold text-accent hover:underline"
                       href={account.website}
                       target="_blank"
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                     >
                       Official website
                       <ExternalLink size={14} aria-hidden="true" />

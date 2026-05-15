@@ -5,7 +5,7 @@ import { AnalysisLoadingScreen } from "@/components/screens/analysis-loading-scr
 import { ControlRoomScreen } from "@/components/screens/control-room-screen";
 import { IntakeScreen } from "@/components/screens/intake-screen";
 import { StartScreen } from "@/components/screens/start-screen";
-import { demoProductProfile, mockPilotAnalysis } from "@/lib/mock-pilot-analysis";
+import { buildDemoPilotAnalysis, demoProductProfile } from "@/lib/mock-pilot-analysis";
 
 type FlowStep = "start" | "intake" | "analysis" | "control-room";
 
@@ -43,7 +43,7 @@ export function PilotOpsApp() {
   }
 
   if (step === "control-room") {
-    return <ControlRoomScreen profile={productProfile} analysis={mockPilotAnalysis} onRestart={() => setStep("start")} />;
+    return <ControlRoomScreen profile={productProfile} analysis={buildDemoPilotAnalysis(productProfile)} onRestart={() => setStep("start")} />;
   }
 
   return <StartScreen onStart={() => setStep("intake")} />;
