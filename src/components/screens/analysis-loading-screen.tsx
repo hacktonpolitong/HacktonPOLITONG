@@ -3,13 +3,11 @@
 import { CheckCircle2, Loader2 } from "lucide-react";
 
 const modules = [
-  "Parsing product profile",
-  "Matching Italian warehouse segments",
-  "Selecting pilot workflow",
-  "Ranking target account shortlist",
-  "Identifying buyer trust gaps",
-  "Generating pilot offer",
-  "Preparing sales pack"
+  "Extracting product evidence",
+  "Scoring Italian buyer segments",
+  "Selecting first pilot wedge",
+  "Assembling pilot package",
+  "Preparing target account shortlist"
 ];
 
 export function AnalysisLoadingScreen() {
@@ -32,12 +30,12 @@ export function AnalysisLoadingScreen() {
               <div>
                 <p className="font-semibold text-foreground">{module}</p>
                 <p className="text-sm text-muted">
-                  {module === "Ranking target account shortlist"
+                  {module === "Preparing target account shortlist"
                     ? "Company-level matching from curated Italian logistics accounts"
-                    : `Structured output module ${index + 1}`}
+                    : `Decision engine stage ${index + 1}`}
                 </p>
               </div>
-              {index < 4 ? (
+              {index < 3 ? (
                 <CheckCircle2 className="text-accent" size={20} aria-hidden="true" />
               ) : (
                 <Loader2 className="animate-spin text-amber" size={20} aria-hidden="true" />

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { AnalysisLoadingScreen } from "@/components/screens/analysis-loading-screen";
 import { ControlRoomScreen } from "@/components/screens/control-room-screen";
-import { IntakeScreen } from "@/components/screens/intake-screen";
+import { IntakeScreen, type EvidenceInputs } from "@/components/screens/intake-screen";
 import { StartScreen } from "@/components/screens/start-screen";
 import { isPilotAnalysisUsable } from "@/lib/pilot-analysis-validation";
 import { demoProductProfile, mockPilotAnalysis } from "@/lib/mock-pilot-analysis";
@@ -12,9 +12,18 @@ import type { PilotAnalysis } from "@/lib/pilot-analysis-types";
 type FlowStep = "start" | "intake" | "analysis" | "control-room";
 const ANALYSIS_REQUEST_TIMEOUT_MS = 8000;
 
+const emptyEvidenceInputs: EvidenceInputs = {
+  chinese_documentation_text: "",
+  website_product_text: "",
+  technical_specs_text: "",
+  proof_certification_notes: "",
+  case_study_roi_notes: ""
+};
+
 export function PilotOpsApp() {
   const [step, setStep] = useState<FlowStep>("start");
   const [productProfile, setProductProfile] = useState(demoProductProfile);
+  const [evidenceInputs, setEvidenceInputs] = useState<EvidenceInputs>(emptyEvidenceInputs);
   const [analysis, setAnalysis] = useState<PilotAnalysis>(mockPilotAnalysis);
 
   useEffect(() => {
@@ -38,7 +47,10 @@ export function PilotOpsApp() {
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({ profile: productProfile }),
+          body: JSON.stringify({
+            profile: productProfile,
+            evidence_inputs: evidenceInputs
+          }),
           signal: controller.signal
         });
 
@@ -72,14 +84,16 @@ export function PilotOpsApp() {
       window.clearTimeout(requestTimeoutId);
       controller.abort();
     };
-  }, [productProfile, step]);
+  }, [evidenceInputs, productProfile, step]);
 
   if (step === "intake") {
     return (
       <IntakeScreen
         profile={productProfile}
-        onAnalyze={(updatedProfile) => {
+        evidenceInputs={evidenceInputs}
+        onAnalyze={({ profile: updatedProfile, evidenceInputs: updatedEvidenceInputs }) => {
           setProductProfile(updatedProfile);
+          setEvidenceInputs(updatedEvidenceInputs);
           setStep("analysis");
         }}
         onBack={() => setStep("start")}
