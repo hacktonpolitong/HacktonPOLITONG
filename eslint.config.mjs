@@ -1,4 +1,5 @@
 import js from "@eslint/js";
+import { fixupPluginRules } from "@eslint/compat";
 import nextPlugin from "@next/eslint-plugin-next";
 import globals from "globals";
 import tseslint from "typescript-eslint";
@@ -15,6 +16,14 @@ export default tseslint.config(
     ]
   },
   js.configs.recommended,
+  {
+    files: ["*.config.js", "*.config.mjs", "*.config.cjs"],
+    languageOptions: {
+      globals: {
+        ...globals.node
+      }
+    }
+  },
   ...tseslint.configs.recommended,
   {
     files: ["**/*.{ts,tsx}"],
@@ -25,7 +34,7 @@ export default tseslint.config(
       }
     },
     plugins: {
-      "@next/next": nextPlugin
+      "@next/next": fixupPluginRules(nextPlugin)
     },
     rules: {
       ...nextPlugin.configs.recommended.rules,
