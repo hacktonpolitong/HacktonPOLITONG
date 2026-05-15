@@ -133,6 +133,58 @@ export const mockPilotAnalysis: PilotAnalysis = {
     exit_clause: "Buyer can stop after 45 days if agreed KPI and support conditions are not met.",
     next_commercial_step: "Convert to a six-month expansion plan if KPIs and support commitments are met."
   },
+  target_account_shortlist: [
+    {
+      company_name: "FERCAM",
+      website: "https://www.fercam.com",
+      hq_region: "other",
+      logistics_category: "3PL and e-commerce fulfilment",
+      warehouse_signals: [
+        "contract logistics and warehousing services",
+        "multiple specialized logistics centres in Italy and Europe",
+        "warehouse management, stock handling, order management, shipping and returns"
+      ],
+      likely_process_fit: ["internal transport", "picking support", "pallet movement", "inventory scanning"],
+      recommended_buyer_roles: ["Contract Logistics Director", "Operations Director", "Warehouse Manager"],
+      outreach_angle:
+        "FERCAM is a strong AMR/AGV pilot candidate because its contract logistics network handles warehouse flows where internal transport can be tested in bounded zones.",
+      source_note:
+        "Official FERCAM pages on logistics and contract logistics/warehousing."
+    },
+    {
+      company_name: "Arcese",
+      website: "https://arcese.com",
+      hq_region: "other",
+      logistics_category: "3PL and e-commerce fulfilment",
+      warehouse_signals: [
+        "contract logistics services",
+        "inbound and outbound logistics",
+        "warehouse flow optimization",
+        "e-commerce logistics including warehousing, order preparation and returns"
+      ],
+      likely_process_fit: ["internal transport", "picking support", "inventory scanning", "line-side replenishment"],
+      recommended_buyer_roles: ["Contract Logistics Director", "Operations Director", "E-commerce Logistics Manager"],
+      outreach_angle:
+        "Arcese is relevant for an AMR pilot because its e-commerce and contract logistics services include picking, packing, returns and warehouse flow optimization.",
+      source_note: "Official Arcese contract logistics page."
+    },
+    {
+      company_name: "BCUBE",
+      website: "https://www.bcube.com",
+      hq_region: "Piedmont",
+      logistics_category: "3PL and e-commerce fulfilment",
+      warehouse_signals: [
+        "Italian integrated logistics operator",
+        "contract logistics and customized supply chain services",
+        "production logistics, inbound logistics, spare parts logistics and consumer retail services"
+      ],
+      likely_process_fit: ["internal transport", "picking support", "pallet movement", "line-side replenishment"],
+      recommended_buyer_roles: ["Operations Director", "Contract Logistics Director", "Warehouse Manager"],
+      outreach_angle:
+        "BCUBE is a credible AMR/AGV target because it already positions logistics as technology-enabled across production, inbound and spare-parts flows.",
+      source_note: "Official BCUBE homepage and contacts page."
+    }
+  ],
   objection_battlecard: [
     {
       objection: "We do not know your brand in Italy.",

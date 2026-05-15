@@ -13,6 +13,18 @@ export type ProductProfile = {
   constraints: string[];
 };
 
+export type TargetAccount = {
+  company_name: string;
+  website: string;
+  hq_region: string | null;
+  logistics_category: string;
+  warehouse_signals: string[];
+  likely_process_fit: string[];
+  recommended_buyer_roles: string[];
+  outreach_angle: string;
+  source_note: string;
+};
+
 export type PilotAnalysis = {
   product_summary: {
     company_name: string;
@@ -65,6 +77,7 @@ export type PilotAnalysis = {
     exit_clause: string;
     next_commercial_step: string;
   };
+  target_account_shortlist: TargetAccount[];
   objection_battlecard: Array<{
     objection: string;
     response: string;

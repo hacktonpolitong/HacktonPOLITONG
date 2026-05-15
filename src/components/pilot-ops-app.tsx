@@ -11,6 +11,7 @@ type FlowStep = "start" | "intake" | "analysis" | "control-room";
 
 export function PilotOpsApp() {
   const [step, setStep] = useState<FlowStep>("start");
+  const [productProfile, setProductProfile] = useState(demoProductProfile);
 
   useEffect(() => {
     if (step !== "analysis") {
@@ -25,7 +26,16 @@ export function PilotOpsApp() {
   }, [step]);
 
   if (step === "intake") {
-    return <IntakeScreen profile={demoProductProfile} onAnalyze={() => setStep("analysis")} onBack={() => setStep("start")} />;
+    return (
+      <IntakeScreen
+        profile={productProfile}
+        onAnalyze={(updatedProfile) => {
+          setProductProfile(updatedProfile);
+          setStep("analysis");
+        }}
+        onBack={() => setStep("start")}
+      />
+    );
   }
 
   if (step === "analysis") {
@@ -33,7 +43,7 @@ export function PilotOpsApp() {
   }
 
   if (step === "control-room") {
-    return <ControlRoomScreen profile={demoProductProfile} analysis={mockPilotAnalysis} onRestart={() => setStep("start")} />;
+    return <ControlRoomScreen profile={productProfile} analysis={mockPilotAnalysis} onRestart={() => setStep("start")} />;
   }
 
   return <StartScreen onStart={() => setStep("intake")} />;

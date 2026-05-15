@@ -1,6 +1,7 @@
 import {
   CalendarDays,
   ClipboardCheck,
+  ExternalLink,
   FileStack,
   Gauge,
   Lightbulb,
@@ -8,6 +9,7 @@ import {
   MessageSquareWarning,
   PackageCheck,
   ShieldAlert,
+  Sparkles,
   Target
 } from "lucide-react";
 import { FitScore } from "@/components/dashboard/fit-score";
@@ -31,7 +33,7 @@ export function ControlRoomScreen({ profile, analysis, onRestart }: ControlRoomS
           <p className="text-sm font-semibold uppercase tracking-wide text-accent">Pilot Control Room</p>
           <h1 className="mt-1 text-3xl font-bold text-foreground">{profile.companyName}</h1>
           <p className="mt-2 max-w-3xl text-sm leading-6 text-muted">
-            {profile.productCategory} entering {profile.targetMarket}. Mock output is structured to be replaced by the future AI analysis response.
+            {profile.productCategory} entering {profile.targetMarket}. Structured pilot strategy for the first credible Italian buyer conversation.
           </p>
         </div>
         <div className="flex gap-3">
@@ -124,6 +126,42 @@ export function ControlRoomScreen({ profile, analysis, onRestart }: ControlRoomS
           </div>
         </SectionPanel>
 
+        <SectionPanel title="Target Account Shortlist" eyebrow="Account ranking" icon={Sparkles} className="lg:col-span-12">
+          <div className="grid gap-3">
+            {analysis.target_account_shortlist.map((account, index) => (
+              <article key={account.company_name} className="rounded-md border border-border bg-[#f8faf7] p-4">
+                <div className="grid gap-4 lg:grid-cols-[1fr_1.25fr]">
+                  <div>
+                    <div className="mb-3 flex flex-wrap items-center gap-2">
+                      <Badge tone="green">Rank {index + 1}</Badge>
+                      <Badge tone="blue">{account.hq_region ?? "region not verified"}</Badge>
+                      <Badge>{account.logistics_category}</Badge>
+                    </div>
+                    <h3 className="text-lg font-semibold text-foreground">{account.company_name}</h3>
+                    <a
+                      className="mt-1 inline-flex items-center gap-1 text-sm font-semibold text-accent hover:underline"
+                      href={account.website}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Official website
+                      <ExternalLink size={14} aria-hidden="true" />
+                    </a>
+                    <p className="mt-3 text-sm leading-6 text-muted">{account.outreach_angle}</p>
+                  </div>
+
+                  <div className="grid gap-3 md:grid-cols-3">
+                    <AccountList title="Signals" items={account.warehouse_signals.slice(0, 3)} />
+                    <AccountList title="Process fit" items={account.likely_process_fit.slice(0, 4)} />
+                    <AccountList title="Buyer roles" items={account.recommended_buyer_roles.slice(0, 4)} />
+                  </div>
+                </div>
+                <p className="mt-3 border-t border-border pt-3 text-xs leading-5 text-muted">{account.source_note}</p>
+              </article>
+            ))}
+          </div>
+        </SectionPanel>
+
         <SectionPanel title="Buyer Objection Battlecard" eyebrow="Sales readiness" icon={MessageSquareWarning} className="lg:col-span-6">
           <div className="grid gap-3">
             {analysis.objection_battlecard.map((item) => (
@@ -196,6 +234,21 @@ export function ControlRoomScreen({ profile, analysis, onRestart }: ControlRoomS
         </SectionPanel>
       </div>
     </main>
+  );
+}
+
+function AccountList({ title, items }: { title: string; items: string[] }) {
+  return (
+    <div>
+      <p className="text-xs font-semibold uppercase tracking-wide text-muted">{title}</p>
+      <ul className="mt-2 space-y-2">
+        {items.map((item) => (
+          <li key={item} className="rounded-md border border-border bg-panel px-3 py-2 text-sm leading-5 text-muted">
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
