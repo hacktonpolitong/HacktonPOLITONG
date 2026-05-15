@@ -1,0 +1,409 @@
+{
+  "version": "1.0",
+  "market": "Italy",
+  "description": "Seed buyer segments for Chinese warehouse automation vendors selling a first pilot into Italian warehouse and logistics operations.",
+  "segments": [
+    {
+      "id": "it_3pl_ecommerce",
+      "name": "Mid-size 3PL and e-commerce fulfilment warehouses",
+      "typical_buyer_profile": {
+        "decision_makers": [
+          "Operations Director",
+          "Warehouse Manager",
+          "Head of Contract Logistics",
+          "Continuous Improvement Manager"
+        ],
+        "company_profile": "Italian or Italy-based third-party logistics operator serving e-commerce, omnichannel retail, marketplaces, and returns-heavy clients.",
+        "warehouse_context": "Multi-client fulfilment sites with picking, packing, dispatch preparation, returns processing, and peak-season volume swings.",
+        "typical_regions": [
+          "Lombardy",
+          "Veneto",
+          "Emilia-Romagna",
+          "Piedmont"
+        ],
+        "buying_moment": "Pressure to increase throughput and reduce walking time without committing to a full fixed-automation redesign."
+      },
+      "common_warehouse_processes": [
+        "internal_transport_picking_to_packing",
+        "picking_support",
+        "packing_consolidation",
+        "returns_replenishment",
+        "dispatch_staging"
+      ],
+      "key_objections": [
+        "Who maintains the robots locally if they stop during a client SLA window?",
+        "How does the system integrate with our WMS or task assignment workflow?",
+        "Can we test in one zone without disrupting all clients in the building?",
+        "Do you have European or Italian references?",
+        "How quickly can the pilot produce measurable ROI?"
+      ],
+      "proof_requirements": [
+        "technical_specs",
+        "ce_safety_summary",
+        "wms_integration_workflow",
+        "support_sla",
+        "spare_parts_plan",
+        "pilot_kpi_plan",
+        "case_study_evidence",
+        "pilot_exit_conditions"
+      ],
+      "fit_score_weight_rationale": {
+        "process_fit": {
+          "weight": 0.3,
+          "rationale": "AMR, AGV, picking support, and packing-flow tools can be piloted on bounded routes or zones."
+        },
+        "pain_intensity": {
+          "weight": 0.25,
+          "rationale": "Labor availability, seasonal peaks, and client SLA pressure make measurable productivity gains attractive."
+        },
+        "pilotability": {
+          "weight": 0.2,
+          "rationale": "A limited route, zone, or shift can be approved before a larger rollout."
+        },
+        "proof_burden": {
+          "weight": 0.15,
+          "rationale": "Buyers need safety, support, integration, and ROI proof, but the pilot can reduce brand-risk concerns."
+        },
+        "sales_cycle_practicality": {
+          "weight": 0.1,
+          "rationale": "Mid-size operators can be faster than large enterprise procurement if operational risk is controlled."
+        }
+      }
+    },
+    {
+      "id": "it_retail_logistics",
+      "name": "Retail logistics and fashion distribution centers",
+      "typical_buyer_profile": {
+        "decision_makers": [
+          "Logistics Director",
+          "Distribution Center Manager",
+          "Retail Operations Manager",
+          "IT/WMS Lead"
+        ],
+        "company_profile": "Retail, apparel, footwear, consumer goods, or omnichannel distributor supplying stores and direct-to-consumer channels in Italy.",
+        "warehouse_context": "SKU-rich operations with store replenishment, picking waves, returns, inventory accuracy pressure, and seasonal peaks.",
+        "typical_regions": [
+          "Lombardy",
+          "Veneto",
+          "Tuscany",
+          "Emilia-Romagna"
+        ],
+        "buying_moment": "Need to handle SKU complexity and seasonal peaks while protecting store-service reliability."
+      },
+      "common_warehouse_processes": [
+        "inventory_scanning",
+        "picking_support",
+        "internal_transport_picking_to_packing",
+        "returns_replenishment",
+        "store_replenishment_sorting"
+      ],
+      "key_objections": [
+        "Will automation cope with frequent SKU changes and seasonal layouts?",
+        "Can the pilot run without delaying store replenishment waves?",
+        "How do we avoid inaccurate stock data after integration?",
+        "What proof shows this works in high-SKU retail flows?",
+        "Can operators use the system with Italian-language training?"
+      ],
+      "proof_requirements": [
+        "technical_specs",
+        "operator_training_pack",
+        "wms_integration_workflow",
+        "roi_model_italy",
+        "case_study_evidence",
+        "support_sla",
+        "pilot_kpi_plan"
+      ],
+      "fit_score_weight_rationale": {
+        "process_fit": {
+          "weight": 0.28,
+          "rationale": "AMRs, inventory scanning robots, and picking support tools can address high-SKU operational friction."
+        },
+        "pain_intensity": {
+          "weight": 0.22,
+          "rationale": "Seasonality, returns, and omnichannel replenishment create strong pressure for flexible automation."
+        },
+        "pilotability": {
+          "weight": 0.18,
+          "rationale": "Pilots can be scoped to one SKU family, one area, or one replenishment flow."
+        },
+        "proof_burden": {
+          "weight": 0.2,
+          "rationale": "Retail buyers require confidence in inventory accuracy, operator training, and WMS integration."
+        },
+        "sales_cycle_practicality": {
+          "weight": 0.12,
+          "rationale": "Brand and store-service risk can slow approval, but an internal logistics pilot is still feasible."
+        }
+      }
+    },
+    {
+      "id": "it_food_beverage",
+      "name": "Food and beverage logistics and warehouse operations",
+      "typical_buyer_profile": {
+        "decision_makers": [
+          "Plant Logistics Manager",
+          "Warehouse Manager",
+          "Health and Safety Manager",
+          "Operations Director"
+        ],
+        "company_profile": "Italian food, beverage, packaging, or grocery distribution operation with repetitive pallet, case, or dispatch flows.",
+        "warehouse_context": "End-of-line palletizing, pallet movement, cold-chain or ambient storage, batch traceability, and dispatch deadlines.",
+        "typical_regions": [
+          "Emilia-Romagna",
+          "Lombardy",
+          "Veneto",
+          "Piedmont"
+        ],
+        "buying_moment": "Need to reduce manual handling, improve consistency, and protect dispatch reliability during labor-intensive flows."
+      },
+      "common_warehouse_processes": [
+        "pallet_movement",
+        "end_of_line_palletizing",
+        "inbound_staging",
+        "dispatch_staging",
+        "loading_unloading_support"
+      ],
+      "key_objections": [
+        "How will the system meet safety expectations around people, forklifts, and pallet loads?",
+        "Can installation happen without stopping production or dispatch?",
+        "Does the product handle our pallet formats, floor conditions, and hygiene constraints?",
+        "Who supports the system during peak dispatch windows?",
+        "Can ROI be shown through reduced manual handling and fewer rework issues?"
+      ],
+      "proof_requirements": [
+        "ce_safety_summary",
+        "installation_plan",
+        "risk_assessment_method",
+        "maintenance_plan",
+        "support_sla",
+        "roi_model_italy",
+        "pilot_kpi_plan",
+        "warranty_terms"
+      ],
+      "fit_score_weight_rationale": {
+        "process_fit": {
+          "weight": 0.27,
+          "rationale": "Palletizing, pallet transport, and dispatch staging have repetitive flows suitable for controlled pilots."
+        },
+        "pain_intensity": {
+          "weight": 0.24,
+          "rationale": "Manual handling, safety pressure, and dispatch timing make automation pain visible."
+        },
+        "pilotability": {
+          "weight": 0.16,
+          "rationale": "A pilot can be limited to one line or SKU family, but physical integration can be heavier than AMR pilots."
+        },
+        "proof_burden": {
+          "weight": 0.23,
+          "rationale": "Safety, risk assessment, installation, and maintenance proof are essential."
+        },
+        "sales_cycle_practicality": {
+          "weight": 0.1,
+          "rationale": "Operations-led pilots are possible, but safety review can add time."
+        }
+      }
+    },
+    {
+      "id": "it_pharma_logistics",
+      "name": "Pharma logistics and healthcare distribution warehouses",
+      "typical_buyer_profile": {
+        "decision_makers": [
+          "Quality Manager",
+          "Logistics Director",
+          "Warehouse Manager",
+          "IT Validation Lead"
+        ],
+        "company_profile": "Italian pharmaceutical distributor, healthcare logistics provider, or controlled warehouse handling medicines, medical devices, or regulated stock.",
+        "warehouse_context": "High-traceability operations with controlled storage, picking accuracy requirements, audit trails, and strict deviation handling.",
+        "typical_regions": [
+          "Lombardy",
+          "Lazio",
+          "Emilia-Romagna",
+          "Veneto"
+        ],
+        "buying_moment": "Interest in reducing picking errors and improving traceability, but with a high proof burden."
+      },
+      "common_warehouse_processes": [
+        "picking_support",
+        "inventory_scanning",
+        "internal_transport_picking_to_packing",
+        "temperature_controlled_replenishment",
+        "dispatch_verification"
+      ],
+      "key_objections": [
+        "How will the system preserve traceability and auditability?",
+        "Can the vendor support validation documentation and change control?",
+        "What happens if the robot interrupts a regulated picking process?",
+        "Is data handling compatible with internal IT and quality requirements?",
+        "Do you have proof from regulated warehouses?"
+      ],
+      "proof_requirements": [
+        "technical_specs",
+        "ce_safety_summary",
+        "wms_integration_workflow",
+        "data_security_summary",
+        "validation_support_note",
+        "case_study_evidence",
+        "support_sla",
+        "pilot_exit_conditions"
+      ],
+      "fit_score_weight_rationale": {
+        "process_fit": {
+          "weight": 0.24,
+          "rationale": "Picking support, inventory scanning, and internal transport can fit, but regulated flows narrow the pilot scope."
+        },
+        "pain_intensity": {
+          "weight": 0.2,
+          "rationale": "Accuracy and traceability pressure is high, especially where manual steps create risk."
+        },
+        "pilotability": {
+          "weight": 0.13,
+          "rationale": "Pilots must avoid quality-system disruption and may need validation support."
+        },
+        "proof_burden": {
+          "weight": 0.31,
+          "rationale": "Quality, validation, traceability, safety, and data proof can dominate the buyer decision."
+        },
+        "sales_cycle_practicality": {
+          "weight": 0.12,
+          "rationale": "Approval cycles are slower, so this is often a second-wave segment unless proof is strong."
+        }
+      }
+    },
+    {
+      "id": "it_parcel_sorting",
+      "name": "Parcel, courier, and sorting operations",
+      "typical_buyer_profile": {
+        "decision_makers": [
+          "Hub Operations Manager",
+          "Network Operations Director",
+          "Automation Manager",
+          "IT Integration Lead"
+        ],
+        "company_profile": "Courier, parcel, express logistics, or e-commerce returns operation handling high-volume inbound and outbound parcel flows in Italy.",
+        "warehouse_context": "Depot or hub operations with parcel induction, barcode scanning, sorting lanes, route cages, and dispatch cutoffs.",
+        "typical_regions": [
+          "Lombardy",
+          "Lazio",
+          "Campania",
+          "Emilia-Romagna"
+        ],
+        "buying_moment": "Need to increase parcel throughput and reduce mis-sort rates while protecting evening dispatch deadlines."
+      },
+      "common_warehouse_processes": [
+        "parcel_sorting",
+        "dispatch_sorting",
+        "loading_unloading_support",
+        "returns_replenishment",
+        "internal_transport_picking_to_packing"
+      ],
+      "key_objections": [
+        "Can the sorter integrate with barcode scanning and route logic?",
+        "Can installation happen without missing dispatch cutoffs?",
+        "What throughput has been proven under parcel-mix conditions?",
+        "Who supports the system during evening peaks?",
+        "How does the pilot avoid creating congestion around induction?"
+      ],
+      "proof_requirements": [
+        "technical_specs",
+        "integration_api_summary",
+        "installation_plan",
+        "throughput_test_evidence",
+        "support_sla",
+        "spare_parts_plan",
+        "pilot_kpi_plan",
+        "pilot_exit_conditions"
+      ],
+      "fit_score_weight_rationale": {
+        "process_fit": {
+          "weight": 0.32,
+          "rationale": "Sorting automation has a direct process match and throughput is easy to measure."
+        },
+        "pain_intensity": {
+          "weight": 0.26,
+          "rationale": "Parcel hubs feel clear pressure around peaks, mis-sorts, and dispatch cutoffs."
+        },
+        "pilotability": {
+          "weight": 0.14,
+          "rationale": "One-lane pilots are possible, but physical and IT integration must be planned carefully."
+        },
+        "proof_burden": {
+          "weight": 0.18,
+          "rationale": "Buyers need throughput evidence, integration details, and support proof."
+        },
+        "sales_cycle_practicality": {
+          "weight": 0.1,
+          "rationale": "Network operators can be formal buyers, but operational urgency can support a pilot."
+        }
+      }
+    },
+    {
+      "id": "it_manufacturing_warehouses",
+      "name": "Manufacturing warehouses and industrial distribution",
+      "typical_buyer_profile": {
+        "decision_makers": [
+          "Plant Manager",
+          "Warehouse Manager",
+          "Industrial Engineering Manager",
+          "Supply Chain Manager"
+        ],
+        "company_profile": "Italian manufacturing site or industrial distributor moving components, finished goods, pallets, spare parts, or packaging materials.",
+        "warehouse_context": "Inbound staging, line-side replenishment, internal pallet movement, finished-goods dispatch, and spare parts storage.",
+        "typical_regions": [
+          "Lombardy",
+          "Veneto",
+          "Emilia-Romagna",
+          "Piedmont",
+          "Tuscany"
+        ],
+        "buying_moment": "Interest in reducing forklift congestion, stabilizing line-side replenishment, and improving internal material flow."
+      },
+      "common_warehouse_processes": [
+        "inbound_staging",
+        "line_side_replenishment",
+        "pallet_movement",
+        "inventory_scanning",
+        "dispatch_staging"
+      ],
+      "key_objections": [
+        "Can the system work around forklifts, operators, and production schedules?",
+        "Will installation interfere with production or dispatch?",
+        "Can we prove the benefit in one line-side or warehouse zone?",
+        "How does the product integrate with ERP, MES, or WMS processes?",
+        "What safety documentation is available for mixed traffic?"
+      ],
+      "proof_requirements": [
+        "technical_specs",
+        "ce_safety_summary",
+        "risk_assessment_method",
+        "installation_plan",
+        "maintenance_plan",
+        "integration_api_summary",
+        "pilot_kpi_plan",
+        "roi_model_italy"
+      ],
+      "fit_score_weight_rationale": {
+        "process_fit": {
+          "weight": 0.29,
+          "rationale": "AMR, AGV, pallet movement, scanning, and WMS tools can support material flow and dispatch operations."
+        },
+        "pain_intensity": {
+          "weight": 0.22,
+          "rationale": "Forklift congestion, labor pressure, and line stoppage risk make process improvements valuable."
+        },
+        "pilotability": {
+          "weight": 0.17,
+          "rationale": "A pilot can be limited to one route, line, or warehouse zone."
+        },
+        "proof_burden": {
+          "weight": 0.22,
+          "rationale": "Safety, integration, and installation proof are important in production-adjacent environments."
+        },
+        "sales_cycle_practicality": {
+          "weight": 0.1,
+          "rationale": "Plant-level pilots are possible, but capital approval and safety review can slow purchase decisions."
+        }
+      }
+    }
+  ]
+}

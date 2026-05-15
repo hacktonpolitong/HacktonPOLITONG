@@ -1,0 +1,336 @@
+{
+  "version": "1.0",
+  "market": "Italy",
+  "description": "Warehouse processes mapped to first-pilot suitability for Italian logistics and warehouse buyers.",
+  "processes": [
+    {
+      "id": "internal_transport_picking_to_packing",
+      "name": "Internal transport between picking and packing",
+      "description": "Move totes, carts, or small loads from picking aisles to packing benches or consolidation areas.",
+      "suitable_product_categories": [
+        "AMR",
+        "AGV",
+        "WMS/AI orchestration"
+      ],
+      "segment_fit": [
+        "it_3pl_ecommerce",
+        "it_retail_logistics",
+        "it_manufacturing_warehouses"
+      ],
+      "pilot_suitability_score": 91,
+      "score_rationale": "Highly repetitive, measurable, bounded to one route, and possible without a full warehouse redesign.",
+      "kpis": [
+        "manual_walking_time_reduction",
+        "totes_moved_per_hour",
+        "operator_handoff_time",
+        "route_availability",
+        "packing_queue_wait_time"
+      ],
+      "constraints": [
+        "Clear route with manageable pedestrian and forklift interaction",
+        "Reliable Wi-Fi or local network coverage",
+        "Defined handoff points at picking and packing",
+        "WMS task handoff or operator tablet workflow"
+      ],
+      "recommended_pilot_shape": {
+        "duration_days": 45,
+        "systems": "2 AMRs",
+        "scope": "One mapped route between picking and packing",
+        "shift_pattern": "Day shift for week 1, then selected peak windows",
+        "buyer_risk_reducer": "No conveyor removal and no full WMS replacement"
+      }
+    },
+    {
+      "id": "picking_support",
+      "name": "Picking support and goods-to-operator assistance",
+      "description": "Assist operators during picking by reducing travel, guiding pick routes, or moving totes through the pick path.",
+      "suitable_product_categories": [
+        "AMR",
+        "picking robot",
+        "WMS/AI orchestration"
+      ],
+      "segment_fit": [
+        "it_3pl_ecommerce",
+        "it_retail_logistics",
+        "it_pharma_logistics"
+      ],
+      "pilot_suitability_score": 82,
+      "score_rationale": "Strong labor and accuracy value, but requires tighter workflow design and operator adoption than simple internal transport.",
+      "kpis": [
+        "picks_per_operator_hour",
+        "walking_distance_per_order",
+        "picking_error_rate",
+        "operator_training_time",
+        "order_cycle_time"
+      ],
+      "constraints": [
+        "Clear SKU and order profile for the pilot zone",
+        "Operator training in Italian or simple bilingual material",
+        "WMS or wave-picking data access",
+        "Avoid peak-season launch unless supervised"
+      ],
+      "recommended_pilot_shape": {
+        "duration_days": 60,
+        "systems": "2 AMRs or one picking-assist workflow",
+        "scope": "One picking zone and one order family",
+        "shift_pattern": "Controlled picking windows",
+        "buyer_risk_reducer": "Run alongside the existing manual pick process before conversion"
+      }
+    },
+    {
+      "id": "parcel_sorting",
+      "name": "Parcel sorting and dispatch lane automation",
+      "description": "Sort parcels by route, carrier, destination, or dispatch wave using modular sorter lanes and barcode logic.",
+      "suitable_product_categories": [
+        "sorting automation",
+        "WMS/AI orchestration",
+        "robotic sorting"
+      ],
+      "segment_fit": [
+        "it_parcel_sorting",
+        "it_3pl_ecommerce"
+      ],
+      "pilot_suitability_score": 86,
+      "score_rationale": "Throughput and error rates are easy to measure, but physical installation and barcode integration must be tightly planned.",
+      "kpis": [
+        "parcels_sorted_per_hour",
+        "mis_sort_rate",
+        "induction_uptime",
+        "manual_touch_reduction",
+        "dispatch_cutoff_adherence"
+      ],
+      "constraints": [
+        "Barcode and route data integration",
+        "Weekend or off-peak installation window",
+        "Safe parcel induction and exception handling",
+        "Defined fallback process if sorter stops"
+      ],
+      "recommended_pilot_shape": {
+        "duration_days": 45,
+        "systems": "One modular sorter lane",
+        "scope": "One parcel family or one outbound route cluster",
+        "shift_pattern": "Evening dispatch window after supervised dry runs",
+        "buyer_risk_reducer": "Manual fallback lane remains active during pilot"
+      }
+    },
+    {
+      "id": "pallet_movement",
+      "name": "Pallet movement and dispatch staging",
+      "description": "Move pallets between production, warehouse, staging, and dispatch areas with automation support.",
+      "suitable_product_categories": [
+        "AGV",
+        "AMR",
+        "palletizing automation",
+        "WMS/AI orchestration"
+      ],
+      "segment_fit": [
+        "it_food_beverage",
+        "it_manufacturing_warehouses"
+      ],
+      "pilot_suitability_score": 78,
+      "score_rationale": "Clear value in forklift reduction and dispatch reliability, with higher safety and mixed-traffic proof burden.",
+      "kpis": [
+        "pallet_moves_per_shift",
+        "forklift_interactions_reduced",
+        "dispatch_staging_accuracy",
+        "route_blockage_events",
+        "manual_handling_reduction"
+      ],
+      "constraints": [
+        "Floor condition and load stability review",
+        "Mixed traffic risk assessment",
+        "Pallet format compatibility",
+        "Charging and staging space"
+      ],
+      "recommended_pilot_shape": {
+        "duration_days": 60,
+        "systems": "1-2 pallet-capable AMRs or AGVs",
+        "scope": "One staging route or one production-to-dispatch lane",
+        "shift_pattern": "Single shift with safety supervision",
+        "buyer_risk_reducer": "Geofenced route and manual forklift fallback"
+      }
+    },
+    {
+      "id": "end_of_line_palletizing",
+      "name": "End-of-line palletizing",
+      "description": "Automate repetitive pallet building after packing or production for boxed products.",
+      "suitable_product_categories": [
+        "palletizing automation",
+        "robotic arms"
+      ],
+      "segment_fit": [
+        "it_food_beverage",
+        "it_manufacturing_warehouses"
+      ],
+      "pilot_suitability_score": 74,
+      "score_rationale": "Strong manual-handling value, but pilot requires physical space, safety guarding, and line integration.",
+      "kpis": [
+        "cases_palletized_per_hour",
+        "manual_lifts_avoided",
+        "pallet_pattern_accuracy",
+        "line_downtime_minutes",
+        "operator_rework_events"
+      ],
+      "constraints": [
+        "End-of-line space",
+        "Safety fencing or scanner design",
+        "SKU and case-size selection",
+        "Weekend installation window"
+      ],
+      "recommended_pilot_shape": {
+        "duration_days": 60,
+        "systems": "One robotic palletizing cell",
+        "scope": "One line and one SKU family",
+        "shift_pattern": "Selected production windows",
+        "buyer_risk_reducer": "Manual palletizing fallback remains available"
+      }
+    },
+    {
+      "id": "inventory_scanning",
+      "name": "Inventory scanning and stock verification",
+      "description": "Use mobile robots or scanning tools to verify stock position, count accuracy, or shelf/bin status.",
+      "suitable_product_categories": [
+        "inventory scanning robot",
+        "AMR",
+        "WMS/AI orchestration"
+      ],
+      "segment_fit": [
+        "it_retail_logistics",
+        "it_pharma_logistics",
+        "it_manufacturing_warehouses"
+      ],
+      "pilot_suitability_score": 80,
+      "score_rationale": "Can run during low-activity windows with measurable accuracy gains, but data integration and barcode/RFID quality matter.",
+      "kpis": [
+        "inventory_accuracy_delta",
+        "scan_coverage_rate",
+        "manual_cycle_count_hours_saved",
+        "exception_resolution_time",
+        "data_sync_success_rate"
+      ],
+      "constraints": [
+        "Readable labels or RFID coverage",
+        "Warehouse map and aisle access",
+        "WMS inventory data export",
+        "Night or low-traffic scanning windows"
+      ],
+      "recommended_pilot_shape": {
+        "duration_days": 30,
+        "systems": "1 scanning robot or scanning AMR",
+        "scope": "One aisle group or SKU category",
+        "shift_pattern": "Night or low-traffic windows",
+        "buyer_risk_reducer": "Report exceptions before changing official stock records"
+      }
+    },
+    {
+      "id": "inbound_staging",
+      "name": "Inbound staging and putaway support",
+      "description": "Support movement and prioritization of inbound goods from receiving docks to staging or putaway areas.",
+      "suitable_product_categories": [
+        "AMR",
+        "AGV",
+        "WMS/AI orchestration"
+      ],
+      "segment_fit": [
+        "it_manufacturing_warehouses",
+        "it_food_beverage",
+        "it_3pl_ecommerce"
+      ],
+      "pilot_suitability_score": 76,
+      "score_rationale": "Useful where inbound congestion is visible, though variability in receiving quality can complicate clean KPI measurement.",
+      "kpis": [
+        "dock_to_staging_cycle_time",
+        "inbound_congestion_events",
+        "manual_moves_reduced",
+        "putaway_queue_time",
+        "receiving_area_dwell_time"
+      ],
+      "constraints": [
+        "Stable receiving windows",
+        "Load unit standardization",
+        "Dock safety rules",
+        "Integration with receiving priority logic"
+      ],
+      "recommended_pilot_shape": {
+        "duration_days": 45,
+        "systems": "1-2 AMRs or AGVs",
+        "scope": "One dock-to-staging route",
+        "shift_pattern": "Morning inbound window",
+        "buyer_risk_reducer": "Manual receiving workflow remains unchanged"
+      }
+    },
+    {
+      "id": "loading_unloading_support",
+      "name": "Loading and unloading support",
+      "description": "Assist operators in moving goods around dock doors, loading areas, or trailer-adjacent staging zones.",
+      "suitable_product_categories": [
+        "AMR",
+        "AGV",
+        "robotic arms",
+        "WMS/AI orchestration"
+      ],
+      "segment_fit": [
+        "it_parcel_sorting",
+        "it_food_beverage",
+        "it_manufacturing_warehouses"
+      ],
+      "pilot_suitability_score": 67,
+      "score_rationale": "High operational pain, but dock areas have safety, congestion, and schedule risks that make first pilots harder.",
+      "kpis": [
+        "dock_turnaround_time",
+        "manual_handling_reduction",
+        "loading_error_rate",
+        "dock_congestion_events",
+        "equipment_uptime"
+      ],
+      "constraints": [
+        "Strict safety supervision",
+        "Defined vehicle and pedestrian separation",
+        "Dock schedule stability",
+        "Fallback manual process"
+      ],
+      "recommended_pilot_shape": {
+        "duration_days": 60,
+        "systems": "One support system in a controlled dock zone",
+        "scope": "One dock door or one route cluster",
+        "shift_pattern": "Low-traffic loading windows first",
+        "buyer_risk_reducer": "Use as a later pilot unless the vendor has strong safety proof"
+      }
+    },
+    {
+      "id": "line_side_replenishment",
+      "name": "Line-side replenishment for manufacturing",
+      "description": "Move components, packaging, or spare parts from warehouse storage to production-side consumption points.",
+      "suitable_product_categories": [
+        "AMR",
+        "AGV",
+        "WMS/AI orchestration"
+      ],
+      "segment_fit": [
+        "it_manufacturing_warehouses"
+      ],
+      "pilot_suitability_score": 79,
+      "score_rationale": "Clear production value and repeatable routes, but production disruption risk requires strict boundaries.",
+      "kpis": [
+        "replenishment_cycle_time",
+        "line_waiting_events",
+        "manual_tugger_moves_reduced",
+        "route_adherence",
+        "stockout_incidents"
+      ],
+      "constraints": [
+        "Production schedule alignment",
+        "Line-side space",
+        "Mixed traffic safety",
+        "ERP/MES/WMS task signal"
+      ],
+      "recommended_pilot_shape": {
+        "duration_days": 45,
+        "systems": "1-2 AMRs or AGVs",
+        "scope": "One warehouse-to-line route",
+        "shift_pattern": "One production shift",
+        "buyer_risk_reducer": "Manual tugger backup remains available"
+      }
+    }
+  ]
+}

@@ -1,0 +1,218 @@
+{
+  "version": "1.0",
+  "market": "Italy",
+  "description": "Cross-border buyer trust gaps for Chinese warehouse automation vendors entering Italian warehouse and logistics operations.",
+  "trust_gaps": [
+    {
+      "id": "no_italian_reference",
+      "title": "No Italian reference or local case study",
+      "risk_level": "high",
+      "applies_to": [
+        "AMR",
+        "AGV",
+        "sorting automation",
+        "palletizing automation",
+        "picking robot",
+        "inventory scanning robot",
+        "WMS/AI orchestration"
+      ],
+      "buyer_concern": "The Italian buyer has no proof that the vendor can work in local warehouse conditions, procurement culture, and operating constraints.",
+      "recommended_mitigation": "Frame the offer as a limited first pilot with measurable KPIs, a clear exit clause, and transferable evidence from similar Chinese or European warehouse flows.",
+      "proof_to_prepare": [
+        "case_study_evidence",
+        "pilot_kpi_plan",
+        "pilot_exit_conditions"
+      ],
+      "sales_response_angle": "We do not ask you to approve a full rollout before local evidence exists; the pilot is designed to create that evidence in one controlled workflow."
+    },
+    {
+      "id": "local_maintenance_unclear",
+      "title": "Local maintenance and response model unclear",
+      "risk_level": "high",
+      "applies_to": [
+        "AMR",
+        "AGV",
+        "sorting automation",
+        "palletizing automation",
+        "robotic arms",
+        "inventory scanning robot"
+      ],
+      "buyer_concern": "Warehouse managers worry that downtime will block dispatch, picking, or production if support is only remote from China.",
+      "recommended_mitigation": "Provide a pilot support SLA, remote diagnostics path, spare parts availability plan in Italy or the EU, and named escalation contacts.",
+      "proof_to_prepare": [
+        "support_sla",
+        "spare_parts_plan",
+        "maintenance_plan"
+      ],
+      "sales_response_angle": "For the pilot we define response commitments, spare part coverage, and escalation before installation, so operations knows what happens if the system stops."
+    },
+    {
+      "id": "ce_safety_evidence_partial",
+      "title": "CE and safety evidence is incomplete or not buyer-ready",
+      "risk_level": "critical",
+      "applies_to": [
+        "AMR",
+        "AGV",
+        "sorting automation",
+        "palletizing automation",
+        "robotic arms",
+        "inventory scanning robot"
+      ],
+      "buyer_concern": "The buyer cannot expose operators, forklifts, or goods to equipment without credible safety documentation and risk assessment support.",
+      "recommended_mitigation": "Prepare a one-page CE/safety summary, operating limits, emergency-stop behavior, risk assessment method, and installation safety checklist for the pilot area.",
+      "proof_to_prepare": [
+        "ce_safety_summary",
+        "risk_assessment_method",
+        "installation_plan"
+      ],
+      "sales_response_angle": "We will not treat compliance as a sales claim; we will present the safety evidence and pilot-area risk controls your HSE team needs to review."
+    },
+    {
+      "id": "wms_integration_unclear",
+      "title": "WMS, ERP, or operational-system integration unclear",
+      "risk_level": "high",
+      "applies_to": [
+        "AMR",
+        "AGV",
+        "sorting automation",
+        "picking robot",
+        "inventory scanning robot",
+        "WMS/AI orchestration"
+      ],
+      "buyer_concern": "IT and operations teams need to know whether the pilot requires deep system integration or can start with a lightweight task workflow.",
+      "recommended_mitigation": "Document the minimum integration mode, such as CSV export, API task handoff, operator tablet dispatch, barcode scan event, or WMS connector.",
+      "proof_to_prepare": [
+        "wms_integration_workflow",
+        "integration_api_summary",
+        "data_security_summary"
+      ],
+      "sales_response_angle": "The pilot can start with the lightest integration path that still measures the target workflow, then expand only after the first KPI review."
+    },
+    {
+      "id": "roi_not_localized",
+      "title": "ROI argument not localized to Italian warehouse assumptions",
+      "risk_level": "medium",
+      "applies_to": [
+        "AMR",
+        "AGV",
+        "sorting automation",
+        "palletizing automation",
+        "picking robot",
+        "inventory scanning robot",
+        "WMS/AI orchestration"
+      ],
+      "buyer_concern": "Finance and operations teams may reject generic savings claims that do not use the buyer's shift pattern, manual travel time, throughput, or error rates.",
+      "recommended_mitigation": "Build a pilot ROI model around measured baseline metrics from the selected Italian workflow rather than broad market benchmarks.",
+      "proof_to_prepare": [
+        "roi_model_italy",
+        "pilot_kpi_plan"
+      ],
+      "sales_response_angle": "The pilot measures your route, your operators, and your dispatch flow before we discuss a larger investment."
+    },
+    {
+      "id": "installation_disruption_risk",
+      "title": "Installation downtime and operational disruption risk",
+      "risk_level": "high",
+      "applies_to": [
+        "AMR",
+        "AGV",
+        "sorting automation",
+        "palletizing automation",
+        "robotic arms"
+      ],
+      "buyer_concern": "The buyer will avoid a pilot if installation threatens dispatch cutoffs, production schedules, or client SLA performance.",
+      "recommended_mitigation": "Define a bounded installation plan with weekend or off-peak work, rollback steps, pilot zone boundaries, and a manual fallback workflow.",
+      "proof_to_prepare": [
+        "installation_plan",
+        "pilot_exit_conditions",
+        "risk_assessment_method"
+      ],
+      "sales_response_angle": "The pilot is installed in one zone with a rollback path and manual fallback, so the buyer does not put the whole operation at risk."
+    },
+    {
+      "id": "spare_parts_uncertain",
+      "title": "Spare parts availability uncertain",
+      "risk_level": "medium",
+      "applies_to": [
+        "AMR",
+        "AGV",
+        "sorting automation",
+        "palletizing automation",
+        "robotic arms",
+        "inventory scanning robot"
+      ],
+      "buyer_concern": "A warehouse pilot can lose credibility if a simple part failure creates a long international wait.",
+      "recommended_mitigation": "List critical spare parts, expected lead times, EU stock options, and the parts included for the pilot period.",
+      "proof_to_prepare": [
+        "spare_parts_plan",
+        "warranty_terms",
+        "maintenance_plan"
+      ],
+      "sales_response_angle": "The pilot includes the critical spares needed to protect the test period, with clear lead times for anything not held locally."
+    },
+    {
+      "id": "operator_training_language_gap",
+      "title": "Operator training and language readiness gap",
+      "risk_level": "medium",
+      "applies_to": [
+        "AMR",
+        "AGV",
+        "sorting automation",
+        "palletizing automation",
+        "picking robot",
+        "inventory scanning robot",
+        "WMS/AI orchestration"
+      ],
+      "buyer_concern": "Italian operators and supervisors need simple onboarding, safety guidance, and escalation instructions they can actually use.",
+      "recommended_mitigation": "Prepare Italian or bilingual quick-start material, operator checklist, supervisor handoff notes, and first-week training plan.",
+      "proof_to_prepare": [
+        "operator_training_pack",
+        "support_sla",
+        "installation_plan"
+      ],
+      "sales_response_angle": "The first week includes supervised operator onboarding and short Italian-language materials for the pilot workflow."
+    },
+    {
+      "id": "data_security_unclear",
+      "title": "Data security and operational data handling unclear",
+      "risk_level": "medium",
+      "applies_to": [
+        "WMS/AI orchestration",
+        "AMR",
+        "inventory scanning robot",
+        "sorting automation",
+        "picking robot"
+      ],
+      "buyer_concern": "IT teams need clarity on what warehouse data is collected, where it is processed, and how access is controlled.",
+      "recommended_mitigation": "Provide a short data security summary covering data fields, storage, remote access, user roles, and pilot data retention.",
+      "proof_to_prepare": [
+        "data_security_summary",
+        "wms_integration_workflow",
+        "integration_api_summary"
+      ],
+      "sales_response_angle": "The pilot data scope is limited and documented, so IT can review access and retention before launch."
+    },
+    {
+      "id": "procurement_risk_unmanaged",
+      "title": "Procurement and internal approval risk unmanaged",
+      "risk_level": "medium",
+      "applies_to": [
+        "AMR",
+        "AGV",
+        "sorting automation",
+        "palletizing automation",
+        "picking robot",
+        "inventory scanning robot",
+        "WMS/AI orchestration"
+      ],
+      "buyer_concern": "A buyer sponsor may like the technology but fail to get internal approval without a low-risk commercial structure.",
+      "recommended_mitigation": "Package the first step as a time-boxed pilot with clear cost, success criteria, exit conditions, and conversion path.",
+      "proof_to_prepare": [
+        "pilot_exit_conditions",
+        "pilot_kpi_plan",
+        "warranty_terms"
+      ],
+      "sales_response_angle": "The proposal is structured to be approved as a contained pilot with clear success criteria, not as an open-ended automation purchase."
+    }
+  ]
+}
