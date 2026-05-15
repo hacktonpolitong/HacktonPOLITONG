@@ -1,0 +1,713 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://pilotops.ai/schemas/pilot_analysis.schema.json",
+  "title": "PilotOps AI Pilot Analysis",
+  "description": "Master structured output for the Pilot Control Room. It turns a Chinese warehouse automation product profile into a localized, low-risk Italian pilot package.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "metadata",
+    "product_summary",
+    "buyer_segment_recommendation",
+    "warehouse_process_recommendation",
+    "trust_gaps",
+    "pilot_offer",
+    "objection_battlecard",
+    "proof_checklist",
+    "next_7_days_plan",
+    "sales_pack"
+  ],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "description": "Run metadata used for audit, frontend rendering, and evaluation.",
+      "additionalProperties": false,
+      "required": [
+        "analysis_id",
+        "created_at",
+        "target_market",
+        "pipeline_version",
+        "dataset_versions",
+        "assumptions"
+      ],
+      "properties": {
+        "analysis_id": {
+          "type": "string",
+          "description": "Stable identifier for the generated analysis."
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp for when the analysis was generated."
+        },
+        "target_market": {
+          "type": "string",
+          "const": "Italy",
+          "description": "Target market for the MVP. Must be Italy."
+        },
+        "pipeline_version": {
+          "type": "string",
+          "description": "Version of the AI pipeline that produced the output."
+        },
+        "dataset_versions": {
+          "type": "object",
+          "description": "Versions of seed datasets used in the analysis.",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "assumptions": {
+          "type": "array",
+          "description": "Important assumptions made because the user did not provide complete evidence.",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "product_summary": {
+      "type": "object",
+      "description": "Normalized summary of the Chinese vendor and warehouse automation product.",
+      "additionalProperties": false,
+      "required": [
+        "company_name",
+        "company_country",
+        "product_name",
+        "product_category",
+        "primary_use_case",
+        "target_market",
+        "core_benefits",
+        "deployment_constraints",
+        "available_proof",
+        "missing_proof",
+        "pilot_complexity",
+        "confidence_score"
+      ],
+      "properties": {
+        "company_name": {
+          "type": "string",
+          "description": "Name of the Chinese vendor."
+        },
+        "company_country": {
+          "type": "string",
+          "description": "Vendor country, expected to be China for the MVP."
+        },
+        "product_name": {
+          "type": "string",
+          "description": "Name of the product being analyzed."
+        },
+        "product_category": {
+          "type": "string",
+          "description": "Warehouse automation category such as AMR, AGV, sorting automation, palletizing automation, picking robot, inventory scanning robot, or WMS/AI orchestration."
+        },
+        "primary_use_case": {
+          "type": "string",
+          "description": "Main warehouse use case identified from the product profile."
+        },
+        "target_market": {
+          "type": "string",
+          "const": "Italy",
+          "description": "Target market for the pilot."
+        },
+        "core_benefits": {
+          "type": "array",
+          "description": "Operational benefits relevant to Italian warehouse buyers.",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "deployment_constraints": {
+          "type": "array",
+          "description": "Operational, technical, safety, or integration constraints that shape the pilot.",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "available_proof": {
+          "type": "array",
+          "description": "Proof assets already available from the vendor.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "missing_proof": {
+          "type": "array",
+          "description": "Proof assets missing or incomplete for an Italian buyer.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "pilot_complexity": {
+          "type": "string",
+          "description": "Estimated complexity of running a first pilot.",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "confidence_score": {
+          "type": "number",
+          "description": "Confidence in the product interpretation, from 0 to 100.",
+          "minimum": 0,
+          "maximum": 100
+        }
+      }
+    },
+    "buyer_segment_recommendation": {
+      "type": "object",
+      "description": "Recommended Italian buyer segment for the first pilot.",
+      "additionalProperties": false,
+      "required": [
+        "recommended_segment_id",
+        "segment_name",
+        "typical_buyer_profile",
+        "fit_score",
+        "why_this_segment",
+        "key_objections",
+        "proof_requirements",
+        "alternative_segments"
+      ],
+      "properties": {
+        "recommended_segment_id": {
+          "type": "string",
+          "description": "Stable segment ID from data/italian_segments.json."
+        },
+        "segment_name": {
+          "type": "string",
+          "description": "Human-readable name of the recommended segment."
+        },
+        "typical_buyer_profile": {
+          "type": "string",
+          "description": "Summary of the likely Italian buyer, decision makers, and warehouse context."
+        },
+        "fit_score": {
+          "type": "number",
+          "description": "Overall segment fit score from 0 to 100.",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "why_this_segment": {
+          "type": "array",
+          "description": "Reasons this is the strongest first-pilot segment.",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "key_objections": {
+          "type": "array",
+          "description": "Likely objections from this buyer segment.",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "proof_requirements": {
+          "type": "array",
+          "description": "Proof items the buyer will likely require before or during the pilot.",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "alternative_segments": {
+          "type": "array",
+          "description": "Other plausible Italian segments and why they were not selected first.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "segment_id",
+              "segment_name",
+              "fit_score",
+              "tradeoff"
+            ],
+            "properties": {
+              "segment_id": {
+                "type": "string",
+                "description": "Stable alternative segment ID."
+              },
+              "segment_name": {
+                "type": "string",
+                "description": "Human-readable alternative segment name."
+              },
+              "fit_score": {
+                "type": "number",
+                "description": "Alternative segment fit score from 0 to 100.",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "tradeoff": {
+                "type": "string",
+                "description": "Reason this segment is less suitable as the first target."
+              }
+            }
+          }
+        }
+      }
+    },
+    "warehouse_process_recommendation": {
+      "type": "object",
+      "description": "Specific warehouse process recommended for the first pilot.",
+      "additionalProperties": false,
+      "required": [
+        "process_id",
+        "process_name",
+        "pilot_suitability_score",
+        "why_suitable",
+        "operational_boundaries",
+        "kpis",
+        "constraints"
+      ],
+      "properties": {
+        "process_id": {
+          "type": "string",
+          "description": "Stable process ID from data/warehouse_processes.json."
+        },
+        "process_name": {
+          "type": "string",
+          "description": "Human-readable warehouse process name."
+        },
+        "pilot_suitability_score": {
+          "type": "number",
+          "description": "Suitability score for a first pilot, from 0 to 100.",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "why_suitable": {
+          "type": "array",
+          "description": "Operational reasons the process is a good first pilot.",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "operational_boundaries": {
+          "type": "array",
+          "description": "Limits that keep the pilot low-risk and measurable.",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "kpis": {
+          "type": "array",
+          "description": "KPIs for measuring pilot success.",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "measurement",
+              "target"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "KPI name."
+              },
+              "measurement": {
+                "type": "string",
+                "description": "How the KPI will be measured."
+              },
+              "target": {
+                "type": "string",
+                "description": "Target or expected improvement for the pilot."
+              }
+            }
+          }
+        },
+        "constraints": {
+          "type": "array",
+          "description": "Constraints the buyer and vendor must handle before pilot launch.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "trust_gaps": {
+      "type": "array",
+      "description": "Prioritized trust gaps that could block Italian buyer approval.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "gap_id",
+          "title",
+          "risk_level",
+          "buyer_concern",
+          "recommended_mitigation",
+          "required_proof",
+          "owner"
+        ],
+        "properties": {
+          "gap_id": {
+            "type": "string",
+            "description": "Stable trust gap ID from data/trust_gaps.json."
+          },
+          "title": {
+            "type": "string",
+            "description": "Trust gap title."
+          },
+          "risk_level": {
+            "type": "string",
+            "description": "Severity of the trust gap.",
+            "enum": [
+              "low",
+              "medium",
+              "high",
+              "critical"
+            ]
+          },
+          "buyer_concern": {
+            "type": "string",
+            "description": "How the Italian buyer is likely to phrase or experience the concern."
+          },
+          "recommended_mitigation": {
+            "type": "string",
+            "description": "Concrete action that reduces the trust gap."
+          },
+          "required_proof": {
+            "type": "array",
+            "description": "Proof items required to mitigate the gap.",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "owner": {
+            "type": "string",
+            "description": "Likely owner responsible for closing the gap, such as vendor, buyer, local partner, or joint."
+          }
+        }
+      }
+    },
+    "pilot_offer": {
+      "type": "object",
+      "description": "Recommended first pilot offer.",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "duration_days",
+        "scope",
+        "included_systems",
+        "required_setup",
+        "kpis",
+        "buyer_risk_reducers",
+        "proof_required_before_launch",
+        "exit_clause",
+        "next_commercial_step"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Short pilot offer title."
+        },
+        "duration_days": {
+          "type": "integer",
+          "description": "Pilot duration in days.",
+          "minimum": 1
+        },
+        "scope": {
+          "type": "string",
+          "description": "Operational pilot scope."
+        },
+        "included_systems": {
+          "type": "array",
+          "description": "Products, modules, or services included in the pilot.",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "required_setup": {
+          "type": "array",
+          "description": "Setup tasks required before launch.",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "kpis": {
+          "type": "array",
+          "description": "Pilot KPIs and targets.",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "target"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "KPI name."
+              },
+              "target": {
+                "type": "string",
+                "description": "Target for the pilot KPI."
+              }
+            }
+          }
+        },
+        "buyer_risk_reducers": {
+          "type": "array",
+          "description": "Pilot design features that reduce buyer approval risk.",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "proof_required_before_launch": {
+          "type": "array",
+          "description": "Proof items that must be ready before launch.",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "exit_clause": {
+          "type": "string",
+          "description": "Commercial or operational exit condition for the pilot."
+        },
+        "next_commercial_step": {
+          "type": "string",
+          "description": "Recommended post-pilot commercial action if the pilot succeeds."
+        }
+      }
+    },
+    "objection_battlecard": {
+      "type": "array",
+      "description": "Likely buyer objections and recommended responses.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "objection",
+          "response",
+          "supporting_proof",
+          "risk_level"
+        ],
+        "properties": {
+          "objection": {
+            "type": "string",
+            "description": "Likely objection from the Italian buyer."
+          },
+          "response": {
+            "type": "string",
+            "description": "Suggested vendor response."
+          },
+          "supporting_proof": {
+            "type": "array",
+            "description": "Proof items that strengthen the response.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "risk_level": {
+            "type": "string",
+            "description": "Importance of handling the objection.",
+            "enum": [
+              "low",
+              "medium",
+              "high",
+              "critical"
+            ]
+          }
+        }
+      }
+    },
+    "proof_checklist": {
+      "type": "array",
+      "description": "Readiness checklist for the Italian pilot.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "proof_id",
+          "name",
+          "category",
+          "status",
+          "buyer_confidence_impact",
+          "recommended_action"
+        ],
+        "properties": {
+          "proof_id": {
+            "type": "string",
+            "description": "Stable proof ID from data/proof_checklist.json."
+          },
+          "name": {
+            "type": "string",
+            "description": "Proof item name."
+          },
+          "category": {
+            "type": "string",
+            "description": "Proof category such as technical, safety, support, integration, business_case, or commercial_structure."
+          },
+          "status": {
+            "type": "string",
+            "description": "Current readiness status.",
+            "enum": [
+              "available",
+              "partial",
+              "missing",
+              "recommended"
+            ]
+          },
+          "buyer_confidence_impact": {
+            "type": "string",
+            "description": "Expected impact on buyer confidence.",
+            "enum": [
+              "low",
+              "medium",
+              "high",
+              "critical"
+            ]
+          },
+          "recommended_action": {
+            "type": "string",
+            "description": "Specific next action to improve readiness."
+          }
+        }
+      }
+    },
+    "next_7_days_plan": {
+      "type": "array",
+      "description": "Practical action plan for the vendor's next week.",
+      "minItems": 1,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "day",
+          "action",
+          "owner",
+          "output"
+        ],
+        "properties": {
+          "day": {
+            "type": "integer",
+            "description": "Day number from 1 to 7.",
+            "minimum": 1,
+            "maximum": 7
+          },
+          "action": {
+            "type": "string",
+            "description": "Action to complete on this day."
+          },
+          "owner": {
+            "type": "string",
+            "description": "Role responsible for the action."
+          },
+          "output": {
+            "type": "string",
+            "description": "Concrete artifact or decision produced by the action."
+          }
+        }
+      }
+    },
+    "sales_pack": {
+      "type": "object",
+      "description": "Ready-to-use sales assets generated from the recommended pilot strategy.",
+      "additionalProperties": false,
+      "required": [
+        "outreach_email",
+        "meeting_pitch",
+        "one_page_pilot_proposal",
+        "roi_argument",
+        "follow_up_message"
+      ],
+      "properties": {
+        "outreach_email": {
+          "type": "object",
+          "description": "First outreach email to the recommended Italian buyer segment.",
+          "additionalProperties": false,
+          "required": [
+            "subject",
+            "body"
+          ],
+          "properties": {
+            "subject": {
+              "type": "string",
+              "description": "Email subject line."
+            },
+            "body": {
+              "type": "string",
+              "description": "Email body."
+            }
+          }
+        },
+        "meeting_pitch": {
+          "type": "string",
+          "description": "Short pitch for a first discovery or pilot discussion call."
+        },
+        "one_page_pilot_proposal": {
+          "type": "object",
+          "description": "Structured content for a one-page pilot proposal.",
+          "additionalProperties": false,
+          "required": [
+            "headline",
+            "buyer_problem",
+            "pilot_scope",
+            "success_metrics",
+            "proof_to_share",
+            "decision_request"
+          ],
+          "properties": {
+            "headline": {
+              "type": "string",
+              "description": "Proposal headline."
+            },
+            "buyer_problem": {
+              "type": "string",
+              "description": "Operational buyer problem addressed by the pilot."
+            },
+            "pilot_scope": {
+              "type": "string",
+              "description": "Concise pilot scope."
+            },
+            "success_metrics": {
+              "type": "array",
+              "description": "Metrics used to decide if the pilot succeeded.",
+              "minItems": 1,
+              "items": {
+                "type": "string"
+              }
+            },
+            "proof_to_share": {
+              "type": "array",
+              "description": "Proof assets to send with the proposal.",
+              "minItems": 1,
+              "items": {
+                "type": "string"
+              }
+            },
+            "decision_request": {
+              "type": "string",
+              "description": "Specific next decision requested from the buyer."
+            }
+          }
+        },
+        "roi_argument": {
+          "type": "string",
+          "description": "Short ROI argument based on the selected process and pilot KPIs."
+        },
+        "follow_up_message": {
+          "type": "string",
+          "description": "Follow-up message after the first call or pilot proposal."
+        }
+      }
+    }
+  }
+}
