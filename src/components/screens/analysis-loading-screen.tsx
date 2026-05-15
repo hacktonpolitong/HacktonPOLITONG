@@ -7,6 +7,7 @@ const modules = [
   "Matching Italian warehouse segments",
   "Selecting pilot workflow",
   "Identifying buyer trust gaps",
+  "Ranking curated target accounts",
   "Generating pilot offer",
   "Preparing sales pack"
 ];

@@ -1,4 +1,5 @@
 import {
+  Building2,
   CalendarDays,
   ClipboardCheck,
   FileStack,
@@ -24,6 +25,11 @@ type ControlRoomScreenProps = {
 };
 
 export function ControlRoomScreen({ profile, analysis, onRestart }: ControlRoomScreenProps) {
+  const timingSignals = [
+    ...analysis.buyer_segment_recommendation.why_this_segment.slice(0, 2),
+    `${analysis.pilot_offer.duration_days}-day scope with ${analysis.pilot_offer.buyer_risk_reducers[0].toLowerCase()} keeps the first approval focused on measurable operational proof.`
+  ];
+
   return (
     <main className="mx-auto min-h-screen w-full max-w-7xl px-5 py-8">
       <header className="mb-6 flex flex-wrap items-start justify-between gap-4 border-b border-border pb-5">
@@ -31,7 +37,7 @@ export function ControlRoomScreen({ profile, analysis, onRestart }: ControlRoomS
           <p className="text-sm font-semibold uppercase tracking-wide text-accent">Pilot Control Room</p>
           <h1 className="mt-1 text-3xl font-bold text-foreground">{profile.companyName}</h1>
           <p className="mt-2 max-w-3xl text-sm leading-6 text-muted">
-            {profile.productCategory} entering {profile.targetMarket}. Mock output is structured to be replaced by the future AI analysis response.
+            {analysis.product_summary.product_name} entering {profile.targetMarket} with a localized, low-risk first pilot package.
           </p>
         </div>
         <div className="flex gap-3">
@@ -75,12 +81,34 @@ export function ControlRoomScreen({ profile, analysis, onRestart }: ControlRoomS
 
         <SectionPanel title="Why Now" eyebrow="Timing signals" icon={Lightbulb} className="lg:col-span-5">
           <ul className="space-y-3">
-            {analysis.why_now.map((signal) => (
+            {timingSignals.map((signal) => (
               <li key={signal} className="text-sm leading-6 text-muted">
                 {signal}
               </li>
             ))}
           </ul>
+        </SectionPanel>
+
+        <SectionPanel title="Target Account Shortlist" eyebrow="Curated accounts" icon={Building2} className="lg:col-span-12">
+          <div className="grid gap-3 lg:grid-cols-5">
+            {analysis.target_account_shortlist.map((account) => (
+              <article key={account.company_name} className="rounded-md border border-border bg-[#f8faf7] p-3">
+                <div className="flex flex-wrap items-start justify-between gap-2">
+                  <h3 className="font-semibold text-foreground">{account.company_name}</h3>
+                  <Badge tone="blue">{account.hq_region ?? "region tbd"}</Badge>
+                </div>
+                <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-muted">{account.logistics_category}</p>
+                <p className="mt-2 text-sm leading-6 text-muted">{account.outreach_angle}</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {account.recommended_buyer_roles.slice(0, 2).map((role) => (
+                    <Badge key={role} tone="green">
+                      {role}
+                    </Badge>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
         </SectionPanel>
 
         <SectionPanel title="Trust Gap Analysis" eyebrow="Buyer risk" icon={ShieldAlert} className="lg:col-span-7">
