@@ -1,299 +1,132 @@
 {
   "version": "1.0",
   "market": "Italy",
-  "description": "Documentation and proof checklist for Chinese warehouse automation vendors preparing a first Italian pilot.",
-  "status_options": [
-    "available",
-    "partial",
-    "missing",
-    "recommended"
-  ],
+  "description": "Buyer-readiness checklist for Chinese warehouse automation vendors preparing a first Italian pilot. It defines proof to prepare for buyer review and does not certify legal compliance.",
   "items": [
     {
-      "id": "technical_specs",
-      "name": "Technical specifications",
+      "id": "technical_specifications",
+      "proof_item_name": "technical specifications",
       "category": "technical",
-      "why_italian_buyer_needs_it": "Operations and engineering teams need operating limits before allowing equipment into a warehouse pilot.",
-      "minimum_content": [
-        "Payload",
-        "Dimensions",
-        "Speed",
-        "Battery runtime",
-        "Charging requirements",
-        "Operating temperature",
-        "Floor and route requirements"
-      ],
-      "required_for_pilot": true,
+      "why_italian_buyer_needs_it": "Operations and engineering teams need operating limits before allowing equipment into a live warehouse pilot.",
+      "minimum_content_expected": "Payload, dimensions, speed, battery runtime, charging requirements, operating environment, floor requirements, connectivity, and known operating limits.",
+      "required_for_pilot_launch": true,
       "buyer_confidence_impact": "high"
     },
     {
-      "id": "ce_safety_summary",
-      "name": "CE and safety documentation summary",
+      "id": "ce_and_safety_summary",
+      "proof_item_name": "CE and safety summary",
       "category": "safety",
-      "why_italian_buyer_needs_it": "HSE and operations teams need a buyer-readable summary of safety evidence before pilot approval.",
-      "minimum_content": [
-        "CE status or readiness statement",
-        "Applicable machinery safety assumptions",
-        "Emergency-stop behavior",
-        "Human interaction limits",
-        "Safety sensors",
-        "Operating area restrictions"
-      ],
-      "required_for_pilot": true,
-      "buyer_confidence_impact": "critical"
-    },
-    {
-      "id": "risk_assessment_method",
-      "name": "Pilot-area risk assessment method",
-      "category": "safety",
-      "why_italian_buyer_needs_it": "Italian warehouses need a practical way to review mixed traffic, operator interaction, and emergency procedures.",
-      "minimum_content": [
-        "Pilot route map",
-        "Pedestrian interaction points",
-        "Forklift interaction points",
-        "Emergency stop locations",
-        "Residual risk owner",
-        "Pre-launch safety checklist"
-      ],
-      "required_for_pilot": true,
+      "why_italian_buyer_needs_it": "The buyer will likely ask for a clear safety readiness summary before reviewing equipment that operates near people, forklifts, goods, or production flows.",
+      "minimum_content_expected": "CE status or readiness statement, safety features, emergency-stop behavior, operating limits, human interaction assumptions, and documents available for buyer review.",
+      "required_for_pilot_launch": true,
       "buyer_confidence_impact": "critical"
     },
     {
       "id": "installation_plan",
-      "name": "Installation and commissioning plan",
+      "proof_item_name": "installation plan",
       "category": "deployment",
-      "why_italian_buyer_needs_it": "The buyer must know how installation avoids disrupting dispatch, production, or client SLA windows.",
-      "minimum_content": [
-        "Site preparation steps",
-        "Installation timeline",
-        "Weekend or off-peak work plan",
-        "Rollback plan",
-        "Commissioning checklist",
-        "Buyer responsibilities"
-      ],
-      "required_for_pilot": true,
+      "why_italian_buyer_needs_it": "Warehouse managers need to understand how setup avoids disrupting dispatch, production, operators, or client service commitments.",
+      "minimum_content_expected": "Site preparation steps, timeline, mapping or commissioning plan, off-peak work assumptions, rollback path, buyer responsibilities, and launch checklist.",
+      "required_for_pilot_launch": true,
       "buyer_confidence_impact": "high"
     },
     {
-      "id": "maintenance_plan",
-      "name": "Maintenance plan",
+      "id": "maintenance_plan_and_spare_parts",
+      "proof_item_name": "maintenance plan and spare parts",
       "category": "support",
-      "why_italian_buyer_needs_it": "Warehouse managers need confidence that the system can remain available during daily operations.",
-      "minimum_content": [
-        "Preventive maintenance tasks",
-        "Remote diagnostics approach",
-        "On-site intervention conditions",
-        "Wear-part replacement plan",
-        "Maintenance owner during pilot"
-      ],
-      "required_for_pilot": true,
+      "why_italian_buyer_needs_it": "The buyer needs assurance that basic faults, wear parts, and support needs will not stop the pilot for an international lead time.",
+      "minimum_content_expected": "Preventive maintenance tasks, remote diagnostics approach, critical spare list, Italy or EU spare-part availability, lead times, and ownership during the pilot.",
+      "required_for_pilot_launch": true,
       "buyer_confidence_impact": "high"
     },
     {
       "id": "support_sla",
-      "name": "Pilot support SLA",
+      "proof_item_name": "support SLA",
       "category": "support",
-      "why_italian_buyer_needs_it": "The buyer needs defined response expectations if the pilot affects live warehouse work.",
-      "minimum_content": [
-        "Support hours",
-        "Response time",
-        "Escalation contacts",
-        "Remote support channel",
-        "On-site support option",
-        "Language coverage"
-      ],
-      "required_for_pilot": true,
+      "why_italian_buyer_needs_it": "Operations needs defined response expectations if the automation affects live warehouse work.",
+      "minimum_content_expected": "Support hours, response time target, escalation contacts, remote support channel, on-site support option, language coverage, and first-week support plan.",
+      "required_for_pilot_launch": true,
       "buyer_confidence_impact": "high"
-    },
-    {
-      "id": "spare_parts_plan",
-      "name": "Spare parts availability plan",
-      "category": "support",
-      "why_italian_buyer_needs_it": "The buyer needs assurance that small failures will not stop the pilot for weeks.",
-      "minimum_content": [
-        "Critical spare list",
-        "Parts included for pilot",
-        "Italy or EU stock location",
-        "Expected lead times",
-        "Replacement responsibility"
-      ],
-      "required_for_pilot": false,
-      "buyer_confidence_impact": "medium"
     },
     {
       "id": "wms_integration_workflow",
-      "name": "WMS workflow integration note",
+      "proof_item_name": "WMS integration workflow",
       "category": "integration",
-      "why_italian_buyer_needs_it": "Operations and IT need to know how tasks move between the warehouse system and the automation layer.",
-      "minimum_content": [
-        "Minimum viable integration mode",
-        "Task trigger",
-        "Data exchanged",
-        "Operator fallback",
-        "Error handling",
-        "Go-live test steps"
-      ],
-      "required_for_pilot": true,
+      "why_italian_buyer_needs_it": "Operations and IT need to know how tasks, exceptions, and data move between the warehouse system and the automation workflow.",
+      "minimum_content_expected": "Minimum viable integration mode, task trigger, data exchanged, API or CSV option, operator tablet fallback, exception handling, and go-live test steps.",
+      "required_for_pilot_launch": true,
       "buyer_confidence_impact": "high"
     },
     {
-      "id": "integration_api_summary",
-      "name": "API or data exchange summary",
-      "category": "integration",
-      "why_italian_buyer_needs_it": "IT teams need a clear view of interfaces before approving even a lightweight pilot.",
-      "minimum_content": [
-        "Available APIs",
-        "Data formats",
-        "Authentication approach",
-        "Latency assumptions",
-        "Logging",
-        "Fallback data process"
-      ],
-      "required_for_pilot": false,
-      "buyer_confidence_impact": "medium"
-    },
-    {
-      "id": "data_security_summary",
-      "name": "Data security and access summary",
-      "category": "integration",
-      "why_italian_buyer_needs_it": "IT and compliance stakeholders need to understand operational data access, storage, and retention during the pilot.",
-      "minimum_content": [
-        "Data collected",
-        "Storage location",
-        "Remote access approach",
-        "User roles",
-        "Retention period",
-        "Deletion process"
-      ],
-      "required_for_pilot": false,
-      "buyer_confidence_impact": "medium"
-    },
-    {
-      "id": "roi_model_italy",
-      "name": "Italy-localized ROI model",
+      "id": "roi_model_with_italian_assumptions",
+      "proof_item_name": "ROI model with Italian assumptions",
       "category": "business_case",
-      "why_italian_buyer_needs_it": "The buyer needs a business case tied to its own labor, throughput, walking time, error, or manual-handling baseline.",
-      "minimum_content": [
-        "Baseline process metric",
-        "Pilot KPI target",
-        "Labor or throughput assumption",
-        "Operational saving logic",
-        "Payback scenario",
-        "Sensitivity notes"
-      ],
-      "required_for_pilot": false,
+      "why_italian_buyer_needs_it": "Finance and operations need a business case tied to the buyer's own labor, walking time, throughput, error, or manual-handling baseline.",
+      "minimum_content_expected": "Baseline metric, pilot KPI target, shift and labor assumptions, operational saving logic, sensitivity notes, and buyer data needed to replace assumptions.",
+      "required_for_pilot_launch": false,
       "buyer_confidence_impact": "high"
     },
     {
       "id": "pilot_kpi_plan",
-      "name": "Pilot KPI measurement plan",
+      "proof_item_name": "pilot KPI plan",
       "category": "business_case",
-      "why_italian_buyer_needs_it": "A first pilot needs success criteria that operations and finance can review together.",
-      "minimum_content": [
-        "Baseline measurement window",
-        "Target metrics",
-        "Data owner",
-        "Measurement frequency",
-        "Success threshold",
-        "Review meeting cadence"
-      ],
-      "required_for_pilot": true,
+      "why_italian_buyer_needs_it": "The buyer needs success criteria that operations and finance can review together before expanding beyond the pilot.",
+      "minimum_content_expected": "Baseline measurement window, target KPIs, data owner, measurement cadence, success thresholds, and weekly review process.",
+      "required_for_pilot_launch": true,
+      "buyer_confidence_impact": "high"
+    },
+    {
+      "id": "risk_assessment_summary",
+      "proof_item_name": "risk assessment summary",
+      "category": "safety",
+      "why_italian_buyer_needs_it": "The buyer needs a practical summary of pilot-area risks before allowing automated equipment into mixed warehouse traffic.",
+      "minimum_content_expected": "Pilot route map, pedestrian and forklift interaction points, emergency-stop locations, restricted areas, residual risk owner, and pre-launch safety checklist.",
+      "required_for_pilot_launch": true,
+      "buyer_confidence_impact": "critical"
+    },
+    {
+      "id": "warranty_and_exit_conditions",
+      "proof_item_name": "warranty and exit conditions",
+      "category": "commercial_structure",
+      "why_italian_buyer_needs_it": "A clear responsibility and exit path lowers procurement risk and makes a first pilot easier to approve.",
+      "minimum_content_expected": "Pilot duration, success criteria, failure criteria, rollback or removal terms, responsibility for faults, warranty boundaries, and conversion decision point.",
+      "required_for_pilot_launch": true,
       "buyer_confidence_impact": "high"
     },
     {
       "id": "case_study_evidence",
-      "name": "Relevant case study evidence",
+      "proof_item_name": "case study evidence",
       "category": "commercial_proof",
-      "why_italian_buyer_needs_it": "The buyer needs proof that the product has worked in a similar warehouse process, even if the first Italian reference does not exist yet.",
-      "minimum_content": [
-        "Customer type",
-        "Warehouse process",
-        "Deployment scope",
-        "Measured outcome",
-        "Before/after metric",
-        "Transferability note for Italy"
-      ],
-      "required_for_pilot": false,
+      "why_italian_buyer_needs_it": "The buyer needs proof that the product has worked in a similar warehouse process, even if an Italian reference customer does not exist yet.",
+      "minimum_content_expected": "Customer type, warehouse process, deployment scope, measured outcome, before-and-after metric, and why the case is transferable to the Italian pilot.",
+      "required_for_pilot_launch": false,
       "buyer_confidence_impact": "medium"
     },
     {
-      "id": "pilot_exit_conditions",
-      "name": "Pilot exit conditions",
-      "category": "commercial_structure",
-      "why_italian_buyer_needs_it": "A clear exit path lowers procurement risk and makes a first pilot easier to approve.",
-      "minimum_content": [
-        "Pilot duration",
-        "Success criteria",
-        "Failure criteria",
-        "Removal or rollback terms",
-        "Data review process",
-        "Conversion decision point"
-      ],
-      "required_for_pilot": true,
-      "buyer_confidence_impact": "high"
-    },
-    {
-      "id": "warranty_terms",
-      "name": "Pilot warranty and responsibility terms",
-      "category": "commercial_structure",
-      "why_italian_buyer_needs_it": "The buyer needs to know who is responsible for faults, damage, replacement, and support during the pilot.",
-      "minimum_content": [
-        "Warranty period",
-        "Covered failures",
-        "Excluded conditions",
-        "Buyer responsibilities",
-        "Vendor responsibilities",
-        "Escalation process"
-      ],
-      "required_for_pilot": false,
+      "id": "operator_and_supervisor_training_pack",
+      "proof_item_name": "operator and supervisor training pack",
+      "category": "support",
+      "why_italian_buyer_needs_it": "Operators and supervisors need simple guidance for onboarding, daily use, exceptions, and escalation during the pilot.",
+      "minimum_content_expected": "Quick-start guide, supervisor checklist, safety do and do not list, exception handling, daily startup and shutdown, and first-week training plan.",
+      "required_for_pilot_launch": false,
       "buyer_confidence_impact": "medium"
     },
     {
-      "id": "operator_training_pack",
-      "name": "Operator and supervisor training pack",
-      "category": "change_management",
-      "why_italian_buyer_needs_it": "Operators must understand how to work around or with the system safely and consistently.",
-      "minimum_content": [
-        "Quick-start guide",
-        "Supervisor checklist",
-        "Safety do and do not list",
-        "Exception handling",
-        "Daily startup and shutdown",
-        "First-week support plan"
-      ],
-      "required_for_pilot": false,
-      "buyer_confidence_impact": "medium"
-    },
-    {
-      "id": "throughput_test_evidence",
-      "name": "Throughput test evidence",
-      "category": "commercial_proof",
-      "why_italian_buyer_needs_it": "Sorting, picking, and transport buyers need evidence that the system can handle realistic Italian warehouse volumes.",
-      "minimum_content": [
-        "Test environment",
-        "Load profile",
-        "Throughput result",
-        "Exception rate",
-        "Uptime",
-        "Difference from pilot conditions"
-      ],
-      "required_for_pilot": false,
+      "id": "data_security_summary",
+      "proof_item_name": "data security summary",
+      "category": "integration",
+      "why_italian_buyer_needs_it": "IT teams need to understand what operational data is collected, where it is processed, and who can access it during the pilot.",
+      "minimum_content_expected": "Data collected, storage location, remote access approach, user roles, retention period, and deletion or export process.",
+      "required_for_pilot_launch": false,
       "buyer_confidence_impact": "medium"
     },
     {
       "id": "validation_support_note",
-      "name": "Validation support note for regulated warehouses",
-      "category": "regulated_operations",
-      "why_italian_buyer_needs_it": "Pharma and healthcare logistics buyers need to understand how the vendor supports quality review and change control.",
-      "minimum_content": [
-        "Validation scope",
-        "Change-control support",
-        "Audit trail behavior",
-        "Deviation handling",
-        "Documentation owner",
-        "Pilot limitation statement"
-      ],
-      "required_for_pilot": false,
+      "proof_item_name": "validation support note",
+      "category": "safety",
+      "why_italian_buyer_needs_it": "Pharma and healthcare logistics buyers may need to understand how the vendor supports quality review and change-control discussion.",
+      "minimum_content_expected": "Validation scope, change-control support, audit-trail behavior, deviation handling, document owner, and pilot limitation statement.",
+      "required_for_pilot_launch": false,
       "buyer_confidence_impact": "high"
     }
   ]
