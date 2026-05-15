@@ -32,6 +32,7 @@ export function ControlRoomScreen({ profile, analysis, onRestart }: ControlRoomS
   ];
   const decisionRows = buildSegmentDecisionRows(analysis);
   const priorityTrustGaps = getPriorityTrustGaps(analysis);
+  const pilotFitRationale = `${analysis.product_summary.product_category} maps to ${analysis.warehouse_process_recommendation.process_name}, so the first pilot can stay focused on ${analysis.product_summary.primary_use_case.toLowerCase()}, measurable KPIs and a limited operational scope.`;
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-7xl px-5 py-8">
@@ -124,7 +125,7 @@ export function ControlRoomScreen({ profile, analysis, onRestart }: ControlRoomS
           <FitScore
             value={analysis.buyer_segment_recommendation.fit_score}
             label="Strong pilot fit"
-            rationale="The AMR use case can be isolated in one workflow, measured quickly and positioned as lower risk than a full automation redesign."
+            rationale={pilotFitRationale}
           />
         </SectionPanel>
 
