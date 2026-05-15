@@ -5,25 +5,67 @@ import { AnalysisLoadingScreen } from "@/components/screens/analysis-loading-scr
 import { ControlRoomScreen } from "@/components/screens/control-room-screen";
 import { IntakeScreen } from "@/components/screens/intake-screen";
 import { StartScreen } from "@/components/screens/start-screen";
-import { buildDemoPilotAnalysis, demoProductProfile } from "@/lib/mock-pilot-analysis";
+import { isPilotAnalysisUsable } from "@/lib/pilot-analysis-validation";
+import { demoProductProfile, mockPilotAnalysis } from "@/lib/mock-pilot-analysis";
+import type { PilotAnalysis } from "@/lib/pilot-analysis-types";
 
 type FlowStep = "start" | "intake" | "analysis" | "control-room";
 
 export function PilotOpsApp() {
   const [step, setStep] = useState<FlowStep>("start");
   const [productProfile, setProductProfile] = useState(demoProductProfile);
+  const [analysis, setAnalysis] = useState<PilotAnalysis>(mockPilotAnalysis);
 
   useEffect(() => {
     if (step !== "analysis") {
       return;
     }
 
-    const timeoutId = window.setTimeout(() => {
-      setStep("control-room");
-    }, 1500);
+    let isCancelled = false;
+    const controller = new AbortController();
 
-    return () => window.clearTimeout(timeoutId);
-  }, [step]);
+    async function runAnalysis() {
+      let nextAnalysis = mockPilotAnalysis;
+      const minimumLoadingTime = new Promise((resolve) => window.setTimeout(resolve, 1500));
+
+      try {
+        const response = await fetch("/api/analyze", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ profile: productProfile }),
+          signal: controller.signal
+        });
+
+        if (response.ok) {
+          const candidate: unknown = await response.json();
+
+          if (isPilotAnalysisUsable(candidate)) {
+            nextAnalysis = candidate;
+          }
+        }
+      } catch {
+        nextAnalysis = mockPilotAnalysis;
+      }
+
+      await minimumLoadingTime;
+
+      if (isCancelled) {
+        return;
+      }
+
+      setAnalysis(nextAnalysis);
+      setStep("control-room");
+    }
+
+    void runAnalysis();
+
+    return () => {
+      isCancelled = true;
+      controller.abort();
+    };
+  }, [productProfile, step]);
 
   if (step === "intake") {
     return (
@@ -43,7 +85,7 @@ export function PilotOpsApp() {
   }
 
   if (step === "control-room") {
-    return <ControlRoomScreen profile={productProfile} analysis={buildDemoPilotAnalysis(productProfile)} onRestart={() => setStep("start")} />;
+    return <ControlRoomScreen profile={productProfile} analysis={analysis} onRestart={() => setStep("start")} />;
   }
 
   return <StartScreen onStart={() => setStep("intake")} />;

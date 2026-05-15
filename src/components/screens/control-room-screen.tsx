@@ -26,6 +26,11 @@ type ControlRoomScreenProps = {
 };
 
 export function ControlRoomScreen({ profile, analysis, onRestart }: ControlRoomScreenProps) {
+  const timingSignals = [
+    ...analysis.buyer_segment_recommendation.why_this_segment.slice(0, 2),
+    `${analysis.pilot_offer.duration_days}-day scope with ${analysis.pilot_offer.buyer_risk_reducers[0].toLowerCase()} keeps the first approval focused on measurable operational proof.`
+  ];
+
   return (
     <main className="mx-auto min-h-screen w-full max-w-7xl px-5 py-8">
       <header className="mb-6 flex flex-wrap items-start justify-between gap-4 border-b border-border pb-5">
@@ -33,8 +38,7 @@ export function ControlRoomScreen({ profile, analysis, onRestart }: ControlRoomS
           <p className="text-sm font-semibold uppercase tracking-wide text-accent">Pilot Control Room</p>
           <h1 className="mt-1 text-3xl font-bold text-foreground">{profile.companyName}</h1>
           <p className="mt-2 max-w-3xl text-sm leading-6 text-muted">
-            Demo pilot strategy for a prefilled {profile.productCategory} profile entering {profile.targetMarket}. The package is calibrated to the
-            AMR/3PL scenario used for the hackathon flow.
+            {analysis.product_summary.product_name} entering {profile.targetMarket} with a localized, low-risk first pilot package.
           </p>
         </div>
         <div className="flex gap-3">
@@ -78,7 +82,7 @@ export function ControlRoomScreen({ profile, analysis, onRestart }: ControlRoomS
 
         <SectionPanel title="Why Now" eyebrow="Timing signals" icon={Lightbulb} className="lg:col-span-5">
           <ul className="space-y-3">
-            {analysis.why_now.map((signal) => (
+            {timingSignals.map((signal) => (
               <li key={signal} className="text-sm leading-6 text-muted">
                 {signal}
               </li>

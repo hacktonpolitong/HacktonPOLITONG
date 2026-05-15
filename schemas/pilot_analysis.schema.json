@@ -28,7 +28,11 @@
         "target_market",
         "pipeline_version",
         "dataset_versions",
-        "assumptions"
+        "assumptions",
+        "analysis_mode",
+        "provider",
+        "model",
+        "key_source"
       ],
       "properties": {
         "analysis_id": {
@@ -63,6 +67,35 @@
           "items": {
             "type": "string"
           }
+        },
+        "analysis_mode": {
+          "type": "string",
+          "description": "Whether the result came from validated live AI output or deterministic local fallback.",
+          "enum": [
+            "live_ai",
+            "deterministic_fallback"
+          ]
+        },
+        "provider": {
+          "type": "string",
+          "description": "Provider used for the final result.",
+          "enum": [
+            "openrouter",
+            "local"
+          ]
+        },
+        "model": {
+          "type": "string",
+          "description": "Model used for the final result, or local_fallback for deterministic fallback."
+        },
+        "key_source": {
+          "type": "string",
+          "description": "API key source used for the final result.",
+          "enum": [
+            "primary",
+            "secondary",
+            "none"
+          ]
         }
       }
     },
