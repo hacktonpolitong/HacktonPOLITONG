@@ -221,28 +221,16 @@ The presenter should highlight that the output is structured, specific, and imme
 
 ## Minimum Product Logic
 
-To avoid looking like a mockup, the MVP should include a small but real analysis layer.
+To avoid looking like a static mockup, the MVP routes every analysis through `POST /api/analyze`.
 
-Recommended local logic:
+Current MVP behavior:
 
-1. Classify the product category from the intake selection or text keywords.
-2. Match the category to a buyer segment from `data/italian_segments.json`.
-3. Select a warehouse process from `data/warehouse_processes.json`.
-4. Score pilot fit based on product category, proof availability, integration complexity, and support readiness.
-5. Select trust gaps from `data/trust_gaps.json` based on missing or partial proof.
-6. Build the proof checklist from `data/proof_checklist.json`.
-7. Generate a pilot offer from templates and selected process data.
-8. Generate sales pack text from the selected segment, process, and trust gaps.
-9. Return a structured object matching `schemas/pilot_analysis.schema.json`.
-
-This can be deterministic and lightweight. The key is that the user input drives the output.
-
-Current visible behavior:
-
-- the app always routes through `POST /api/analyze`;
-- without OpenRouter keys, the route returns a stable deterministic AMR/3PL Pilot Control Room;
-- with valid OpenRouter keys, the route attempts live AI generation and validates the response before rendering it;
-- if live AI fails, times out, or returns unsafe/invalid content, the deterministic Pilot Control Room is shown.
+1. The demo scenario is intentionally locked to a Chinese AMR vendor entering the Italian 3PL/e-commerce fulfilment market.
+2. Without OpenRouter keys, `POST /api/analyze` returns the deterministic AMR/3PL fallback Pilot Control Room.
+3. With valid OpenRouter keys, the route attempts live AI generation and validates the response before rendering it.
+4. If live AI fails, times out, returns invalid structure, or produces unsafe content, the deterministic AMR/3PL fallback is shown.
+5. The Target Account Shortlist is built from curated company-level data, not scraped leads or guaranteed buyers.
+6. Dynamic product/category classification can be treated as a future evolution after the hackathon MVP.
 
 ## Presentation Script
 
