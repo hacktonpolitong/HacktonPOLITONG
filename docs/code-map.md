@@ -1,10 +1,10 @@
 # Code Map
 
-This map reflects the repository during early MVP setup. It should be updated as AI/backend and frontend implementation branches continue to integrate.
+This map reflects the repository after the demo-flow, target-account, and analysis API integration branches.
 
 ## Root Files
 
-- `README.md`: contributor onboarding, planned setup commands, environment notes, and links to key docs.
+- `README.md`: contributor onboarding, setup commands, environment notes, demo path, and links to key docs.
 - `AGENTS.md`: operating guide for AI coding agents.
 - `pilotops_ai_product_spec.md`: source product specification for PilotOps AI.
 - `pilotops_ai_market_tech_analysis.md`: market, API, plugin, and repository analysis.
@@ -14,11 +14,11 @@ This map reflects the repository during early MVP setup. It should be updated as
 
 - `docs/team_setup_plan.md`: team ownership split, branch names, deliverables, and review matrix.
 - `docs/project-brief.md`: short product brief and MVP framing.
-- `docs/architecture.md`: planned system architecture and flow.
+- `docs/architecture.md`: system architecture and flow.
 - `docs/code-map.md`: this repository map.
 - `docs/ai-pipeline.md`: structured AI pipeline design owned by Jacopo.
 - `docs/data-model.md`: local data and schema documentation owned by Jacopo.
-- `docs/testing-and-evals.md`: planned testing and AI evaluation documentation owned by Jacopo.
+- `docs/testing-and-evals.md`: testing and AI evaluation documentation owned by Jacopo.
 - `docs/ui-system.md`: frontend UI system documentation owned by Matteo.
 - `docs/decisions/ADR-0001-mvp-scope.md`: initial MVP scope decision.
 
@@ -36,19 +36,23 @@ These directories exist in the current MVP setup and are owned by Jacopo:
 
 ## App Source
 
-When present, `src/` contains the frontend scaffold owned by Matteo:
+`src/` contains the Next.js app, frontend flow, server-side analysis route, deterministic fallback, and shared validation helpers:
 
-- `src/app/`: Next.js app files.
+- `src/app/`: Next.js app files, including `src/app/api/analyze/route.ts`.
 - `src/components/`: reusable UI, dashboard, and screen components.
-- `src/lib/`: typed mock data and shared helpers.
+- `src/lib/`: demo profile, deterministic fallback analysis, OpenRouter client, Pilot Analysis types, and response validation helpers.
 
 ## Current Application State
 
-The repository may include a frontend scaffold and package scripts, but the AI endpoint is not complete yet. Current pending areas:
+The current MVP includes:
 
-- no API route implementation;
-- no AI pipeline implementation;
-- automated tests and schema validation scripts may still be pending.
+- a clickable Start Screen -> Product Intake -> Analysis Loading -> Pilot Control Room flow;
+- a server-side `POST /api/analyze` route;
+- a deterministic AMR/3PL fallback that works without environment variables;
+- optional OpenRouter live AI mode through server-side environment variables;
+- Target Account Shortlist rendering from curated company-level seed data.
+
+Automated tests and schema validation scripts may still be pending.
 
 ## Ownership Boundaries
 

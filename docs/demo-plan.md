@@ -29,7 +29,7 @@ Vercel live link
         -> Next.js web app
         -> interactive intake flow
         -> analysis loading state
-        -> local MVP analysis engine using seed data and rules
+        -> server-side analysis route with deterministic seed-data fallback
         -> Pilot Control Room rendered from structured analysis output
         -> optional live AI generation when API keys and connectivity are reliable
 ```
@@ -44,9 +44,9 @@ Minimum requirement:
 
 - the app is deployed at a public live URL;
 - the user can click through the full flow;
-- the intake step accepts editable product/company inputs;
-- the analysis result is generated from the submitted inputs, not only hardcoded screen text;
-- the dashboard changes at least meaningfully when the product category or proof status changes;
+- the intake step shows a prefilled product/company profile and allows the presenter to rename the demo vendor without invalidating the AMR scenario;
+- the analysis result is generated through `POST /api/analyze`, with a deterministic AMR/3PL fallback when no live AI key is configured;
+- the dashboard remains coherent with the locked AMR/3PL demo scenario and renders a complete structured Pilot Control Room;
 - the result uses the structured Pilot Control Room schema;
 - the app can be tested by judges without private credentials;
 - any AI API integration is server-side and optional for the default test path.
@@ -77,17 +77,17 @@ Behavior:
 
 - the app loads from the public Vercel link;
 - the user can start a pilot analysis;
-- the intake screen is prefilled for speed but remains editable;
+- the intake screen is prefilled for speed and keeps the AMR/3PL scenario locked for demo consistency;
 - the app shows an AI-style analysis loading state;
-- the app runs a local analysis function that maps the submitted profile to seeded buyer segments, warehouse processes, trust gaps, proof requirements, pilot offer logic, and sales pack templates;
-- the Pilot Control Room appears with structured output generated from that local analysis;
+- the app calls `POST /api/analyze`, which returns the deterministic AMR/3PL analysis when no live AI key is configured;
+- the Pilot Control Room appears with structured output generated from the fallback analysis or a validated live AI response;
 - no external AI API call is required.
 
 Why this matters:
 
 - no API cost is required;
 - the demo works even with weak internet;
-- judges can test the flow and see the result respond to inputs;
+- judges can test the full flow without private credentials;
 - the output remains aligned with the product spec.
 
 ### Mode 2: Optional Live AI Mode
@@ -107,11 +107,11 @@ This mode should never expose API keys in frontend code.
 Expected environment variables, if live AI is enabled:
 
 ```text
-OPENAI_API_KEY
-OPENAI_MODEL
-ORBIT_API_KEY
-ORBIT_BASE_URL
-ORBIT_MODEL
+OPENROUTER_API_KEY
+OPENROUTER_FALLBACK_API_KEY
+OPENROUTER_MODEL
+OPENROUTER_SITE_URL
+OPENROUTER_APP_NAME
 ```
 
 Only the variables needed by the implemented provider should be configured.
@@ -163,11 +163,11 @@ Recommended fields:
 - pilot ambition;
 - known constraints.
 
-For the live presentation, this step should be fast. The demo can use prefilled data so the presenter does not spend time typing, but the fields should be editable so the product is testable.
+For the live presentation, this step should be fast. The demo uses prefilled data so the presenter does not spend time typing. The company name can be edited, while the product category, proof inputs, and constraints remain locked so the deterministic AMR/3PL fallback stays coherent.
 
-### Step 3: Documentation Readiness
+### Step 3: Documentation Readiness Signals
 
-The app shows what proof an Italian buyer will probably expect.
+The Product Intake and Pilot Control Room show what proof an Italian buyer will probably expect. This is not a separate screen in the current MVP.
 
 Expected checklist categories:
 
@@ -192,6 +192,7 @@ Suggested modules:
 - parsing product fit;
 - matching Italian buyer segment;
 - selecting warehouse pilot process;
+- ranking target account shortlist;
 - identifying trust gaps;
 - generating pilot offer;
 - preparing sales pack.
@@ -210,6 +211,7 @@ Required sections:
 - Why Now;
 - Trust Gap Analysis;
 - Recommended Pilot Offer;
+- Target Account Shortlist;
 - Buyer Objection Battlecard;
 - Documentation / Proof Checklist;
 - Ready-to-Send Sales Pack;
@@ -235,12 +237,12 @@ Recommended local logic:
 
 This can be deterministic and lightweight. The key is that the user input drives the output.
 
-Examples of visible output changes:
+Current visible behavior:
 
-- changing product category from AMR to palletizing changes the buyer segment and pilot process;
-- marking local support as missing increases the support trust gap severity;
-- marking CE/safety summary as missing changes the proof checklist and buyer objections;
-- changing pilot ambition changes the recommended pilot duration or scope.
+- the app always routes through `POST /api/analyze`;
+- without OpenRouter keys, the route returns a stable deterministic AMR/3PL Pilot Control Room;
+- with valid OpenRouter keys, the route attempts live AI generation and validates the response before rendering it;
+- if live AI fails, times out, or returns unsafe/invalid content, the deterministic Pilot Control Room is shown.
 
 ## Presentation Script
 
@@ -272,8 +274,8 @@ Minimum testable path:
 4. Submit.
 5. Reach the Pilot Control Room.
 6. Inspect the recommendation sections.
-7. Change at least one relevant input and rerun the analysis.
-8. Confirm the recommendation changes in a visible way.
+7. Inspect the Target Account Shortlist and confirm it is described as curated company-level data, not scraped leads.
+8. Confirm the dashboard renders without private credentials.
 
 If live AI is enabled, judges may optionally test a new input. The app should still show a clear result if the AI call fails.
 
@@ -295,12 +297,12 @@ Required safeguards:
 
 The live MVP link does not require AI API spending by itself.
 
-Costs are only introduced if the app performs real AI calls through Orbit AI, OpenAI, or another provider.
+Costs are only introduced if the app performs real AI calls through OpenRouter.
 
 Recommended approach:
 
 - use local deterministic analysis for the default demo;
-- use live AI only as an optional enhancement;
+- use live AI only as an optional enhancement through server-side OpenRouter keys;
 - set spending or usage limits on any API key used for the hackathon;
 - create a dedicated demo API key when possible;
 - revoke or rotate shared demo keys after the event.
@@ -311,9 +313,9 @@ The demo is successful when:
 
 - the Vercel link opens reliably;
 - the main flow can be completed by a judge;
-- intake fields are editable;
-- output is generated from submitted inputs;
-- changing key inputs changes the Pilot Control Room result;
+- the prefilled intake keeps the AMR/3PL demo scenario coherent;
+- output is generated through the analysis route and remains usable without API keys;
+- live AI, when configured, is optional and falls back safely;
 - the output clearly matches the AMR-to-Italy use case;
 - the dashboard feels like a control room, not a static slide;
 - the result contains concrete buyer, process, trust, pilot, proof, and sales recommendations;
@@ -339,8 +341,8 @@ Before presenting:
 
 The team still needs to decide:
 
-- whether the submitted hackathon version will include live AI generation;
-- which provider will power live AI if enabled;
+- whether the presentation should show live AI mode or only the stable deterministic path;
+- which OpenRouter model should be used if live AI is shown;
 - how many product categories the local MVP analysis should support beyond the demo AMR profile;
 - whether to expose copy/export actions in the first live MVP;
 - whether to include source citations in the Pilot Control Room;
