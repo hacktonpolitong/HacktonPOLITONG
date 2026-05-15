@@ -107,12 +107,14 @@ Jacopo owns:
    - `data/trust_gaps.json`
    - `data/proof_checklist.json`
    - `data/demo_amr_profile.json`
+   - planned `data/italian_target_accounts.json`, only when curated target accounts are ready
    - `schemas/pilot_analysis.schema.json`
 
 2. `docs/ai-pipeline.md` should define:
    - product parser;
    - segment matcher;
    - process selector;
+   - target account finder;
    - trust gap analyzer;
    - pilot package generator;
    - sales pack generator;
@@ -134,6 +136,7 @@ Jacopo owns:
    - pilot offer;
    - objection battlecard;
    - proof checklist;
+   - target account shortlist;
    - next 7 days plan;
    - sales pack.
 
@@ -191,6 +194,7 @@ Matteo owns:
    - Recommended Pilot Offer;
    - Buyer Objection Battlecard;
    - Documentation Checklist;
+   - Target Account Shortlist;
    - Sales Pack;
    - Next 7 Days Action Plan.
 
@@ -270,4 +274,3 @@ The initial environment is ready when:
 - the UI has the main flow mocked;
 - every person has reviewed another person's work;
 - the next implementation tasks can start without ambiguity.
-

@@ -2,7 +2,7 @@
 
 ## One-Line Definition
 
-PilotOps AI helps Chinese warehouse automation companies enter the Italian market by identifying the best first pilot opportunity: the right Italian buyer segment, the right warehouse process, the trust gaps to close, and the pilot package to propose.
+PilotOps AI helps Chinese warehouse automation companies enter the Italian market by identifying the best first pilot opportunity: the right Italian buyer segment, the right warehouse process, the trust gaps to close, the pilot package to propose, and the first Italian target accounts to approach.
 
 ## Problem
 
@@ -14,6 +14,7 @@ Chinese warehouse automation companies may already have working products, techni
 - what trust gaps block the buyer from saying yes;
 - what proof or documentation needs to be prepared;
 - how to communicate the offer credibly against local or European alternatives.
+- which Italian companies are concretely compatible with the recommended pilot.
 
 The product answers the practical sales question:
 
@@ -47,6 +48,7 @@ The value is not a long market report. The value is operational clarity:
 - what proof is missing;
 - what objections to prepare for;
 - what pilot offer and sales materials to use.
+- which relevant Italian companies to approach first using company-level public contact paths and role-based outreach.
 
 ## MVP Scope
 
@@ -60,6 +62,7 @@ The MVP should include:
 - trust gap analysis;
 - pilot offer generation;
 - buyer objection simulation;
+- Target Account Shortlist from a curated target-account database;
 - sales pack generation;
 - final dashboard called Pilot Control Room.
 
@@ -74,6 +77,7 @@ The MVP should not:
 - guarantee real sales leads;
 - build a full CRM;
 - scrape the entire web at scale;
+- collect private personal contact data or personal decision-maker emails;
 - create only a generic consulting report;
 - behave like a simple chatbot;
 - promise that the pilot will certainly be sold.
@@ -84,9 +88,9 @@ The MVP should not:
 2. The user enters company and product information.
 3. The user provides or summarizes available documentation.
 4. The system shows documentation readiness needs.
-5. The AI analysis engine processes product fit, buyer segment, process fit, trust gaps, pilot offer, and sales assets.
+5. The AI analysis engine processes product fit, buyer segment, process fit, target-account fit, trust gaps, pilot offer, and sales assets.
 6. The user lands in the Pilot Control Room.
-7. The dashboard shows the recommended first buyer segment, warehouse process, trust gaps, pilot package, objection battlecard, proof checklist, sales pack, and next 7 days action plan.
+7. The dashboard shows the recommended first buyer segment, warehouse process, trust gaps, pilot package, objection battlecard, proof checklist, Target Account Shortlist, sales pack, and next 7 days action plan.
 
 ## Demo Anchor
 
@@ -96,7 +100,7 @@ The expected output includes:
 
 - best buyer: mid-size Italian 3PL or e-commerce fulfilment warehouses;
 - best pilot process: internal transport between picking and packing;
+- target accounts: compatible Italian 3PL or e-commerce fulfilment companies, preferably in Lombardy, Veneto, Emilia-Romagna, or Piedmont, selected from a curated target-account database;
 - trust gaps: local maintenance, Italian references, ROI localization, integration clarity;
 - pilot offer: limited 45-day pilot with a small number of robots and measurable KPIs;
 - sales pack: email, one-pager, objection battlecard, and checklist.
-

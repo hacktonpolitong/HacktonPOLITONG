@@ -10,6 +10,7 @@ The first evaluation set should cover:
 - Italian segment matching
 - Warehouse process selection
 - Trust gap prioritization
+- Target Account Shortlist quality
 - Pilot offer specificity
 - Sales pack usefulness
 - JSON schema validity
@@ -27,13 +28,16 @@ Expected behavior:
 - Product category: AMR
 - Recommended buyer segment: 3PL/e-commerce fulfilment or retail logistics, with 3PL/e-commerce preferred when the product emphasizes tote movement between picking and packing.
 - Recommended process: internal transport between picking and packing.
+- Target Account Shortlist: compatible Italian 3PL/e-commerce fulfilment accounts from the curated target-account database, ideally in Lombardy, Veneto, Emilia-Romagna, or Piedmont when enough verified accounts exist.
 - High-priority trust gaps: local maintenance, Italian reference, localized ROI, WMS integration, CE/safety evidence.
 - Pilot offer: bounded 45-day pilot, 2 AMRs, one mapped route, measurable KPIs, exit clause.
 
 Pass criteria:
 
 - Output validates against `schemas/pilot_analysis.schema.json`.
+- Output includes `target_account_shortlist`.
 - The pilot does not require a full warehouse redesign.
+- Shortlisted accounts match the recommended buyer segment and warehouse process.
 - The sales pack includes concrete Italian buyer objections and responses.
 
 ### Fixture B: Sorting Automation for Parcel Flow
@@ -65,6 +69,7 @@ Expected behavior:
 - Recommended process: parcel sorting or dispatch sorting.
 - High-priority trust gaps: installation downtime, safety documentation, integration with barcode/WMS systems, local maintenance.
 - Pilot should be scoped to one lane or one shift, not a whole hub.
+- Target Account Shortlist should not drift into unrelated generic logistics companies without parcel/sorting relevance.
 
 ### Fixture C: Palletizing Automation for Food and Beverage
 
@@ -95,6 +100,7 @@ Expected behavior:
 - Recommended process: pallet movement or end-of-line palletizing.
 - High-priority trust gaps: safety validation, installation downtime, ROI localization, support model.
 - Pilot should include one SKU family or one dispatch line with clear manual-lift reduction KPIs.
+- Target Account Shortlist should match food and beverage logistics or manufacturing warehouse fit, not generic e-commerce fulfilment by default.
 
 ## Deterministic Checks
 
@@ -103,6 +109,12 @@ Run these checks on every generated final output:
 - JSON parses successfully.
 - Output validates against `schemas/pilot_analysis.schema.json`.
 - All required top-level dashboard sections are present.
+- `target_account_shortlist` is present.
+- Each target account has `account_id`, `company_name`, `region`, `matched_segment_id`, `matched_process_id`, `why_relevant`, at least one recommended buyer role, and a contact method.
+- No private personal contact data, personal decision-maker emails, or scraped personal profiles are present.
+- Accounts match the recommended buyer segment and warehouse process.
+- Each outreach angle is specific to the selected pilot and account fit.
+- The shortlist does not drift into generic lead generation or present itself as exhaustive.
 - `target_market` is Italy.
 - At least one trust gap is `high` or `critical` when the demo profile lacks Italian references or local support proof.
 - Pilot offer contains duration, scope, KPIs, buyer risk reducers, exit clause, and next commercial step.
@@ -130,6 +142,7 @@ Score each generated analysis from 1 to 5:
 | Pilot realism | Full transformation or vague trial | Some scope and KPIs | Bounded pilot with route/process, KPIs, exit clause, and proof |
 | Trust gap quality | Generic risk list | Correct but shallow risks | Buyer-specific objections with practical mitigations |
 | Sales usefulness | Abstract copy | Usable but generic | Ready-to-send material tied to selected segment and process |
+| Target account quality | Generic or unrelated accounts | Some account fit but weak reasoning | Segment/process-matched accounts with company-level public contact paths and specific outreach angle |
 | Schema quality | Missing required fields | Valid but thin | Valid, complete, ordered by priority, frontend-ready |
 
 Minimum acceptance score for the demo AMR fixture:
@@ -146,6 +159,9 @@ These outputs should fail review:
 - Suggesting full national expansion before the first pilot.
 - Claiming CE compliance is complete when the input says the CE summary is partial.
 - Producing a long market-size report instead of pilot scope and next actions.
+- Presenting the Target Account Shortlist as scraped leads or guaranteed buyers.
+- Including personal private contact data or personal decision-maker emails.
+- Listing companies that do not match the recommended segment or warehouse process.
 - Leaving the sales pack as generic "book a meeting" language.
 - Returning a proof checklist without statuses or missing-proof recommendations.
 
@@ -154,7 +170,8 @@ These outputs should fail review:
 1. Run the demo AMR fixture through the pipeline.
 2. Validate the output against `schemas/pilot_analysis.schema.json`.
 3. Compare selected segment and process against expected behavior.
-4. Review trust gaps for buyer realism and missing proof.
-5. Review pilot offer for operational boundaries and KPIs.
-6. Review sales pack for immediate usability by the Head of International Expansion.
-7. Record failures as schema defects, data defects, or prompt defects.
+4. Review Target Account Shortlist for segment/process fit, company-level public contact method, source notes, and absence of private personal data.
+5. Review trust gaps for buyer realism and missing proof.
+6. Review pilot offer for operational boundaries and KPIs.
+7. Review sales pack for immediate usability by the Head of International Expansion.
+8. Record failures as schema defects, data defects, or prompt defects.
