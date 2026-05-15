@@ -1,0 +1,777 @@
+[
+  {
+    "company_name": "FERCAM",
+    "website": "https://www.fercam.com",
+    "hq_region": "other",
+    "logistics_category": "3PL and e-commerce fulfilment",
+    "warehouse_signals": [
+      "contract logistics and warehousing services",
+      "multiple specialized logistics centres in Italy and Europe",
+      "warehouse management, stock handling, order management, shipping and returns"
+    ],
+    "likely_process_fit": [
+      "internal transport",
+      "picking support",
+      "pallet movement",
+      "inventory scanning"
+    ],
+    "recommended_buyer_roles": [
+      "Contract Logistics Director",
+      "Operations Director",
+      "Warehouse Manager",
+      "Continuous Improvement Manager"
+    ],
+    "outreach_angle": "FERCAM is a strong AMR/AGV pilot candidate because its contract logistics network handles warehouse flows where internal transport, picking and stock movement can be tested in bounded zones.",
+    "source_note": "Official FERCAM pages on logistics and contract logistics/warehousing: https://www.fercam.com/en-int/sectors/logistics-51.html and https://www.fercam.com/en-it/services/contract-logistics-and-warehousing-493.html"
+  },
+  {
+    "company_name": "Arcese",
+    "website": "https://arcese.com",
+    "hq_region": "other",
+    "logistics_category": "3PL and e-commerce fulfilment",
+    "warehouse_signals": [
+      "contract logistics services",
+      "inbound and outbound logistics",
+      "warehouse flow optimization",
+      "e-commerce logistics including warehousing, order preparation, returns and courier selection"
+    ],
+    "likely_process_fit": [
+      "internal transport",
+      "picking support",
+      "inventory scanning",
+      "line-side replenishment"
+    ],
+    "recommended_buyer_roles": [
+      "Contract Logistics Director",
+      "Operations Director",
+      "Warehouse Manager",
+      "E-commerce Logistics Manager"
+    ],
+    "outreach_angle": "Arcese is relevant for an AMR pilot because its e-commerce and contract logistics services include picking, packing, returns and warehouse flow optimization.",
+    "source_note": "Official Arcese contract logistics page: https://arcese.com/en/contract-logistics/"
+  },
+  {
+    "company_name": "BCUBE",
+    "website": "https://www.bcube.com",
+    "hq_region": "Piedmont",
+    "logistics_category": "3PL and e-commerce fulfilment",
+    "warehouse_signals": [
+      "Italian integrated logistics operator",
+      "contract logistics and customized supply chain services",
+      "production logistics, inbound logistics, spare parts logistics and consumer retail services",
+      "technology, IoT, Industry 4.0 and lean management positioning"
+    ],
+    "likely_process_fit": [
+      "internal transport",
+      "picking support",
+      "pallet movement",
+      "line-side replenishment",
+      "inventory scanning"
+    ],
+    "recommended_buyer_roles": [
+      "Operations Director",
+      "Contract Logistics Director",
+      "Warehouse Manager",
+      "Innovation Manager"
+    ],
+    "outreach_angle": "BCUBE is a credible AMR/AGV target because it already positions logistics as technology-enabled and operates across production, inbound, spare parts and consumer logistics flows.",
+    "source_note": "Official BCUBE homepage and contacts page: https://www.bcube.com/en/ and https://www.bcube.com/en/contacts/"
+  },
+  {
+    "company_name": "ID Logistics Italia",
+    "website": "https://www.id-logistics.com/it",
+    "hq_region": null,
+    "logistics_category": "3PL and e-commerce fulfilment",
+    "warehouse_signals": [
+      "contract logistics services",
+      "e-commerce channel management",
+      "fulfillment center operations",
+      "reverse logistics and order flow management"
+    ],
+    "likely_process_fit": [
+      "internal transport",
+      "picking support",
+      "inventory scanning",
+      "pallet movement"
+    ],
+    "recommended_buyer_roles": [
+      "Country Operations Director",
+      "Site Manager",
+      "Warehouse Manager",
+      "E-commerce Fulfilment Manager"
+    ],
+    "outreach_angle": "ID Logistics Italia is a practical AMR pilot target because its public contract logistics offer includes fulfilment centers, e-commerce flows and reverse logistics.",
+    "source_note": "Official ID Logistics Italy pages on contract logistics and sectors: https://www.id-logistics.com/it/soluzioni/logistica-contrattuale/ and https://www.id-logistics.com/it/soluzioni/settori-di-attivita/; Italian HQ region not clearly verified from the public page."
+  },
+  {
+    "company_name": "FIEGE Italia",
+    "website": "https://www.fiege.com",
+    "hq_region": null,
+    "logistics_category": "3PL and e-commerce fulfilment",
+    "warehouse_signals": [
+      "contract logistics and fulfilment services",
+      "e-commerce logistics focus",
+      "warehouse and distribution operations in Italy"
+    ],
+    "likely_process_fit": [
+      "internal transport",
+      "picking support",
+      "inventory scanning",
+      "pallet movement"
+    ],
+    "recommended_buyer_roles": [
+      "Operations Director",
+      "Warehouse Manager",
+      "Fulfilment Manager",
+      "Continuous Improvement Manager"
+    ],
+    "outreach_angle": "FIEGE Italia is relevant for AMR pilots where fulfilment and warehouse movement processes can be improved without changing the full operating model.",
+    "source_note": "Official FIEGE company website and Italy logistics pages; Italian HQ region not clearly verified from publicly accessible official pages during this pass."
+  },
+  {
+    "company_name": "Prada Group",
+    "website": "https://www.pradagroup.com",
+    "hq_region": "Lombardy",
+    "logistics_category": "Retail logistics and fashion distribution",
+    "warehouse_signals": [
+      "Levanella Logistics Hub dedicated to finished product logistics",
+      "storage of clothing, footwear and leather goods",
+      "quality control areas serving warehouses",
+      "major logistics reorganization project"
+    ],
+    "likely_process_fit": [
+      "internal transport",
+      "picking support",
+      "inventory scanning",
+      "pallet movement"
+    ],
+    "recommended_buyer_roles": [
+      "Logistics Director",
+      "Warehouse Manager",
+      "Industrial Operations Manager",
+      "Continuous Improvement Manager"
+    ],
+    "outreach_angle": "Prada Group has a sophisticated finished-goods logistics hub where AMR pilots could support movement between storage, quality control and dispatch workflows.",
+    "source_note": "Official Prada Group Levanella Logistics Hub pages: https://www.pradagroup.com/en/perspectives/stories/sezione-luoghi/levanella-logistic-hub.html and https://www.pradagroup.com/en/group/sites.html"
+  },
+  {
+    "company_name": "Benetton Group",
+    "website": "https://www.benettongroup.com",
+    "hq_region": "Veneto",
+    "logistics_category": "Retail logistics and fashion distribution",
+    "warehouse_signals": [
+      "Castrette logistic hub in Villorba",
+      "shipments to thousands of retail outlets worldwide",
+      "high-volume inbound and outbound package handling",
+      "operational headquarters with logistics function"
+    ],
+    "likely_process_fit": [
+      "internal transport",
+      "picking support",
+      "parcel sorting",
+      "inventory scanning"
+    ],
+    "recommended_buyer_roles": [
+      "Logistics Director",
+      "Distribution Center Manager",
+      "Warehouse Manager",
+      "Retail Operations Manager"
+    ],
+    "outreach_angle": "Benetton's Castrette logistics hub is a concrete fashion distribution environment where AMR/AGV pilots could target internal transport and sorting support.",
+    "source_note": "Official Benetton Castrette and logistics pages: https://it.benetton.com/inside/article_castrette.html and https://www.benettongroup.com/it/media-press/immagini/corporate/castrette/logistica/"
+  },
+  {
+    "company_name": "Oniverse",
+    "website": "https://www.oniverse.it",
+    "hq_region": "Veneto",
+    "logistics_category": "Retail logistics and fashion distribution",
+    "warehouse_signals": [
+      "distribution centers in Vallese di Oppeano and Castagnaro",
+      "daily preparation of products for store replenishment",
+      "shop restocking process supported by integrated IT systems",
+      "warehouse and distribution platforms described as strategic assets"
+    ],
+    "likely_process_fit": [
+      "internal transport",
+      "picking support",
+      "inventory scanning",
+      "pallet movement"
+    ],
+    "recommended_buyer_roles": [
+      "Logistics Director",
+      "Distribution Center Manager",
+      "Warehouse Manager",
+      "IT/WMS Lead"
+    ],
+    "outreach_angle": "Oniverse is a strong AMR target because its store replenishment model depends on frequent warehouse handling and digitally integrated distribution centers.",
+    "source_note": "Official Oniverse logistics organization page: https://www.oniverse.it/en/world-in-progress/supply-chain/our-logistic-organization"
+  },
+  {
+    "company_name": "OTB Group",
+    "website": "https://www.otb.net",
+    "hq_region": "Veneto",
+    "logistics_category": "Retail logistics and fashion distribution",
+    "warehouse_signals": [
+      "global fashion group with production hubs and distribution subsidiaries",
+      "direct retail, outlet, online and wholesale channels",
+      "multi-brand fashion distribution structure"
+    ],
+    "likely_process_fit": [
+      "internal transport",
+      "picking support",
+      "inventory scanning",
+      "pallet movement"
+    ],
+    "recommended_buyer_roles": [
+      "Logistics Director",
+      "Distribution Manager",
+      "Warehouse Manager",
+      "Omnichannel Operations Manager"
+    ],
+    "outreach_angle": "OTB's multi-brand distribution model makes it a plausible target for warehouse pilots that improve inventory movement and omnichannel replenishment flows.",
+    "source_note": "Official OTB market presence page: https://www.otb.net/it/presenza-sul-mercato"
+  },
+  {
+    "company_name": "EssilorLuxottica Italia",
+    "website": "https://www.essilorluxottica.com",
+    "hq_region": "Veneto",
+    "logistics_category": "Retail logistics and fashion distribution",
+    "warehouse_signals": [
+      "large eyewear manufacturing and distribution footprint in Italy",
+      "retail and wholesale distribution of eyewear products",
+      "high-SKU product flows suitable for inventory and internal movement use cases"
+    ],
+    "likely_process_fit": [
+      "internal transport",
+      "picking support",
+      "inventory scanning",
+      "pallet movement"
+    ],
+    "recommended_buyer_roles": [
+      "Logistics Director",
+      "Supply Chain Director",
+      "Distribution Center Manager",
+      "Warehouse Manager"
+    ],
+    "outreach_angle": "EssilorLuxottica's eyewear distribution and high-SKU operations make it a plausible target for AMR pilots around picking support and inventory accuracy.",
+    "source_note": "Official EssilorLuxottica corporate site and Italian operations pages; warehouse-level details should be further verified before production use."
+  },
+  {
+    "company_name": "STEF Italia",
+    "website": "https://www.stef.com",
+    "hq_region": null,
+    "logistics_category": "Food and beverage logistics",
+    "warehouse_signals": [
+      "temperature-controlled food supply chain specialist",
+      "national network of temperature-controlled platforms",
+      "logistics and transport for fresh, frozen and heat-sensitive products",
+      "warehouse storage down to frozen temperature ranges"
+    ],
+    "likely_process_fit": [
+      "pallet movement",
+      "internal transport",
+      "inventory scanning",
+      "picking support"
+    ],
+    "recommended_buyer_roles": [
+      "Operations Director",
+      "Cold Chain Logistics Manager",
+      "Warehouse Manager",
+      "Health and Safety Manager"
+    ],
+    "outreach_angle": "STEF Italia is a good AMR/AGV target where temperature-controlled warehousing creates repetitive pallet and case movement under strict operational constraints.",
+    "source_note": "Official STEF Italia pages: https://www.stef.com/italia/ and https://www.stef.com/italia/trasporto-refrigerato-di-prodotti-agroalimentari; Italian HQ region not clearly verified from the public page."
+  },
+  {
+    "company_name": "Italtrans",
+    "website": "https://www.italtrans.com",
+    "hq_region": "Lombardy",
+    "logistics_category": "Food and beverage logistics",
+    "warehouse_signals": [
+      "logistics operations in group warehouses",
+      "frozen, fresh and dry compartments",
+      "high level of warehouse automation",
+      "network of logistics hubs and warehouses",
+      "storage, order preparation and co-packing services"
+    ],
+    "likely_process_fit": [
+      "pallet movement",
+      "internal transport",
+      "picking support",
+      "inventory scanning"
+    ],
+    "recommended_buyer_roles": [
+      "Operations Director",
+      "Warehouse Manager",
+      "Logistics Engineering Manager",
+      "Continuous Improvement Manager"
+    ],
+    "outreach_angle": "Italtrans is a strong AMR/AGV pilot candidate because its public site already describes automated warehouses and multi-temperature logistics processes.",
+    "source_note": "Official Italtrans logistics page: https://www.italtrans.com/en/logistica/"
+  },
+  {
+    "company_name": "Number 1 Logistics Group",
+    "website": "https://number1.it",
+    "hq_region": "Emilia-Romagna",
+    "logistics_category": "Food and beverage logistics",
+    "warehouse_signals": [
+      "leader in Italian grocery logistics",
+      "food warehouse operations under HACCP protocols",
+      "hubs across Italy",
+      "warehouse space dedicated to grocery and FMCG logistics"
+    ],
+    "likely_process_fit": [
+      "pallet movement",
+      "internal transport",
+      "picking support",
+      "inventory scanning"
+    ],
+    "recommended_buyer_roles": [
+      "Operations Director",
+      "Grocery Logistics Manager",
+      "Warehouse Manager",
+      "Continuous Improvement Manager"
+    ],
+    "outreach_angle": "Number 1 Logistics Group is relevant for AMR pilots because grocery logistics combines high-volume warehouse handling with repeatable pallet and picking flows.",
+    "source_note": "Official Number 1 pages on company and services: https://number1.it/azienda/ and https://number1.it/en/services/"
+  },
+  {
+    "company_name": "MARR",
+    "website": "https://www.marr.it",
+    "hq_region": "Emilia-Romagna",
+    "logistics_category": "Food and beverage logistics",
+    "warehouse_signals": [
+      "Italian foodservice distribution leader",
+      "national food distribution network",
+      "distribution units and foodservice product handling",
+      "foodservice assortment requiring cold, fresh and dry logistics"
+    ],
+    "likely_process_fit": [
+      "pallet movement",
+      "picking support",
+      "internal transport",
+      "inventory scanning"
+    ],
+    "recommended_buyer_roles": [
+      "Logistics Director",
+      "Distribution Center Manager",
+      "Warehouse Manager",
+      "Foodservice Operations Manager"
+    ],
+    "outreach_angle": "MARR's national foodservice distribution network makes it a credible AMR/AGV target for warehouse movement, picking and replenishment pilots.",
+    "source_note": "Official MARR group and location pages: https://www.marr.it/il-gruppo and https://www.marr.it/gruppo/dove-siamo"
+  },
+  {
+    "company_name": "Logistica Uno",
+    "website": "https://www.logisticauno.com",
+    "hq_region": "Veneto",
+    "logistics_category": "Food and beverage logistics",
+    "warehouse_signals": [
+      "logistics services for food and beverage supply chains",
+      "warehousing and distribution operations",
+      "contract logistics and transport services"
+    ],
+    "likely_process_fit": [
+      "pallet movement",
+      "internal transport",
+      "picking support",
+      "inventory scanning"
+    ],
+    "recommended_buyer_roles": [
+      "Operations Director",
+      "Warehouse Manager",
+      "Food and Beverage Logistics Manager",
+      "Continuous Improvement Manager"
+    ],
+    "outreach_angle": "Logistica Uno is a practical target for AMR/AGV pilots where food and beverage warehousing depends on repeatable pallet movement and picking flows.",
+    "source_note": "Official Logistica Uno website and service pages; detailed warehouse signals should be rechecked on official pages before production use."
+  },
+  {
+    "company_name": "Eurodifarm",
+    "website": "https://eurodifarm.com",
+    "hq_region": "Lombardy",
+    "logistics_category": "Pharma logistics",
+    "warehouse_signals": [
+      "temperature-controlled distribution of pharmaceutical, diagnostic and biomedical products",
+      "national controlled-temperature distribution network",
+      "4 hubs and regional platforms",
+      "pharma and medical warehouse areas",
+      "RFID use for reliability and inventory transparency"
+    ],
+    "likely_process_fit": [
+      "inventory scanning",
+      "picking support",
+      "internal transport",
+      "pallet movement"
+    ],
+    "recommended_buyer_roles": [
+      "Healthcare Logistics Director",
+      "Quality Manager",
+      "Warehouse Manager",
+      "IT Validation Lead"
+    ],
+    "outreach_angle": "Eurodifarm is a strong AMR/AGV prospect because pharma distribution needs controlled, traceable warehouse movement and inventory accuracy.",
+    "source_note": "Official Eurodifarm homepage and network page: https://eurodifarm.com/ and https://eurodifarm.com/network/"
+  },
+  {
+    "company_name": "PHSE",
+    "website": "https://phse.com",
+    "hq_region": "Lombardy",
+    "logistics_category": "Pharma logistics",
+    "warehouse_signals": [
+      "temperature-controlled healthcare distribution in Italy",
+      "pharma hubs in Milan and Rome",
+      "GDP warehouses",
+      "real-time temperature and location monitoring",
+      "hospital, homecare and clinical laboratory distribution"
+    ],
+    "likely_process_fit": [
+      "inventory scanning",
+      "internal transport",
+      "picking support"
+    ],
+    "recommended_buyer_roles": [
+      "Healthcare Logistics Director",
+      "Quality Manager",
+      "Warehouse Manager",
+      "Cold Chain Operations Manager"
+    ],
+    "outreach_angle": "PHSE is relevant for AMR/AGV pilots where controlled healthcare flows require high traceability and careful warehouse handoffs.",
+    "source_note": "Official PHSE Italy page: https://phse.com/en/healthcare-temperature-controlled-distribution/"
+  },
+  {
+    "company_name": "Plurima",
+    "website": "https://www.plurima.info",
+    "hq_region": "other",
+    "logistics_category": "Pharma logistics",
+    "warehouse_signals": [
+      "healthcare logistics services",
+      "outsourced pharmaceutical and economale warehouse management",
+      "storage, distribution and control of pharmaceutical warehouse activities",
+      "traceability systems for pharma logistics"
+    ],
+    "likely_process_fit": [
+      "inventory scanning",
+      "picking support",
+      "internal transport",
+      "pallet movement"
+    ],
+    "recommended_buyer_roles": [
+      "Healthcare Logistics Director",
+      "Warehouse Manager",
+      "Quality Manager",
+      "Public Healthcare Operations Manager"
+    ],
+    "outreach_angle": "Plurima is a good fit for pilots around inventory accuracy and internal movement in outsourced healthcare and pharmaceutical warehouses.",
+    "source_note": "Official Plurima healthcare logistics page: https://www.plurima.info/servizi/logistica/logistica-sanitaria/"
+  },
+  {
+    "company_name": "Bomi Group / UPS Healthcare",
+    "website": "https://www.ups.com",
+    "hq_region": "Lombardy",
+    "logistics_category": "Pharma logistics",
+    "warehouse_signals": [
+      "Italian healthcare logistics company acquired by UPS Healthcare",
+      "integrated logistics for medical devices, diagnostics, biomedical and pharmaceutical sectors",
+      "temperature-controlled facilities added to UPS Healthcare network",
+      "daily delivery flows to hospitals, clinics, laboratories, pharmacies and patients"
+    ],
+    "likely_process_fit": [
+      "inventory scanning",
+      "picking support",
+      "internal transport",
+      "pallet movement"
+    ],
+    "recommended_buyer_roles": [
+      "Healthcare Operations Director",
+      "Warehouse Manager",
+      "Quality Manager",
+      "Supply Chain Director"
+    ],
+    "outreach_angle": "Bomi's healthcare logistics footprint is relevant for pilots that improve warehouse traceability, picking and controlled product movement.",
+    "source_note": "Official UPS Healthcare press release on Bomi acquisition: https://www.ups.com/it/en/healthcare/news/press-releases/ups-acquires-bomi"
+  },
+  {
+    "company_name": "Movianto Italy",
+    "website": "https://movianto.com",
+    "hq_region": "Lombardy",
+    "logistics_category": "Pharma logistics",
+    "warehouse_signals": [
+      "healthcare and pharmaceutical logistics in Italy",
+      "storage, distribution and value-added healthcare services",
+      "logistics hubs in Milan and Napoli",
+      "warehouse operations at +15/+25 and +2/+8 temperature ranges",
+      "healthcare warehouse expansion plan in Milan area"
+    ],
+    "likely_process_fit": [
+      "inventory scanning",
+      "picking support",
+      "internal transport",
+      "pallet movement"
+    ],
+    "recommended_buyer_roles": [
+      "Healthcare Logistics Director",
+      "Warehouse Manager",
+      "Quality Manager",
+      "Cold Chain Operations Manager"
+    ],
+    "outreach_angle": "Movianto Italy is a credible pilot prospect because its healthcare warehouse operations combine controlled storage, picking and traceability-sensitive distribution.",
+    "source_note": "Official Movianto Italy page: https://movianto.com/locations/italy/"
+  },
+  {
+    "company_name": "Poste Italiane",
+    "website": "https://www.posteitaliane.it",
+    "hq_region": "Lazio",
+    "logistics_category": "Parcel, courier, and sorting operations",
+    "warehouse_signals": [
+      "parcel and correspondence division",
+      "investment in sorting and automation technologies",
+      "large e-commerce parcel hub in Bologna",
+      "parcel network supported by post offices, pick-up points and lockers"
+    ],
+    "likely_process_fit": [
+      "parcel sorting",
+      "internal transport",
+      "inventory scanning"
+    ],
+    "recommended_buyer_roles": [
+      "Parcel Operations Director",
+      "Hub Operations Manager",
+      "Automation Manager",
+      "Network Operations Director"
+    ],
+    "outreach_angle": "Poste Italiane is a major target for automation conversations because parcel growth and hub sorting create clear opportunities for AMR/AGV support around internal movement and sorting flows.",
+    "source_note": "Official Poste Italiane correspondence and parcel page plus TG Poste hub article: https://www.posteitaliane.it/it/corrispondenza-e-pacchi.html and https://tgposte.poste.it/2019/07/16/poste-nasce-a-bologna-il-piu-grande-hub-ditalia-per-le-commerce/"
+  },
+  {
+    "company_name": "BRT",
+    "website": "https://www.brt.it",
+    "hq_region": "Emilia-Romagna",
+    "logistics_category": "Parcel, courier, and sorting operations",
+    "warehouse_signals": [
+      "express courier network",
+      "over 200 branches",
+      "branch network supporting shipment operations",
+      "parcel collection and delivery network across Italy"
+    ],
+    "likely_process_fit": [
+      "parcel sorting",
+      "internal transport",
+      "inventory scanning"
+    ],
+    "recommended_buyer_roles": [
+      "Network Operations Director",
+      "Hub Operations Manager",
+      "Branch Operations Manager",
+      "Automation Manager"
+    ],
+    "outreach_angle": "BRT's dense branch network makes it a relevant pilot target for automating parcel movement and depot sorting support.",
+    "source_note": "Official BRT network page: https://www.brt.it/it/network/"
+  },
+  {
+    "company_name": "GLS Italy",
+    "website": "https://gls-group.com/IT",
+    "hq_region": "Lombardy",
+    "logistics_category": "Parcel, courier, and sorting operations",
+    "warehouse_signals": [
+      "parcel delivery network in Italy",
+      "depot presence across the country",
+      "parcel shops and city depot model",
+      "rapid delivery coverage including peripheral locations"
+    ],
+    "likely_process_fit": [
+      "parcel sorting",
+      "internal transport",
+      "inventory scanning"
+    ],
+    "recommended_buyer_roles": [
+      "Network Operations Director",
+      "Depot Operations Manager",
+      "Hub Manager",
+      "Automation Manager"
+    ],
+    "outreach_angle": "GLS Italy is a relevant AMR/AGV target because depot-based parcel networks can benefit from internal movement, sortation support and scanning workflows.",
+    "source_note": "Official GLS Italy company and city depot pages: https://gls-group.com/IT/en/company/gls-italy/ and https://gls-group.com/IT/en/city-depot/"
+  },
+  {
+    "company_name": "DHL Express Italy",
+    "website": "https://www.dhl.com",
+    "hq_region": "Lombardy",
+    "logistics_category": "Parcel, courier, and sorting operations",
+    "warehouse_signals": [
+      "international express hub at Milan Malpensa",
+      "gateway and service center operations",
+      "parcel and express shipment network",
+      "quality and safety certifications for Malpensa Hub"
+    ],
+    "likely_process_fit": [
+      "parcel sorting",
+      "internal transport",
+      "inventory scanning"
+    ],
+    "recommended_buyer_roles": [
+      "Hub Operations Manager",
+      "Network Operations Director",
+      "Automation Manager",
+      "Process Improvement Manager"
+    ],
+    "outreach_angle": "DHL Express Italy's Malpensa hub is a relevant automation target where parcel sorting, internal transport and scanning accuracy are operational priorities.",
+    "source_note": "Official DHL Group Malpensa Hub press release and DHL Express Italy certifications page: https://group.dhl.com/en/media-relations/press-releases/2021/dhl-express-opens-its-new-international-hub-at-malpensa-airport.html and https://www.dhl.com/it-en/home/express/news/quality-and-safety-certifications.html"
+  },
+  {
+    "company_name": "InPost Italia",
+    "website": "https://inpost.it",
+    "hq_region": "Lombardy",
+    "logistics_category": "Parcel, courier, and sorting operations",
+    "warehouse_signals": [
+      "parcel locker and out-of-home delivery network",
+      "InPost lockers and InPost Points across Italy",
+      "parcel movement, temporary deposit, pickup and delivery services",
+      "public service charter describes parcel handling services"
+    ],
+    "likely_process_fit": [
+      "parcel sorting",
+      "internal transport",
+      "inventory scanning"
+    ],
+    "recommended_buyer_roles": [
+      "Operations Director",
+      "Network Operations Manager",
+      "Hub Operations Manager",
+      "Automation Manager"
+    ],
+    "outreach_angle": "InPost Italia is a plausible target for automation pilots where parcel locker growth increases the need for efficient hub movement, sorting and scan accuracy.",
+    "source_note": "Official InPost Italy pages and service charter: https://inpost.it/chi-siamo and https://inpost.it/sites/default/files/2025-07/Carta_dei_servizi_Locker_InPost_Italia_17_07_2025.pdf"
+  },
+  {
+    "company_name": "Würth Italia",
+    "website": "https://www.wuerth.it",
+    "hq_region": "other",
+    "logistics_category": "Manufacturing and industrial distribution",
+    "warehouse_signals": [
+      "three logistics centers in Egna, Crespellano and Capena",
+      "central warehouse and national customer service logistics",
+      "Zero Impact Logistics Hub",
+      "automated storage and picking system with shuttle technology"
+    ],
+    "likely_process_fit": [
+      "internal transport",
+      "picking support",
+      "inventory scanning",
+      "pallet movement"
+    ],
+    "recommended_buyer_roles": [
+      "Logistics Director",
+      "Warehouse Manager",
+      "Internal Process Director",
+      "Continuous Improvement Manager"
+    ],
+    "outreach_angle": "Würth Italia is an excellent AMR/AGV pilot target because it has multiple logistics centers and already invests in automated storage and warehouse process innovation.",
+    "source_note": "Official Würth Italia company and logistics hub pages: https://www.wuerth.it/azienda/wurth-italia/ and https://www.wuerth.it/azienda/zero-impact-logistic-hub/"
+  },
+  {
+    "company_name": "Iveco Group",
+    "website": "https://www.ivecogroup.com",
+    "hq_region": "Piedmont",
+    "logistics_category": "Manufacturing and industrial distribution",
+    "warehouse_signals": [
+      "commercial vehicle and powertrain manufacturing operations",
+      "San Mauro Torinese logistics hub referenced in company reporting",
+      "spare parts warehouse and parts distribution operations",
+      "industrial sites and supply chain operations"
+    ],
+    "likely_process_fit": [
+      "line-side replenishment",
+      "pallet movement",
+      "internal transport",
+      "inventory scanning"
+    ],
+    "recommended_buyer_roles": [
+      "Supply Chain Director",
+      "Industrial Logistics Manager",
+      "Warehouse Manager",
+      "Parts Distribution Manager"
+    ],
+    "outreach_angle": "Iveco Group is relevant for AMR/AGV pilots around parts logistics, line-side replenishment and warehouse movement in industrial operations.",
+    "source_note": "Official Iveco Group overview and annual reporting mentioning San Mauro Torinese logistics hub: https://www.ivecogroup.com/it-IT/group/about_us/overview and Iveco Group annual report materials."
+  },
+  {
+    "company_name": "Ferrari",
+    "website": "https://www.ferrari.com",
+    "hq_region": "Emilia-Romagna",
+    "logistics_category": "Manufacturing and industrial distribution",
+    "warehouse_signals": [
+      "Maranello manufacturing operations",
+      "industrial logistics area referenced in official Ferrari careers page",
+      "supplier portfolio, MRP requests and stock-level logistics parameters",
+      "warehouse stock-level planning activities"
+    ],
+    "likely_process_fit": [
+      "line-side replenishment",
+      "internal transport",
+      "inventory scanning",
+      "pallet movement"
+    ],
+    "recommended_buyer_roles": [
+      "Industrial Logistics Manager",
+      "Supply Chain Manager",
+      "Warehouse Manager",
+      "Material Planning Manager"
+    ],
+    "outreach_angle": "Ferrari is relevant for tightly scoped AMR/AGV pilots where high-value industrial logistics depends on accurate material planning and controlled warehouse movement.",
+    "source_note": "Official Ferrari careers page for industrial logistics/material planning in Maranello: https://jobs.ferrari.com/job/Maranello-Material-Planner-Internship-%28Maranello%29/1340314255/"
+  },
+  {
+    "company_name": "Datalogic",
+    "website": "https://www.datalogic.com",
+    "hq_region": "Emilia-Romagna",
+    "logistics_category": "Manufacturing and industrial distribution",
+    "warehouse_signals": [
+      "manufacturing sites in the Bologna area",
+      "automatic data capture and process automation markets",
+      "solutions across retail, manufacturing, transportation and logistics",
+      "intralogistics applications including packaging, palletizing, robotics, automated warehouses and AGVs"
+    ],
+    "likely_process_fit": [
+      "inventory scanning",
+      "line-side replenishment",
+      "internal transport",
+      "picking support"
+    ],
+    "recommended_buyer_roles": [
+      "Industrial Operations Manager",
+      "Warehouse Manager",
+      "Supply Chain Manager",
+      "Manufacturing Engineering Manager"
+    ],
+    "outreach_angle": "Datalogic is a relevant industrial automation target because its manufacturing and logistics technology context makes warehouse scanning and internal movement pilots highly aligned.",
+    "source_note": "Official Datalogic production and intralogistics pages: https://www.datalogic.com/eng/media-center/news/expanding-production-capabilities-nd2-8114.html and https://www.datalogic.com/eng/industries-applications/manufacturing/intralogistics-so-21.html"
+  },
+  {
+    "company_name": "CEDI - Centro Distribuzione Industriale",
+    "website": "https://www.cedi.it",
+    "hq_region": "other",
+    "logistics_category": "Manufacturing and industrial distribution",
+    "warehouse_signals": [
+      "trade and distribution of technical industrial articles",
+      "storage areas in San Marco Evangelista and Maranello",
+      "warehouse rotation of industrial items",
+      "complete management of auxiliary materials warehouse for industrial customers",
+      "distribution to customer departments"
+    ],
+    "likely_process_fit": [
+      "picking support",
+      "inventory scanning",
+      "internal transport",
+      "line-side replenishment"
+    ],
+    "recommended_buyer_roles": [
+      "Operations Director",
+      "Warehouse Manager",
+      "Industrial Distribution Manager",
+      "Supply Chain Manager"
+    ],
+    "outreach_angle": "CEDI is a good pilot target because industrial distribution and auxiliary-material warehouse management create repeatable picking, replenishment and inventory-control workflows.",
+    "source_note": "Official CEDI company page: https://www.cedi.it/home/?lang=en"
+  }
+]

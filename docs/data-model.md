@@ -11,6 +11,7 @@ This document describes the local JSON files owned by the AI/data pipeline and t
 | `data/trust_gaps.json` | Cross-border trust risks for Chinese vendors entering Italy | Trust Gap Analyzer |
 | `data/proof_checklist.json` | Proof and documentation requirements for Italian market entry pilots | Trust Gap Analyzer, Sales Pack Generator |
 | `data/demo_amr_profile.json` | Complete demo product intake for the AMR walkthrough | Product Parser, demo mode |
+| `data/italian_target_accounts.json` | Curated Italian warehouse/logistics companies for AMR/AGV pilot prospecting | Target Account Finder |
 | `schemas/pilot_analysis.schema.json` | Draft-07 schema for final Pilot Control Room output | Backend, frontend, evals |
 
 ## `italian_segments.json`
@@ -166,6 +167,56 @@ Notes:
 - The actual file includes detailed specs, proof status, integration notes, constraints, and demo assumptions.
 - The demo profile should be complete enough to pass through every pipeline stage without user input.
 
+## `italian_target_accounts.json`
+
+Purpose: curated Italian warehouse and logistics companies for AMR/AGV pilot prospecting. The file gives the Pilot Control Room a concrete target-account shortlist after the pipeline has selected the best buyer segment and warehouse process.
+
+Shape:
+
+```json
+[
+  {
+    "company_name": "Example Logistics S.p.A.",
+    "website": "https://example.com",
+    "hq_region": "Lombardy",
+    "logistics_category": "3PL and e-commerce fulfilment",
+    "warehouse_signals": ["contract logistics and warehousing services"],
+    "likely_process_fit": ["internal transport", "picking support"],
+    "recommended_buyer_roles": ["Operations Director", "Warehouse Manager"],
+    "outreach_angle": "Why this company is a plausible AMR/AGV pilot target now.",
+    "source_note": "Official company website, press release, or public trade directory used for curation."
+  }
+]
+```
+
+Fields:
+
+- `company_name` (`string`): public company name shown in the shortlist.
+- `website` (`string`): official company domain only.
+- `hq_region` (`string` or `null`): headquarters or best verified Italian region, using Lombardy, Veneto, Emilia-Romagna, Piedmont, Lazio, other, or `null` when not verified from public sources.
+- `logistics_category` (`string`): one of the six target categories used by the MVP: 3PL and e-commerce fulfilment, retail logistics and fashion distribution, food and beverage logistics, pharma logistics, parcel/courier/sorting operations, or manufacturing and industrial distribution.
+- `warehouse_signals` (`array<string>`): public company-level signals that suggest warehouse, fulfilment, distribution, sorting, cold-chain, pharma, or industrial logistics relevance.
+- `likely_process_fit` (`array<string>`): warehouse processes likely relevant to the company, using the process labels from the seed process model such as internal transport, picking support, parcel sorting, pallet movement, inventory scanning, and line-side replenishment.
+- `recommended_buyer_roles` (`array<string>`): role titles to approach, never real people or personal contact details.
+- `outreach_angle` (`string`): one concise reason the AMR/AGV vendor should approach this account for a pilot conversation.
+- `source_note` (`string`): public sourcing note, usually official websites, press releases, or public trade directories.
+
+Sourcing approach:
+
+- Use public company-level data only.
+- Prefer official company websites, official press releases, public trade directories, and public company materials.
+- Do not include personal contacts, private emails, phone numbers, LinkedIn profiles, or scraped personal data.
+- Treat the dataset as a curated MVP seed, not a live or exhaustive Italian company database.
+
+Filtering logic:
+
+1. Take `selected_segment` and `selected_process` from the Segment Matcher and Process Selector.
+2. Filter accounts where `logistics_category` maps to the selected segment.
+3. Filter or boost accounts where `likely_process_fit` includes the selected process family.
+4. Boost accounts whose `hq_region` matches the preferred pilot region, when a region preference exists.
+5. Boost accounts whose `warehouse_signals` mention process-relevant signals such as fulfilment, cold chain, sorting hub, automated warehouse, distribution centre, or line-side flow.
+6. Return the top 5 to 10 accounts as `target_account_shortlist`, ordered by fit and with the outreach angle preserved.
+
 ## Master Schema
 
 `schemas/pilot_analysis.schema.json` defines the final dashboard contract. Required top-level fields:
@@ -176,6 +227,7 @@ Notes:
 - `warehouse_process_recommendation`
 - `trust_gaps`
 - `pilot_offer`
+- `target_account_shortlist` (optional)
 - `objection_battlecard`
 - `proof_checklist`
 - `next_7_days_plan`

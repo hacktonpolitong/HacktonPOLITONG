@@ -484,6 +484,75 @@
         }
       }
     },
+    "target_account_shortlist": {
+      "type": "array",
+      "description": "Ranked shortlist of Italian target accounts matched to the selected segment and process",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "company_name",
+          "website",
+          "hq_region",
+          "logistics_category",
+          "warehouse_signals",
+          "likely_process_fit",
+          "recommended_buyer_roles",
+          "outreach_angle",
+          "source_note"
+        ],
+        "properties": {
+          "company_name": {
+            "type": "string",
+            "description": "Public company name shown in the Pilot Control Room shortlist."
+          },
+          "website": {
+            "type": "string",
+            "description": "Official company website."
+          },
+          "hq_region": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Verified Italian headquarters or primary region, or null when not verified from public sources."
+          },
+          "logistics_category": {
+            "type": "string",
+            "description": "Target account category matched to the selected buyer segment."
+          },
+          "warehouse_signals": {
+            "type": "array",
+            "description": "Public company-level warehouse, fulfilment, distribution, sorting, cold-chain, pharma, or industrial logistics signals.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "likely_process_fit": {
+            "type": "array",
+            "description": "Warehouse processes likely relevant to the account.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "recommended_buyer_roles": {
+            "type": "array",
+            "description": "Role titles to approach, without personal contact data.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "outreach_angle": {
+            "type": "string",
+            "description": "One-sentence account-specific outreach angle."
+          },
+          "source_note": {
+            "type": "string",
+            "description": "Public sourcing note for the company-level account data."
+          }
+        }
+      }
+    },
     "objection_battlecard": {
       "type": "array",
       "description": "Likely buyer objections and recommended responses.",
