@@ -207,6 +207,7 @@ Sourcing approach:
 - Prefer official company websites, official press releases, public trade directories, and public company materials.
 - Do not include personal contacts, private emails, phone numbers, LinkedIn profiles, or scraped personal data.
 - Treat the dataset as a curated MVP seed, not a live or exhaustive Italian company database.
+- It is not a guarantee that any account will buy, reply, or accept a pilot.
 
 Filtering logic:
 
@@ -248,3 +249,5 @@ Frontend rendering expectation:
 - Do not rename top-level schema fields without coordinating with frontend owners.
 - Use Italy-specific warehouse, logistics, and buyer language in seed data.
 - Keep compliance content as readiness guidance, not formal certification advice.
+- Do not add private personal contact data to target-account outputs.
+- Prefer company-level public contact paths and role-based outreach.

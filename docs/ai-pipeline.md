@@ -1,6 +1,6 @@
 # PilotOps AI Pipeline
 
-This document defines the structured AI workflow for turning a Chinese warehouse automation product profile into a practical Italian first-pilot package. The pipeline is intentionally narrow: it does not produce a broad market report, a lead list, or compliance certification. It produces the structured output needed by the Pilot Control Room.
+This document defines the structured AI workflow for turning a Chinese warehouse automation product profile into a practical Italian first-pilot package. The pipeline is intentionally narrow: it does not produce a broad market report, a scraped lead list, or compliance certification. It produces the structured output needed by the Pilot Control Room, including a Target Account Shortlist generated from a curated target-account database.
 
 ## Pipeline Principles
 
@@ -9,6 +9,7 @@ This document defines the structured AI workflow for turning a Chinese warehouse
 - The final buyer is an Italian warehouse, logistics, fulfilment, retail, manufacturing, pharma, parcel, or food and beverage operator.
 - Each stage returns structured JSON that can be validated, logged, reviewed, and rendered.
 - Seed datasets provide the baseline domain knowledge; the model should explain when a recommendation comes from product evidence, seed data, or an inference.
+- Target accounts come from a local curated target-account database with company-level public contact paths, not broad live scraping or personal-data harvesting.
 - The final response must match `schemas/pilot_analysis.schema.json`.
 
 ## Inputs
@@ -287,13 +288,14 @@ Inputs:
 - Stages 1 through 6
 - Proof checklist results
 - Objection patterns from seed data
-- Target account shortlist, when available
+- Target account shortlist for account-specific outreach angle constraints, when available
 
 Logic:
 
 - Generate concise outbound material that speaks to Italian operations risk, not abstract AI value.
 - Include a first outreach email, meeting pitch, one-page pilot proposal, ROI argument, objection battlecard, and proof checklist summary.
 - When a target account shortlist exists, adapt outreach angles to the selected account category without inventing personal contacts.
+- Keep account-specific copy at company and role level; do not invent private contacts or personal emails.
 - Keep language practical, specific, and credible.
 
 Expected structured output:
@@ -330,6 +332,7 @@ Logic:
 
 - Ensure every required field in `schemas/pilot_analysis.schema.json` is present.
 - Keep evidence notes separate from claims that require legal or compliance validation.
+- Keep target-account source notes separate from recommendations, preserving `source_note` caveats and `hq_region: null` when public verification is incomplete.
 - Flag assumptions so the frontend can show confidence and readiness without pretending the pilot is guaranteed.
 - Return one object suitable for dashboard rendering.
 
@@ -339,7 +342,7 @@ Expected structured output:
 {
   "stage": "evidence_schema_assembler",
   "final_output_contract": "schemas/pilot_analysis.schema.json",
-  "dataset_records_used": ["it_3pl_ecommerce", "internal_transport_picking_to_packing", "local_maintenance_unclear"],
+  "dataset_records_used": ["it_3pl_ecommerce", "internal_transport_picking_to_packing", "it_account_001", "local_maintenance_unclear"],
   "assumptions": ["The buyer operates a mid-size fulfilment warehouse in Northern Italy", "The AMRs can operate safely on the selected route after mapping"],
   "validation_status": "schema_ready"
 }
@@ -365,5 +368,12 @@ The backend should return a single JSON object matching `schemas/pilot_analysis.
 - Do not recommend a full market-entry strategy when the input only supports a first pilot.
 - Do not claim CE compliance is verified unless the provided documents prove it.
 - Do not claim live-scraped or complete Italian leads exist in the MVP; the target-account shortlist comes from a curated seed dataset.
+- Do not invent companies when using real-company mode.
+- Do not expose personal contact data unless it is explicitly public and compliant.
+- Prefer company-level contacts: official website, public contact page, or generic company email when public.
+- Use role-based outreach instead of personal-data scraping.
+- If account confidence is low, preserve the verification caveat in `source_note` or omit the account from the ranked shortlist.
+- Do not claim a shortlisted company is guaranteed to buy or respond.
+- Do not represent the shortlist as exhaustive.
 - Do not hide missing proof; convert it into a buyer-trust action.
 - Do not generate generic sales copy that could apply to any SaaS or robotics company.
