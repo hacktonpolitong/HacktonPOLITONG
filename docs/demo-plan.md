@@ -4,9 +4,9 @@
 
 This document defines how PilotOps AI will be demonstrated during the hackathon as a live MVP.
 
-The demo must prove that PilotOps AI is more than a static presentation: it should show a working web app that turns a Chinese warehouse automation product into a localized, low-risk Italian pilot package.
+The demo must prove that PilotOps AI is more than a static presentation or clickable mockup: it should show a working web app that turns a Chinese warehouse automation product into a localized, low-risk Italian pilot package.
 
-The priority is to deliver a stable, credible, and testable live link. Real-time AI generation is valuable, but it should not be required for the core demo to work.
+The priority is to deliver a stable, credible, and testable live link. Real-time AI generation is valuable, but the MVP should still behave like a functional product without it by using a small deterministic analysis engine, local seed datasets, and structured output rendering.
 
 ## Demo Goal
 
@@ -29,11 +29,29 @@ Vercel live link
         -> Next.js web app
         -> interactive intake flow
         -> analysis loading state
-        -> Pilot Control Room rendered from structured demo data
-        -> optional AI generation when API keys and connectivity are reliable
+        -> local MVP analysis engine using seed data and rules
+        -> Pilot Control Room rendered from structured analysis output
+        -> optional live AI generation when API keys and connectivity are reliable
 ```
 
-This keeps the demo usable even if external AI APIs are slow, unavailable, rate-limited, or not configured.
+This keeps the demo usable even if external AI APIs are slow, unavailable, rate-limited, or not configured, while still satisfying the requirement that the deliverable is a functional product rather than a mockup.
+
+## Functional MVP Requirement
+
+The submitted hackathon deliverable should be treated as a working MVP, not a mockup.
+
+Minimum requirement:
+
+- the app is deployed at a public live URL;
+- the user can click through the full flow;
+- the intake step accepts editable product/company inputs;
+- the analysis result is generated from the submitted inputs, not only hardcoded screen text;
+- the dashboard changes at least meaningfully when the product category or proof status changes;
+- the result uses the structured Pilot Control Room schema;
+- the app can be tested by judges without private credentials;
+- any AI API integration is server-side and optional for the default test path.
+
+The MVP does not need to be a production-grade market intelligence system. It does need to behave like a real first version of the product.
 
 ## Hosting Plan
 
@@ -51,24 +69,25 @@ The live URL should be shared with judges and included in the presentation mater
 
 ## Demo Modes
 
-### Mode 1: Stable Demo Mode
+### Mode 1: Stable Functional MVP Mode
 
-Stable demo mode is the default mode for the presentation.
+Stable functional MVP mode is the default mode for the presentation and judge testing.
 
 Behavior:
 
 - the app loads from the public Vercel link;
 - the user can start a pilot analysis;
-- the intake screen is prefilled or can be quickly filled with the demo AMR profile;
+- the intake screen is prefilled for speed but remains editable;
 - the app shows an AI-style analysis loading state;
-- the Pilot Control Room appears with realistic structured output;
+- the app runs a local analysis function that maps the submitted profile to seeded buyer segments, warehouse processes, trust gaps, proof requirements, pilot offer logic, and sales pack templates;
+- the Pilot Control Room appears with structured output generated from that local analysis;
 - no external AI API call is required.
 
 Why this matters:
 
 - no API cost is required;
 - the demo works even with weak internet;
-- judges can still test the flow;
+- judges can test the flow and see the result respond to inputs;
 - the output remains aligned with the product spec.
 
 ### Mode 2: Optional Live AI Mode
@@ -81,7 +100,7 @@ Behavior:
 - the server calls the selected AI provider using environment variables;
 - the provider returns structured pilot analysis JSON;
 - the dashboard renders the generated result;
-- if the API fails, the app falls back to the stable demo result.
+- if the API fails, the app falls back to the stable local MVP analysis.
 
 This mode should never expose API keys in frontend code.
 
@@ -144,7 +163,7 @@ Recommended fields:
 - pilot ambition;
 - known constraints.
 
-For the live presentation, this step should be fast. The demo can use prefilled data so the presenter does not spend time typing.
+For the live presentation, this step should be fast. The demo can use prefilled data so the presenter does not spend time typing, but the fields should be editable so the product is testable.
 
 ### Step 3: Documentation Readiness
 
@@ -198,6 +217,31 @@ Required sections:
 
 The presenter should highlight that the output is structured, specific, and immediately actionable.
 
+## Minimum Product Logic
+
+To avoid looking like a mockup, the MVP should include a small but real analysis layer.
+
+Recommended local logic:
+
+1. Classify the product category from the intake selection or text keywords.
+2. Match the category to a buyer segment from `data/italian_segments.json`.
+3. Select a warehouse process from `data/warehouse_processes.json`.
+4. Score pilot fit based on product category, proof availability, integration complexity, and support readiness.
+5. Select trust gaps from `data/trust_gaps.json` based on missing or partial proof.
+6. Build the proof checklist from `data/proof_checklist.json`.
+7. Generate a pilot offer from templates and selected process data.
+8. Generate sales pack text from the selected segment, process, and trust gaps.
+9. Return a structured object matching `schemas/pilot_analysis.schema.json`.
+
+This can be deterministic and lightweight. The key is that the user input drives the output.
+
+Examples of visible output changes:
+
+- changing product category from AMR to palletizing changes the buyer segment and pilot process;
+- marking local support as missing increases the support trust gap severity;
+- marking CE/safety summary as missing changes the proof checklist and buyer objections;
+- changing pilot ambition changes the recommended pilot duration or scope.
+
 ## Presentation Script
 
 Suggested 2-minute flow:
@@ -228,6 +272,8 @@ Minimum testable path:
 4. Submit.
 5. Reach the Pilot Control Room.
 6. Inspect the recommendation sections.
+7. Change at least one relevant input and rerun the analysis.
+8. Confirm the recommendation changes in a visible way.
 
 If live AI is enabled, judges may optionally test a new input. The app should still show a clear result if the AI call fails.
 
@@ -237,7 +283,7 @@ The demo should be designed around reliability first.
 
 Required safeguards:
 
-- keep a stable mock result available;
+- keep a stable local analysis fallback available;
 - avoid requiring API keys for the main judge path;
 - never expose keys with `NEXT_PUBLIC_` variables;
 - test the Vercel URL before the presentation;
@@ -253,7 +299,7 @@ Costs are only introduced if the app performs real AI calls through Orbit AI, Op
 
 Recommended approach:
 
-- use mock data for the default demo;
+- use local deterministic analysis for the default demo;
 - use live AI only as an optional enhancement;
 - set spending or usage limits on any API key used for the hackathon;
 - create a dedicated demo API key when possible;
@@ -265,6 +311,9 @@ The demo is successful when:
 
 - the Vercel link opens reliably;
 - the main flow can be completed by a judge;
+- intake fields are editable;
+- output is generated from submitted inputs;
+- changing key inputs changes the Pilot Control Room result;
 - the output clearly matches the AMR-to-Italy use case;
 - the dashboard feels like a control room, not a static slide;
 - the result contains concrete buyer, process, trust, pilot, proof, and sales recommendations;
@@ -292,7 +341,7 @@ The team still needs to decide:
 
 - whether the submitted hackathon version will include live AI generation;
 - which provider will power live AI if enabled;
-- whether judges can edit only the demo AMR profile or submit entirely new products;
+- how many product categories the local MVP analysis should support beyond the demo AMR profile;
 - whether to expose copy/export actions in the first live MVP;
 - whether to include source citations in the Pilot Control Room;
 - whether the live URL should use the default Vercel domain or a custom project name.
