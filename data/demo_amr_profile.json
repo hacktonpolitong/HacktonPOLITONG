@@ -1,200 +1,106 @@
 {
   "profile_id": "demo_amr_italy_3pl_internal_transport",
   "created_for": "PilotOps AI MVP demo",
-  "company": {
-    "name": "Shenzhen MovePilot Robotics",
-    "country": "China",
-    "website": "https://example.movepilot.invalid",
-    "buyer_user": "Head of International Expansion",
-    "current_markets": [
-      "China",
-      "Southeast Asia"
-    ],
-    "italy_entry_goal": "Win a first paid pilot with a mid-size Italian warehouse or logistics buyer"
+  "vendor": {
+    "fictional_name": "Shenzhen Northstar Mobility",
+    "short_description": "Fictional Chinese warehouse robotics vendor preparing its first Italian pilot for AMR-based internal transport."
   },
-  "product": {
-    "name": "MP-800 Autonomous Mobile Robot",
-    "category": "AMR",
-    "short_description": "Autonomous mobile robot for internal transport of totes and small carts inside warehouses.",
-    "detailed_description": "The MP-800 moves totes, cartons, and small carts between picking, packing, replenishment, and dispatch staging areas. It is designed for modular deployment without fixed conveyors and can start with operator tablet dispatch before deeper WMS integration.",
-    "primary_use_cases": [
-      "Internal transport between picking and packing",
-      "Returns movement to inspection benches",
-      "Dispatch staging support",
-      "Line-side material movement in light manufacturing"
+  "product_category": "AMR",
+  "product_name": "NSM-300 Autonomous Mobile Robot",
+  "product_description": "Mid-range autonomous mobile robot designed to move totes, cartons, and small carts between warehouse zones without installing fixed conveyors.",
+  "amr_use_cases": [
+    "internal transport between picking and packing zones",
+    "tote movement from returns inspection to replenishment",
+    "dispatch staging support",
+    "line-side replenishment in light manufacturing"
+  ],
+  "technical_specs": {
+    "payload_kg": 300,
+    "max_speed_ms": 1.6,
+    "battery_runtime_hours": 10,
+    "navigation_type": "SLAM navigation with mapped routes and obstacle detection",
+    "safety_features": [
+      "emergency stop button",
+      "front obstacle detection",
+      "configurable speed zones",
+      "audible movement alert",
+      "restricted area mapping"
     ],
-    "core_benefits": [
-      "Reduce manual walking time for warehouse operators",
-      "Increase consistency of tote movement between zones",
-      "Deploy in a bounded route without redesigning the warehouse",
-      "Scale from two robots to a larger fleet after pilot validation",
-      "Lower upfront disruption than fixed conveyor automation"
+    "connectivity": [
+      "Wi-Fi",
+      "REST API",
+      "CSV task import",
+      "operator tablet dispatch"
     ],
-    "technical_specs": {
-      "payload_kg": 300,
-      "max_speed_m_per_s": 1.6,
-      "battery_runtime_hours": 8,
-      "charging_time_hours": 2,
-      "navigation": "SLAM navigation with mapped routes and obstacle detection",
-      "safety_features": [
-        "Emergency stop button",
-        "Obstacle detection",
-        "Speed zones",
-        "Audible alerts",
-        "Configurable no-go areas"
-      ],
-      "connectivity": [
-        "Wi-Fi",
-        "REST API",
-        "Operator tablet dispatch",
-        "CSV task import"
-      ],
-      "fleet_management": "Web dashboard for route status, task queue, robot health, and battery status",
-      "operating_environment": [
-        "Indoor warehouse floor",
-        "Ambient temperature",
-        "Marked handoff points recommended",
-        "No outdoor rain exposure"
-      ]
-    },
-    "installation_requirements": [
-      "Warehouse floor map",
-      "Charging point near pilot route",
-      "Wi-Fi coverage along the selected route",
-      "Defined pickup and drop-off points",
-      "Operator briefing before live pilot",
-      "Safety review of pedestrian and forklift interaction points"
-    ],
-    "integration_options": [
-      {
-        "mode": "Operator tablet dispatch",
-        "fit_for_pilot": "high",
-        "description": "Warehouse supervisor or operator manually assigns transport tasks during the first pilot."
-      },
-      {
-        "mode": "CSV task import",
-        "fit_for_pilot": "medium",
-        "description": "Daily or hourly task list exported from WMS and imported into the fleet dashboard."
-      },
-      {
-        "mode": "REST API handoff",
-        "fit_for_pilot": "medium",
-        "description": "WMS creates transport tasks through API after IT review."
-      }
-    ]
+    "fleet_dashboard": true
   },
+  "installation_requirements": [
+    "warehouse floor map",
+    "charging location near the pilot route",
+    "Wi-Fi coverage along the selected route",
+    "defined pickup and drop-off points",
+    "operator briefing before live pilot",
+    "pilot-area safety review for pedestrian and forklift interaction"
+  ],
+  "integration_options": [
+    "operator tablet dispatch for the first pilot",
+    "CSV task import from WMS export",
+    "REST API task handoff after IT review"
+  ],
   "target_market": {
     "country": "Italy",
-    "preferred_segment_hint": "Mid-size 3PL and e-commerce fulfilment warehouses",
-    "secondary_segment_hints": [
-      "Retail logistics and fashion distribution centers",
-      "Manufacturing warehouses and industrial distribution"
-    ],
-    "entry_goal": "Secure a bounded first pilot that creates Italian operating evidence",
-    "regions_to_prioritize": [
+    "target_segment": "mid-size 3PL or e-commerce fulfilment",
+    "target_regions": [
       "Lombardy",
-      "Veneto",
       "Emilia-Romagna",
+      "Veneto",
       "Piedmont"
     ]
   },
-  "current_proof_available": {
-    "technical_specs": "available",
-    "ce_safety_summary": "partial",
-    "risk_assessment_method": "missing",
-    "installation_plan": "partial",
-    "maintenance_plan": "partial",
-    "support_sla": "missing",
-    "spare_parts_plan": "missing",
-    "wms_integration_workflow": "partial",
-    "integration_api_summary": "available",
-    "data_security_summary": "partial",
-    "roi_model_italy": "missing",
-    "pilot_kpi_plan": "partial",
-    "case_study_evidence": "available",
-    "pilot_exit_conditions": "missing",
-    "warranty_terms": "partial",
-    "operator_training_pack": "missing",
-    "throughput_test_evidence": "available",
-    "validation_support_note": "recommended"
-  },
-  "proof_details": {
-    "technical_specs": "English technical sheet with payload, speed, battery, navigation, connectivity, and operating environment.",
-    "chinese_case_studies": [
-      {
-        "customer_type": "Chinese e-commerce fulfilment warehouse",
-        "process": "Tote movement between picking and packing",
-        "scope": "6 AMRs across three routes",
-        "reported_result": "Reduced operator walking time by 22 percent in the measured zone"
-      },
-      {
-        "customer_type": "Electronics spare parts warehouse",
-        "process": "Internal transport from storage to packing",
-        "scope": "4 AMRs, two shifts",
-        "reported_result": "Improved task consistency during evening dispatch preparation"
-      }
-    ],
-    "ce_status": "Vendor has a partial CE/safety summary and needs a buyer-ready one-page safety pack for the Italian pilot.",
-    "support_model": "Remote diagnostics from China available. No named Italian support partner yet. Vendor can provide first-week on-site engineer for demo period if budget allows.",
-    "pricing_range": "Pilot fee expected between EUR 18,000 and EUR 28,000 excluding travel, local partner support, and site preparation.",
-    "warranty_summary": "Standard hardware warranty available, but pilot-specific responsibility terms need to be written."
-  },
-  "desired_pilot": {
-    "ambition": "45-day limited pilot in one Italian warehouse zone",
-    "preferred_process": "Internal transport between picking and packing",
-    "systems": [
-      "2 MP-800 AMRs",
-      "Fleet dashboard",
-      "Charging station",
-      "Operator tablet workflow"
-    ],
-    "pilot_scope": "One mapped route moving totes from picking aisles to packing benches in a 3PL or e-commerce fulfilment warehouse.",
-    "target_kpis": [
-      {
-        "name": "Manual walking time reduction",
-        "target": "15-25 percent reduction on selected route"
-      },
-      {
-        "name": "Totes moved per hour",
-        "target": "Baseline plus 15 percent during stable pilot windows"
-      },
-      {
-        "name": "Route availability",
-        "target": "95 percent during agreed operating windows"
-      },
-      {
-        "name": "Operator handoff time",
-        "target": "Average handoff below 45 seconds after week 2"
-      }
+  "pilot_shape": {
+    "duration_days": 45,
+    "number_of_systems": 2,
+    "scope": "one mapped route moving totes from picking aisles to packing benches in a 3PL or e-commerce fulfilment warehouse",
+    "target_process": "internal transport between picking and packing zones",
+    "measurable_kpis": [
+      "manual walking time reduced on the selected route",
+      "totes moved per hour during agreed pilot windows",
+      "route availability during pilot shifts",
+      "operator handoff time at pickup and drop-off points"
     ],
     "risk_reducers": [
-      "One route only",
-      "No full WMS replacement",
-      "Manual fallback remains available",
-      "Exit clause after 45 days",
-      "Weekly KPI review"
+      "one route only",
+      "manual fallback remains available",
+      "operator tablet workflow before deeper WMS integration",
+      "weekly KPI review",
+      "exit condition after the 45-day pilot"
     ],
-    "next_commercial_step": "If KPIs and support commitments are met, expand to 6 AMRs across picking-to-packing and dispatch staging."
+    "next_commercial_step": "If the pilot meets agreed KPIs and support expectations, propose a paid expansion to six AMRs across picking-to-packing and dispatch staging."
+  },
+  "proof_status": {
+    "available": [
+      "technical specifications",
+      "API summary",
+      "fictional demo case outline from a similar Chinese fulfilment workflow"
+    ],
+    "missing": [
+      "Italian reference customer",
+      "buyer-ready CE and safety summary",
+      "local maintenance partner",
+      "maintenance plan and spare parts",
+      "support SLA",
+      "ROI model with Italian assumptions",
+      "pilot KPI plan",
+      "warranty and exit conditions",
+      "operator and supervisor training pack"
+    ]
   },
   "known_constraints": [
-    "No Italian customer reference yet",
-    "No signed local maintenance partner yet",
-    "CE/safety summary is partial and must be made buyer-ready",
-    "ROI model is not localized to Italian warehouse assumptions",
-    "WMS integration should begin with operator tablet or CSV workflow to avoid long IT approval",
-    "Operator training pack needs Italian-language quick-start material"
-  ],
-  "demo_expected_output": {
-    "recommended_segment_id": "it_3pl_ecommerce",
-    "recommended_process_id": "internal_transport_picking_to_packing",
-    "highest_priority_trust_gaps": [
-      "local_maintenance_unclear",
-      "no_italian_reference",
-      "ce_safety_evidence_partial",
-      "wms_integration_unclear",
-      "roi_not_localized"
-    ],
-    "pilot_duration_days": 45,
-    "sales_pack_angle": "Offer a low-risk, one-route AMR pilot that creates Italian operating proof before asking for a larger automation purchase."
-  }
+    "no Italian reference customer",
+    "partial CE/safety summary",
+    "no local maintenance partner identified",
+    "no localized ROI model",
+    "WMS integration should start with operator tablet dispatch or CSV task import to avoid long IT approval",
+    "Italian-language operator and supervisor material must be prepared before the pilot"
+  ]
 }

@@ -44,7 +44,7 @@ Seed datasets:
 - `data/trust_gaps.json`
 - `data/proof_checklist.json`
 - `data/demo_amr_profile.json`
-- `data/italian_target_accounts.json` planned for Target Account Finder
+- `data/italian_target_accounts.json`
 
 ## Stage 1: Product Parser
 
@@ -161,65 +161,7 @@ Expected structured output:
 }
 ```
 
-## Stage 4: Target Account Finder
-
-Purpose: filter and rank Italian companies from the curated target-account dataset for the recommended pilot.
-
-Inputs:
-
-- Stage 1 product summary
-- Stage 2 segment recommendation
-- Stage 3 process recommendation
-- Planned `data/italian_target_accounts.json`
-- Trust and proof expectations from `data/trust_gaps.json` and `data/proof_checklist.json`
-
-Logic:
-
-- Filter accounts by recommended buyer segment, matched warehouse process, product category, and Italy market fit.
-- Prioritize accounts in relevant regions for the segment, such as Lombardy, Veneto, Emilia-Romagna, or Piedmont for 3PL/e-commerce fulfilment pilots when supported by the dataset.
-- Score pilot suitability using segment match, process match, region priority, warehouse signals, proof/trust gap compatibility, and contactability through company-level public channels.
-- Return 5-10 companies when enough curated accounts are available.
-- Mark accounts as `needs_verification` when the dataset signal is incomplete or stale.
-- Use role-based outreach, such as Operations Director, Warehouse Manager, or Head of Contract Logistics.
-
-Expected structured output:
-
-```json
-{
-  "stage": "target_account_finder",
-  "target_account_shortlist": [
-    {
-      "account_id": "it_account_001",
-      "company_name": "Example Logistics S.p.A.",
-      "website": "https://example.com",
-      "region": "Lombardy",
-      "city": "Milan area",
-      "matched_segment_id": "it_3pl_ecommerce",
-      "matched_process_id": "internal_transport_picking_to_packing",
-      "fit_score": 86,
-      "why_relevant": "The account is classified as a mid-market 3PL/e-commerce fulfilment operator with likely picking-to-packing internal transport pressure.",
-      "recommended_buyer_roles": [
-        "Operations Director",
-        "Warehouse Manager",
-        "Head of Contract Logistics"
-      ],
-      "contact_method": {
-        "type": "company_contact_page",
-        "value": "https://example.com/contact"
-      },
-      "outreach_angle": "Propose a 45-day AMR test on one picking-to-packing route to reduce walking time without redesigning the whole warehouse.",
-      "confidence_level": "medium",
-      "source_notes": [
-        "Official company website",
-        "Manual MVP curation",
-        "Public business information"
-      ]
-    }
-  ]
-}
-```
-
-## Stage 5: Trust Gap Analyzer
+## Stage 4: Trust Gap Analyzer
 
 Purpose: identify what would prevent an Italian buyer from approving the pilot.
 
@@ -228,7 +170,6 @@ Inputs:
 - Stage 1 product summary
 - Stage 2 segment recommendation
 - Stage 3 process recommendation
-- Stage 4 target account shortlist, when available
 - `data/trust_gaps.json`
 - `data/proof_checklist.json`
 
@@ -256,7 +197,7 @@ Expected structured output:
 }
 ```
 
-## Stage 6: Pilot Package Generator
+## Stage 5: Pilot Package Generator
 
 Purpose: design the first pilot package that the Italian buyer can realistically approve.
 
@@ -265,8 +206,7 @@ Inputs:
 - Stage 1 product summary
 - Stage 2 segment recommendation
 - Stage 3 process recommendation
-- Stage 4 target account shortlist
-- Stage 5 trust gaps
+- Stage 4 trust gaps
 
 Logic:
 
@@ -298,6 +238,47 @@ Expected structured output:
 }
 ```
 
+## Stage 6: Target Account Finder
+
+Purpose: rank a shortlist of Italian target accounts that match the selected buyer segment, warehouse process, and pilot strategy.
+
+Inputs:
+
+- Stage 2 selected segment
+- Stage 3 selected process
+- HQ region preference or target regions, when available
+- `data/italian_target_accounts.json`
+
+Logic:
+
+- Filter accounts by `logistics_category` mapped to the selected segment.
+- Filter or boost accounts whose `likely_process_fit` includes the selected process family.
+- Boost accounts whose `hq_region` matches the preferred Italian pilot region.
+- Boost accounts whose `warehouse_signals` support the selected pilot use case, such as fulfilment, cold chain, sorting hub, automated warehouse, distribution centre, or line-side flow.
+- Return a ranked shortlist of 5 to 10 accounts.
+- Use only the curated seed dataset in the MVP; do not make live API calls, scrape websites, enrich contacts, or infer personal contact data.
+
+Expected structured output:
+
+```json
+{
+  "stage": "target_account_finder",
+  "target_account_shortlist": [
+    {
+      "company_name": "Example Logistics S.p.A.",
+      "website": "https://example.com",
+      "hq_region": "Lombardy",
+      "logistics_category": "3PL and e-commerce fulfilment",
+      "warehouse_signals": ["contract logistics and warehousing services"],
+      "likely_process_fit": ["internal transport", "picking support"],
+      "recommended_buyer_roles": ["Operations Director", "Warehouse Manager"],
+      "outreach_angle": "This account matches the selected AMR internal transport pilot because its public warehouse signals show fulfilment flows and repeatable picking-to-packing movement.",
+      "source_note": "Official company website or public press release."
+    }
+  ]
+}
+```
+
 ## Stage 7: Sales Pack Generator
 
 Purpose: produce ready-to-use commercial material for the Head of International Expansion.
@@ -307,12 +288,13 @@ Inputs:
 - Stages 1 through 6
 - Proof checklist results
 - Objection patterns from seed data
-- Target account shortlist for account-specific outreach angle constraints
+- Target account shortlist for account-specific outreach angle constraints, when available
 
 Logic:
 
 - Generate concise outbound material that speaks to Italian operations risk, not abstract AI value.
 - Include a first outreach email, meeting pitch, one-page pilot proposal, ROI argument, objection battlecard, and proof checklist summary.
+- When a target account shortlist exists, adapt outreach angles to the selected account category without inventing personal contacts.
 - Keep account-specific copy at company and role level; do not invent private contacts or personal emails.
 - Keep language practical, specific, and credible.
 
@@ -350,7 +332,7 @@ Logic:
 
 - Ensure every required field in `schemas/pilot_analysis.schema.json` is present.
 - Keep evidence notes separate from claims that require legal or compliance validation.
-- Keep target-account source notes separate from recommendations, and show `needs_verification` where confidence is low.
+- Keep target-account source notes separate from recommendations, preserving `source_note` caveats and `hq_region: null` when public verification is incomplete.
 - Flag assumptions so the frontend can show confidence and readiness without pretending the pilot is guaranteed.
 - Return one object suitable for dashboard rendering.
 
@@ -375,9 +357,9 @@ The backend should return a single JSON object matching `schemas/pilot_analysis.
 - Best warehouse process
 - Trust gap analysis
 - Recommended pilot offer
+- Target account shortlist
 - Buyer objection battlecard
 - Proof checklist
-- Target Account Shortlist
 - Sales pack
 - Next 7 days action plan
 
@@ -385,11 +367,12 @@ The backend should return a single JSON object matching `schemas/pilot_analysis.
 
 - Do not recommend a full market-entry strategy when the input only supports a first pilot.
 - Do not claim CE compliance is verified unless the provided documents prove it.
+- Do not claim live-scraped or complete Italian leads exist in the MVP; the target-account shortlist comes from a curated seed dataset.
 - Do not invent companies when using real-company mode.
 - Do not expose personal contact data unless it is explicitly public and compliant.
 - Prefer company-level contacts: official website, public contact page, or generic company email when public.
 - Use role-based outreach instead of personal-data scraping.
-- If account confidence is low, show the company as `needs_verification`.
+- If account confidence is low, preserve the verification caveat in `source_note` or omit the account from the ranked shortlist.
 - Do not claim a shortlisted company is guaranteed to buy or respond.
 - Do not represent the shortlist as exhaustive.
 - Do not hide missing proof; convert it into a buyer-trust action.
