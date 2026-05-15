@@ -8,9 +8,15 @@ PilotOps AI is not intended to be a generic market report generator. The MVP foc
 
 ## Current Repository State
 
-This repository is still in early MVP setup.
+This repository contains the hackathon MVP for PilotOps AI:
 
-At this stage it contains product documentation, market/technical analysis, team setup planning, seed data, a structured output schema, and a frontend scaffold. The AI endpoint and full backend integration are still pending.
+- a Next.js, React, TypeScript, and Tailwind frontend;
+- a prefilled demo intake for the AMR-to-Italy scenario;
+- a server-side `POST /api/analyze` route;
+- a deterministic local fallback analysis that requires no API key;
+- optional live AI generation through OpenRouter when server-side environment variables are configured;
+- local seed datasets, including a curated Italian Target Account Shortlist dataset;
+- the structured Pilot Control Room schema and supporting docs.
 
 ## MVP Scope
 
@@ -39,53 +45,87 @@ The MVP should not attempt to:
 - behave as a plain chatbot;
 - produce only a generic consulting report.
 
-## Planned Technical Direction
+## Implemented Technical Path
 
-The product spec and technical analysis currently point toward:
-
-- Frontend: Next.js, React, TypeScript, Tailwind CSS.
-- UI: dashboard-oriented Pilot Control Room, with shadcn/ui or equivalent components planned.
-- Backend/API layer: Next.js API routes or server actions are expected, but the AI analysis endpoint is not implemented yet.
-- AI layer: OpenAI Responses API with structured outputs is the preferred direction.
-- Data layer: local JSON seed datasets for the MVP, with `data/italian_target_accounts.json` planned for the Target Account Shortlist and optional document ingestion later.
-
-Some frontend dependencies and scripts are present; AI/API integration remains planned.
+- Frontend: Next.js, React, TypeScript, and Tailwind CSS.
+- UI: dashboard-oriented Pilot Control Room with local component primitives.
+- Backend/API layer: `POST /api/analyze` implemented as a Next.js route.
+- Default analysis path: deterministic local fallback built from the AMR demo profile and seed data.
+- Optional live AI path: OpenRouter chat completions, server-side only, with response validation and fallback to the deterministic result.
+- Data layer: local JSON seed datasets, including `data/italian_target_accounts.json` for the Target Account Shortlist.
 
 ## Install Dependencies
 
-Application dependencies are defined in `package.json` when the frontend scaffold is present.
-
-Expected setup:
+Install the dependencies defined in `package.json`:
 
 ```bash
 npm install
 ```
 
-Use the exact command from `package.json`.
-
 ## Run the App
 
-Use the package scripts when the local dependency install is available.
-
-Expected local command:
+Start the local development server:
 
 ```bash
 npm run dev
 ```
 
-The app currently relies on mock/frontend data until the AI endpoint is connected.
+Build the production bundle:
+
+```bash
+npm run build
+```
+
+Run lint checks:
+
+```bash
+npm run lint
+```
+
+## Default Stable Demo Path
+
+No environment variables are required for the default demo.
+
+The stable path is:
+
+1. Open the app.
+2. Click `Open Demo Flow` or `Start Analysis`.
+3. Review the prefilled `Product Intake` screen for the fictional Chinese AMR vendor.
+4. Click `Run Pilot Analysis`.
+5. Wait for the `Building the Pilot Control Room` loading state.
+6. Review the `Pilot Control Room`: Pilot Fit Score, Best First Buyer Segment, Best Warehouse Process, Why Now, Trust Gap Analysis, Recommended Pilot Offer, Target Account Shortlist, Buyer Objection Battlecard, Documentation Checklist, Sales Pack, and Next 7 Days Action Plan.
+
+The default path uses the server-side analysis route, then falls back to the deterministic AMR/3PL result when no OpenRouter key is configured.
+
+## Optional Live AI Path
+
+Live AI mode is implemented as an optional server-side enhancement through OpenRouter.
+
+If `OPENROUTER_API_KEY` is configured, `POST /api/analyze` attempts to generate a structured Pilot Control Room response with OpenRouter. The server validates the response and falls back to the deterministic local result if the provider fails, times out, returns invalid JSON, or produces unsafe content.
+
+The frontend never requires a key for the demo path.
 
 ## Environment Variables
 
-No environment variables are required for documentation review or local mock UI work.
+No environment variables are required to run the default demo.
 
-Expected future variables:
+Optional server-side variables for live AI mode:
 
-- `OPENAI_API_KEY`: planned for the AI analysis pipeline.
-- `OPENAI_MODEL`: optional model selector if the implementation supports it.
-- `TAVILY_API_KEY` or `EXA_API_KEY`: optional and only if the team adds external web research.
+- `OPENROUTER_API_KEY` (optional): primary OpenRouter API key for live AI generation.
+- `OPENROUTER_FALLBACK_API_KEY` (optional): secondary OpenRouter key used if the primary key fails with an eligible error.
+- `OPENROUTER_MODEL` (optional): model override. If omitted, the app uses the default model from `src/lib/openrouter-client.ts`.
+- `OPENROUTER_SITE_URL` (optional): sent as the OpenRouter HTTP referer header.
+- `OPENROUTER_APP_NAME` (optional): sent as the OpenRouter app title header.
 
-Do not add API keys to the repository. Use a local `.env.local` file once the app scaffold supports it.
+Do not add API keys to the repository. Use a local `.env.local` file or Vercel environment variables.
+
+## Vercel Deployment
+
+The MVP is intended to run on Vercel as a standard Next.js app.
+
+- Build command: `npm run build`.
+- No environment variables are required for the default demo path.
+- Add the optional OpenRouter variables in Vercel only if the team wants to demo live AI mode.
 
 ## Key Documents
 
