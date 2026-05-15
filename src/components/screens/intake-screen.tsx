@@ -1,16 +1,23 @@
 "use client";
 
+import { useState } from "react";
 import { ArrowRight, FileText, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { ProductProfile } from "@/lib/pilot-analysis-types";
 
 type IntakeScreenProps = {
   profile: ProductProfile;
-  onAnalyze: () => void;
+  onAnalyze: (profile: ProductProfile) => void;
   onBack: () => void;
 };
 
 export function IntakeScreen({ profile, onAnalyze, onBack }: IntakeScreenProps) {
+  const [draft, setDraft] = useState(profile);
+
+  function updateField(field: keyof ProductProfile, value: string) {
+    setDraft((current) => ({ ...current, [field]: value }));
+  }
+
   return (
     <main className="mx-auto min-h-screen w-full max-w-6xl px-5 py-8">
       <header className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-border pb-5">
@@ -31,34 +38,40 @@ export function IntakeScreen({ profile, onAnalyze, onBack }: IntakeScreenProps) 
               <FileText size={20} aria-hidden="true" />
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-foreground">{profile.companyName}</h2>
-              <p className="text-sm text-muted">{profile.productCategory}</p>
+              <h2 className="text-lg font-semibold text-foreground">{draft.companyName}</h2>
+              <p className="text-sm text-muted">Demo AMR profile for Italian 3PL fulfilment pilots</p>
             </div>
           </div>
 
           <div className="grid gap-4">
-            <ReadonlyField label="Target market" value={profile.targetMarket} />
-            <ReadonlyField label="Pilot ambition" value={profile.pilotAmbition} />
-            <ReadonlyField label="Documentation status" value={profile.documentationStatus} />
+            <EditableField label="Company name" value={draft.companyName} onChange={(value) => updateField("companyName", value)} />
+            <LockedField label="Product category" value={draft.productCategory} />
+            <LockedField label="Target market" value={draft.targetMarket} />
+            <LockedField label="Pilot ambition" value={draft.pilotAmbition} />
+            <LockedField label="Documentation status" value={draft.documentationStatus} />
           </div>
         </div>
 
         <div className="rounded-lg border border-border bg-panel p-5 shadow-panel">
           <h2 className="text-lg font-semibold text-foreground">Product description</h2>
           <textarea
-            className="mt-3 min-h-32 w-full resize-none rounded-md border border-border bg-[#f8faf7] p-3 text-sm leading-6 text-foreground"
-            value={profile.description}
+            className="mt-3 min-h-32 w-full resize-none rounded-md border border-border bg-[#eef2ec] p-3 text-sm leading-6 text-muted"
+            value={draft.description}
             readOnly
           />
+          <p className="mt-2 text-xs leading-5 text-muted">
+            Demo-safe mode: the analysis below is calibrated to this AMR/3PL profile. Rename the vendor if needed, but the product category,
+            proof inputs, and constraints stay locked so the Pilot Control Room remains coherent.
+          </p>
 
           <div className="mt-5 grid gap-5 md:grid-cols-3">
-            <ListBlock title="Benefits" items={profile.benefits} />
-            <ListBlock title="Proof available" items={profile.currentProof} />
-            <ListBlock title="Known constraints" items={profile.constraints} />
+            <ListViewer title="Benefits" items={draft.benefits} />
+            <ListViewer title="Proof available" items={draft.currentProof} />
+            <ListViewer title="Known constraints" items={draft.constraints} />
           </div>
 
           <div className="mt-6 flex justify-end">
-            <Button onClick={onAnalyze}>
+            <Button onClick={() => onAnalyze(draft)}>
               Run Pilot Analysis
               <ArrowRight size={16} aria-hidden="true" />
             </Button>
@@ -69,26 +82,41 @@ export function IntakeScreen({ profile, onAnalyze, onBack }: IntakeScreenProps) 
   );
 }
 
-function ReadonlyField({ label, value }: { label: string; value: string }) {
+function EditableField({ label, value, onChange }: { label: string; value: string; onChange: (value: string) => void }) {
   return (
     <label className="block">
       <span className="text-xs font-semibold uppercase tracking-wide text-muted">{label}</span>
-      <input className="mt-2 w-full rounded-md border border-border bg-[#f8faf7] px-3 py-2 text-sm text-foreground" value={value} readOnly />
+      <input
+        className="mt-2 w-full rounded-md border border-border bg-[#f8faf7] px-3 py-2 text-sm text-foreground"
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+      />
     </label>
   );
 }
 
-function ListBlock({ title, items }: { title: string; items: string[] }) {
+function LockedField({ label, value }: { label: string; value: string }) {
+  return (
+    <label className="block">
+      <span className="text-xs font-semibold uppercase tracking-wide text-muted">{label}</span>
+      <input
+        className="mt-2 w-full rounded-md border border-border bg-[#eef2ec] px-3 py-2 text-sm font-semibold text-accent"
+        value={value}
+        readOnly
+      />
+    </label>
+  );
+}
+
+function ListViewer({ title, items }: { title: string; items: string[] }) {
   return (
     <div>
       <h3 className="text-sm font-semibold text-foreground">{title}</h3>
-      <ul className="mt-2 space-y-2">
+      <div className="mt-2 min-h-40 rounded-md border border-border bg-[#eef2ec] px-3 py-2 text-sm leading-6 text-muted">
         {items.map((item) => (
-          <li key={item} className="rounded-md border border-border bg-[#f8faf7] px-3 py-2 text-sm leading-5 text-muted">
-            {item}
-          </li>
+          <p key={item}>{item}</p>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
