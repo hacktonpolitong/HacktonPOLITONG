@@ -12,7 +12,6 @@
     "likely_process_fit": [
       "internal transport",
       "picking support",
-      "pallet movement",
       "inventory scanning"
     ],
     "recommended_buyer_roles": [
@@ -38,8 +37,7 @@
     "likely_process_fit": [
       "internal transport",
       "picking support",
-      "inventory scanning",
-      "line-side replenishment"
+      "inventory scanning"
     ],
     "recommended_buyer_roles": [
       "Contract Logistics Director",
@@ -64,8 +62,6 @@
     "likely_process_fit": [
       "internal transport",
       "picking support",
-      "pallet movement",
-      "line-side replenishment",
       "inventory scanning"
     ],
     "recommended_buyer_roles": [
@@ -91,8 +87,7 @@
     "likely_process_fit": [
       "internal transport",
       "picking support",
-      "inventory scanning",
-      "pallet movement"
+      "inventory scanning"
     ],
     "recommended_buyer_roles": [
       "Country Operations Director",
@@ -116,8 +111,7 @@
     "likely_process_fit": [
       "internal transport",
       "picking support",
-      "inventory scanning",
-      "pallet movement"
+      "inventory scanning"
     ],
     "recommended_buyer_roles": [
       "Operations Director",
@@ -140,10 +134,9 @@
       "major logistics reorganization project"
     ],
     "likely_process_fit": [
-      "internal transport",
       "picking support",
       "inventory scanning",
-      "pallet movement"
+      "internal transport"
     ],
     "recommended_buyer_roles": [
       "Logistics Director",
@@ -166,10 +159,10 @@
       "operational headquarters with logistics function"
     ],
     "likely_process_fit": [
-      "internal transport",
       "picking support",
-      "parcel sorting",
-      "inventory scanning"
+      "inventory scanning",
+      "internal transport",
+      "parcel sorting"
     ],
     "recommended_buyer_roles": [
       "Logistics Director",
@@ -192,10 +185,9 @@
       "warehouse and distribution platforms described as strategic assets"
     ],
     "likely_process_fit": [
-      "internal transport",
       "picking support",
       "inventory scanning",
-      "pallet movement"
+      "internal transport"
     ],
     "recommended_buyer_roles": [
       "Logistics Director",
@@ -217,10 +209,9 @@
       "multi-brand fashion distribution structure"
     ],
     "likely_process_fit": [
-      "internal transport",
       "picking support",
       "inventory scanning",
-      "pallet movement"
+      "internal transport"
     ],
     "recommended_buyer_roles": [
       "Logistics Director",
@@ -242,10 +233,9 @@
       "high-SKU product flows suitable for inventory and internal movement use cases"
     ],
     "likely_process_fit": [
-      "internal transport",
       "picking support",
       "inventory scanning",
-      "pallet movement"
+      "internal transport"
     ],
     "recommended_buyer_roles": [
       "Logistics Director",
@@ -270,8 +260,7 @@
     "likely_process_fit": [
       "pallet movement",
       "internal transport",
-      "inventory scanning",
-      "picking support"
+      "inventory scanning"
     ],
     "recommended_buyer_roles": [
       "Operations Director",
@@ -297,7 +286,6 @@
     "likely_process_fit": [
       "pallet movement",
       "internal transport",
-      "picking support",
       "inventory scanning"
     ],
     "recommended_buyer_roles": [
@@ -323,7 +311,6 @@
     "likely_process_fit": [
       "pallet movement",
       "internal transport",
-      "picking support",
       "inventory scanning"
     ],
     "recommended_buyer_roles": [
@@ -348,7 +335,6 @@
     ],
     "likely_process_fit": [
       "pallet movement",
-      "picking support",
       "internal transport",
       "inventory scanning"
     ],
@@ -374,7 +360,6 @@
     "likely_process_fit": [
       "pallet movement",
       "internal transport",
-      "picking support",
       "inventory scanning"
     ],
     "recommended_buyer_roles": [
@@ -401,8 +386,7 @@
     "likely_process_fit": [
       "inventory scanning",
       "picking support",
-      "internal transport",
-      "pallet movement"
+      "internal transport"
     ],
     "recommended_buyer_roles": [
       "Healthcare Logistics Director",
@@ -427,8 +411,8 @@
     ],
     "likely_process_fit": [
       "inventory scanning",
-      "internal transport",
-      "picking support"
+      "picking support",
+      "internal transport"
     ],
     "recommended_buyer_roles": [
       "Healthcare Logistics Director",
@@ -453,8 +437,7 @@
     "likely_process_fit": [
       "inventory scanning",
       "picking support",
-      "internal transport",
-      "pallet movement"
+      "internal transport"
     ],
     "recommended_buyer_roles": [
       "Healthcare Logistics Director",
@@ -479,8 +462,7 @@
     "likely_process_fit": [
       "inventory scanning",
       "picking support",
-      "internal transport",
-      "pallet movement"
+      "internal transport"
     ],
     "recommended_buyer_roles": [
       "Healthcare Operations Director",
@@ -506,8 +488,7 @@
     "likely_process_fit": [
       "inventory scanning",
       "picking support",
-      "internal transport",
-      "pallet movement"
+      "internal transport"
     ],
     "recommended_buyer_roles": [
       "Healthcare Logistics Director",
@@ -531,8 +512,7 @@
     ],
     "likely_process_fit": [
       "parcel sorting",
-      "internal transport",
-      "inventory scanning"
+      "internal transport"
     ],
     "recommended_buyer_roles": [
       "Parcel Operations Director",
@@ -556,8 +536,7 @@
     ],
     "likely_process_fit": [
       "parcel sorting",
-      "internal transport",
-      "inventory scanning"
+      "internal transport"
     ],
     "recommended_buyer_roles": [
       "Network Operations Director",
@@ -581,8 +560,7 @@
     ],
     "likely_process_fit": [
       "parcel sorting",
-      "internal transport",
-      "inventory scanning"
+      "internal transport"
     ],
     "recommended_buyer_roles": [
       "Network Operations Director",
@@ -606,8 +584,7 @@
     ],
     "likely_process_fit": [
       "parcel sorting",
-      "internal transport",
-      "inventory scanning"
+      "internal transport"
     ],
     "recommended_buyer_roles": [
       "Hub Operations Manager",
@@ -631,8 +608,7 @@
     ],
     "likely_process_fit": [
       "parcel sorting",
-      "internal transport",
-      "inventory scanning"
+      "internal transport"
     ],
     "recommended_buyer_roles": [
       "Operations Director",
@@ -655,10 +631,10 @@
       "automated storage and picking system with shuttle technology"
     ],
     "likely_process_fit": [
-      "internal transport",
-      "picking support",
+      "line-side replenishment",
+      "pallet movement",
       "inventory scanning",
-      "pallet movement"
+      "internal transport"
     ],
     "recommended_buyer_roles": [
       "Logistics Director",
@@ -683,8 +659,8 @@
     "likely_process_fit": [
       "line-side replenishment",
       "pallet movement",
-      "internal transport",
-      "inventory scanning"
+      "inventory scanning",
+      "internal transport"
     ],
     "recommended_buyer_roles": [
       "Supply Chain Director",
@@ -708,9 +684,9 @@
     ],
     "likely_process_fit": [
       "line-side replenishment",
-      "internal transport",
+      "pallet movement",
       "inventory scanning",
-      "pallet movement"
+      "internal transport"
     ],
     "recommended_buyer_roles": [
       "Industrial Logistics Manager",
@@ -733,10 +709,10 @@
       "intralogistics applications including packaging, palletizing, robotics, automated warehouses and AGVs"
     ],
     "likely_process_fit": [
-      "inventory scanning",
       "line-side replenishment",
-      "internal transport",
-      "picking support"
+      "pallet movement",
+      "inventory scanning",
+      "internal transport"
     ],
     "recommended_buyer_roles": [
       "Industrial Operations Manager",
@@ -760,10 +736,10 @@
       "distribution to customer departments"
     ],
     "likely_process_fit": [
-      "picking support",
+      "line-side replenishment",
+      "pallet movement",
       "inventory scanning",
-      "internal transport",
-      "line-side replenishment"
+      "internal transport"
     ],
     "recommended_buyer_roles": [
       "Operations Director",
@@ -788,7 +764,6 @@
     "likely_process_fit": [
       "internal transport",
       "picking support",
-      "pallet movement",
       "inventory scanning"
     ],
     "recommended_buyer_roles": [
@@ -814,7 +789,6 @@
     "likely_process_fit": [
       "internal transport",
       "picking support",
-      "pallet movement",
       "inventory scanning"
     ],
     "recommended_buyer_roles": [
@@ -840,8 +814,6 @@
     "likely_process_fit": [
       "internal transport",
       "picking support",
-      "pallet movement",
-      "line-side replenishment",
       "inventory scanning"
     ],
     "recommended_buyer_roles": [
@@ -867,7 +839,6 @@
     "likely_process_fit": [
       "internal transport",
       "picking support",
-      "pallet movement",
       "inventory scanning"
     ],
     "recommended_buyer_roles": [
@@ -891,7 +862,6 @@
       "order picking, storage, cross-docking, palletizing, labeling and repackaging"
     ],
     "likely_process_fit": [
-      "picking support",
       "pallet movement",
       "internal transport",
       "inventory scanning"
@@ -919,7 +889,6 @@
     "likely_process_fit": [
       "pallet movement",
       "internal transport",
-      "picking support",
       "inventory scanning"
     ],
     "recommended_buyer_roles": [
@@ -944,9 +913,8 @@
     ],
     "likely_process_fit": [
       "inventory scanning",
-      "internal transport",
       "picking support",
-      "pallet movement"
+      "internal transport"
     ],
     "recommended_buyer_roles": [
       "Pharma Logistics Director",
@@ -970,9 +938,8 @@
     ],
     "likely_process_fit": [
       "inventory scanning",
-      "internal transport",
       "picking support",
-      "pallet movement"
+      "internal transport"
     ],
     "recommended_buyer_roles": [
       "Operations Director",
@@ -995,10 +962,10 @@
       "warehousing, labelling, packaging and assembly activities"
     ],
     "likely_process_fit": [
-      "internal transport",
-      "pallet movement",
       "line-side replenishment",
-      "inventory scanning"
+      "pallet movement",
+      "inventory scanning",
+      "internal transport"
     ],
     "recommended_buyer_roles": [
       "Operations Director",
@@ -1022,9 +989,9 @@
     ],
     "likely_process_fit": [
       "line-side replenishment",
-      "internal transport",
       "pallet movement",
-      "inventory scanning"
+      "inventory scanning",
+      "internal transport"
     ],
     "recommended_buyer_roles": [
       "Operations Director",
