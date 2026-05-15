@@ -18,7 +18,7 @@ For API/tooling choices, also read [market and tech analysis](./pilotops_ai_mark
 
 PilotOps AI helps Chinese warehouse automation companies enter the Italian market by identifying the most realistic first pilot opportunity.
 
-The core output is a Pilot Control Room: a structured dashboard showing the recommended Italian buyer segment, warehouse process, trust gaps, pilot package, buyer objections, proof checklist, sales pack, and next actions.
+The core output is a Pilot Control Room: a structured dashboard showing the recommended Italian buyer segment, warehouse process, trust gaps, pilot package, buyer objections, proof checklist, Target Account Shortlist, sales pack, and next actions.
 
 The product is for the Chinese vendor's Head of International Expansion or similar role. The Italian warehouse/logistics company is the final customer the vendor wants to win.
 
@@ -34,6 +34,7 @@ Do not turn the MVP into:
 - a broad European market-entry platform;
 - a full CRM;
 - a lead scraping system;
+- a personal-data or personal-email harvesting system;
 - an autonomous outreach engine;
 - a legal/compliance certification tool;
 - a plain chatbot;
@@ -42,7 +43,7 @@ Do not turn the MVP into:
 
 ## Current Implementation State
 
-This branch is foundation/documentation only. There is no app scaffold, no package manager config, no AI endpoint, no seed dataset directory, and no frontend implementation yet.
+This repository is in early MVP setup. It may contain documentation, seed data, schemas, package files, and frontend scaffolding, but the AI endpoint and complete backend integration may still be pending.
 
 When documenting planned systems, use conservative language such as `planned`, `expected`, or `to be defined`.
 
@@ -80,12 +81,13 @@ Expected future conventions:
 - TypeScript for application code;
 - structured AI outputs rather than free-form report blobs;
 - local JSON seed data for MVP knowledge where appropriate;
+- Target Account Shortlist generation from a curated target-account database, using company-level public contacts and role-based outreach;
 - small, reviewable changes;
 - no unrelated refactors during feature work.
 
 ## Testing
 
-No runnable app or test suite exists yet.
+Runnable app and test/lint availability depends on the current branch state.
 
 Before finishing a task:
 

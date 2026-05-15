@@ -6,7 +6,7 @@ This document describes the frontend skeleton owned by Matteo's setup branch. It
 
 - Operational first: the main output should feel like a working dashboard for an expansion team, not a chat interface or a long report.
 - Structured output ready: screens and components consume typed objects so the future AI endpoint can replace mock data without a UI rewrite.
-- Low-risk clarity: buyer segment, pilot workflow, trust gaps, offer, proof and next actions must be visible as separate decision areas.
+- Low-risk clarity: buyer segment, pilot workflow, trust gaps, offer, proof, Target Account Shortlist and next actions must be visible as separate decision areas.
 - Reviewable components: dashboard sections are small, named and reusable.
 
 ## Visual Tokens
@@ -35,6 +35,7 @@ This document describes the frontend skeleton owned by Matteo's setup branch. It
 - The Pilot Control Room uses a responsive 12-column grid on desktop and a single column on mobile.
 - Each major output area is rendered in a `SectionPanel` so future data can map directly into dashboard regions.
 - The layout keeps strategic sections at the top and execution assets lower on the page.
+- Target Account Shortlist should be rendered as account rows or compact account cards with company name, region/city, segment/process match, fit score, company-level contact method, recommended buyer roles and outreach angle.
 
 ## Main Components
 
@@ -56,6 +57,7 @@ This document describes the frontend skeleton owned by Matteo's setup branch. It
 
 - Keep data in typed objects and pass it into components as props.
 - Prefer tables for comparison-heavy data and cards for repeated sales assets or action items.
+- Keep target-account contacts at company level and role level; do not design UI for private personal contacts or personal email harvesting.
 - Use lucide-react icons for recognizable operational cues.
 - Avoid adding backend calls directly inside presentational components.
 - Keep AI-generated long text segmented into dashboard fields rather than rendering a single report blob.

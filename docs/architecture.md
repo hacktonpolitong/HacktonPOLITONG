@@ -1,6 +1,6 @@
 # Architecture
 
-This document describes the planned MVP architecture for PilotOps AI. The repository currently contains documentation only; application code, AI implementation, datasets, and frontend screens are still to be added by their respective setup branches.
+This document describes the MVP architecture for PilotOps AI. The repository currently contains documentation, seed datasets, a structured output schema, and a frontend scaffold. The AI endpoint and complete backend integration are still to be added by their respective setup branches.
 
 ## System Overview
 
@@ -11,6 +11,7 @@ PilotOps AI is planned as a web app with:
 - a structured AI analysis pipeline;
 - local seed knowledge for the MVP;
 - a Pilot Control Room dashboard;
+- a Target Account Shortlist generated from a curated target-account database;
 - generated sales materials.
 
 The core system boundary is:
@@ -19,7 +20,7 @@ The core system boundary is:
 Product intake + docs summary
         -> AI analysis pipeline + seed knowledge
         -> structured pilot analysis JSON
-        -> Pilot Control Room dashboard
+        -> Pilot Control Room dashboard, including Target Account Shortlist
 ```
 
 ## Frontend
@@ -68,10 +69,11 @@ Planned pipeline:
 1. Product parser: understand product type, warehouse use case, operational value, constraints, documentation state, and likely pilot scale.
 2. Segment matcher: match the product to the most suitable Italian warehouse/logistics buyer segment.
 3. Process selector: choose the warehouse workflow that is realistic for a low-risk first pilot.
-4. Trust gap analyzer: identify buyer concerns and missing proof.
-5. Pilot package generator: define pilot scope, duration, setup, KPIs, risk reducers, proof required, and next commercial step.
-6. Sales pack generator: produce outreach email, meeting pitch, one-page proposal, proof checklist, objection battlecard, and action plan.
-7. Structured output formatter: return a predictable JSON object for the dashboard.
+4. Target account finder: filter and rank companies from the curated Italian target-account database using the recommended segment, warehouse process, priority region, product category, proof/trust gap compatibility, and pilot suitability.
+5. Trust gap analyzer: identify buyer concerns and missing proof.
+6. Pilot package generator: define pilot scope, duration, setup, KPIs, risk reducers, proof required, and next commercial step.
+7. Sales pack generator: produce outreach email, meeting pitch, one-page proposal, proof checklist, objection battlecard, and action plan.
+8. Structured output formatter: return a predictable JSON object for the dashboard.
 
 The product and market analysis recommend OpenAI Responses API with structured outputs for the AI layer. Exact prompts, schema, and evaluation fixtures belong to Jacopo's setup scope.
 
@@ -88,6 +90,9 @@ Expected seed data areas:
 - buyer objections;
 - competitor or alternative categories;
 - demo AMR product profile.
+- planned curated Italian target accounts in `data/italian_target_accounts.json`.
+
+The target-account dataset should support company-level public contact paths and role-based outreach. It must not be treated as live web scraping, personal lead harvesting, or a source of private personal emails.
 
 Seed dataset design belongs to Jacopo's setup scope.
 
@@ -99,10 +104,11 @@ Seed dataset design belongs to Jacopo's setup scope.
 4. The backend loads relevant seed knowledge.
 5. The AI pipeline classifies the product and maps it to an Italian buyer segment.
 6. The pipeline selects the best pilot warehouse process.
-7. The pipeline identifies trust gaps and buyer objections.
-8. The pipeline generates the recommended pilot offer and sales pack.
-9. The backend returns structured JSON.
-10. The frontend renders the Pilot Control Room dashboard.
+7. The pipeline filters and ranks compatible Italian target accounts from the curated target-account database.
+8. The pipeline identifies trust gaps and buyer objections.
+9. The pipeline generates the recommended pilot offer and sales pack.
+10. The backend returns structured JSON.
+11. The frontend renders the Pilot Control Room dashboard.
 
 ## Pilot Control Room Output
 
@@ -116,19 +122,16 @@ The dashboard should include:
 - Recommended Pilot Offer;
 - Buyer Objection Battlecard;
 - Documentation / Proof Checklist;
+- Target Account Shortlist;
 - Ready-to-Send Sales Pack;
 - Next 7 Days Action Plan.
 
 ## Current Non-Implementation Notes
 
-The following are intentionally not implemented in this foundation branch:
+The following are still pending or incomplete:
 
-- app scaffold;
-- package dependencies;
 - API routes;
 - AI prompts;
-- JSON schemas;
-- seed datasets;
-- frontend screens;
 - automated tests.
-
+- curated `data/italian_target_accounts.json` dataset;
+- AI integration for generating the Target Account Shortlist.

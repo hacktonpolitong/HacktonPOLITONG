@@ -14,6 +14,7 @@
     "pilot_offer",
     "objection_battlecard",
     "proof_checklist",
+    "target_account_shortlist",
     "next_7_days_plan",
     "sales_pack"
   ],
@@ -577,6 +578,128 @@
           "recommended_action": {
             "type": "string",
             "description": "Specific next action to improve readiness."
+          }
+        }
+      }
+    },
+    "target_account_shortlist": {
+      "type": "array",
+      "description": "Shortlist of Italian target accounts ranked from a curated target-account database using company-level public contact paths and role-based outreach.",
+      "minItems": 5,
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "account_id",
+          "company_name",
+          "website",
+          "region",
+          "city",
+          "matched_segment_id",
+          "matched_process_id",
+          "fit_score",
+          "why_relevant",
+          "recommended_buyer_roles",
+          "contact_method",
+          "outreach_angle",
+          "confidence_level",
+          "source_notes"
+        ],
+        "properties": {
+          "account_id": {
+            "type": "string",
+            "description": "Stable account ID from planned data/italian_target_accounts.json."
+          },
+          "company_name": {
+            "type": "string",
+            "description": "Italian company name from the curated target-account database."
+          },
+          "website": {
+            "type": "string",
+            "format": "uri",
+            "description": "Official company website."
+          },
+          "region": {
+            "type": "string",
+            "description": "Italian region where the account is based or most relevant for the pilot."
+          },
+          "city": {
+            "type": "string",
+            "description": "City or city area associated with the account."
+          },
+          "matched_segment_id": {
+            "type": "string",
+            "description": "Recommended buyer segment ID matched to the account."
+          },
+          "matched_process_id": {
+            "type": "string",
+            "description": "Recommended warehouse process ID matched to the account."
+          },
+          "fit_score": {
+            "type": "number",
+            "description": "Target-account fit score from 0 to 100.",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "why_relevant": {
+            "type": "string",
+            "description": "Reason this company is relevant to the recommended pilot."
+          },
+          "recommended_buyer_roles": {
+            "type": "array",
+            "description": "Role-based contacts to pursue, not personal contact data.",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "contact_method": {
+            "type": "object",
+            "description": "Company-level public contact path. Do not include private personal contact data.",
+            "additionalProperties": false,
+            "required": [
+              "type",
+              "value"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Type of company-level contact path.",
+                "enum": [
+                  "company_contact_page",
+                  "generic_company_email",
+                  "official_website",
+                  "needs_verification"
+                ]
+              },
+              "value": {
+                "type": "string",
+                "description": "Public contact URL, generic company email, official website, or verification note."
+              }
+            }
+          },
+          "outreach_angle": {
+            "type": "string",
+            "description": "Account-specific outreach angle tied to the recommended pilot."
+          },
+          "confidence_level": {
+            "type": "string",
+            "description": "Confidence in account fit and contact path.",
+            "enum": [
+              "low",
+              "medium",
+              "high",
+              "needs_verification"
+            ]
+          },
+          "source_notes": {
+            "type": "array",
+            "description": "Source notes used for account inclusion, such as official website, manual MVP curation, or public business information.",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
           }
         }
       }

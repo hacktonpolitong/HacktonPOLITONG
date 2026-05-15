@@ -27,7 +27,7 @@ For now, we use **PilotOps AI** as the internal working name.
 
 ## 3. One-Line Definition
 
-**PilotOps AI helps Chinese warehouse automation companies enter the Italian market by identifying the best first pilot opportunity: the right Italian buyer segment, the right warehouse process, the right trust gaps to close, and the right pilot package to propose.**
+**PilotOps AI helps Chinese warehouse automation companies enter the Italian market by identifying the best first pilot opportunity: the right Italian buyer segment, the right warehouse process, the right trust gaps to close, the right pilot package to propose, and the first Italian target accounts to approach.**
 
 ---
 
@@ -52,6 +52,7 @@ However, when entering Italy, they often do not know:
 - what documentation or proof must be shown;
 - how to position the product against existing local or European alternatives;
 - how to communicate the offer in a credible, low-risk way.
+- which concrete Italian companies are most compatible with the recommended pilot.
 
 The main problem is therefore not simply “market entry”.
 
@@ -67,7 +68,7 @@ A market report is not enough.
 
 A traditional report may explain market size, competitors, macro trends and regulatory conditions. However, it does not directly answer the operational sales question:
 
-> **Who should we approach, why now, what should we propose, what proof do they need, and what pilot can they approve with low risk?**
+> **Who should we approach, why now, what should we propose, what proof do they need, what pilot can they approve with low risk, and which Italian companies should we start from?**
 
 PilotOps AI is designed to turn product information and documentation into a practical **Pilot Entry Package**.
 
@@ -177,7 +178,7 @@ This is a key product principle:
 PilotOps AI should combine the first three promises below:
 
 1. **Tell the company where to enter the Italian warehouse market.**
-2. **Tell the company who to sell to first.**
+2. **Tell the company who to sell to first, including a short list of compatible Italian companies.**
 3. **Build the most realistic first pilot package.**
 4. Avoid becoming only a generic market report generator.
 
@@ -207,6 +208,7 @@ The MVP should include:
 - trust gap analysis;
 - pilot offer generation;
 - buyer objection simulation;
+- Target Account Shortlist with relevant Italian companies from a curated target-account database;
 - sales pack generation;
 - final dashboard called **Pilot Control Room**.
 
@@ -219,6 +221,7 @@ The MVP should not attempt to:
 - guarantee real sales leads;
 - build a full CRM;
 - scrape the entire web at scale;
+- collect private personal contact data or personal decision-maker emails;
 - create a generic consulting report;
 - behave like a simple chatbot;
 - promise that the pilot will certainly be sold.
@@ -308,6 +311,7 @@ Suggested analysis modules displayed during loading:
 - matching Italian warehouse segments;
 - identifying buyer trust gaps;
 - selecting pilot process;
+- ranking compatible Italian target accounts;
 - generating pilot offer;
 - preparing sales materials.
 
@@ -328,8 +332,9 @@ Main sections:
 5. Recommended Pilot Offer
 6. Buyer Objection Battlecard
 7. Documentation / Proof Checklist
-8. Ready-to-Send Sales Pack
-9. Next 7 Days Action Plan
+8. Target Account Shortlist
+9. Ready-to-Send Sales Pack
+10. Next 7 Days Action Plan
 
 ---
 
@@ -471,6 +476,27 @@ The AI generates materials that can be used immediately:
 - proof checklist;
 - next-step plan.
 
+### 14.8 Target Account Shortlist Generation
+
+The AI generates and ranks a short list of Italian companies that are compatible with the recommended buyer segment and pilot process.
+
+This section must use a curated target-account database, not broad live web scraping. The planned MVP dataset is `data/italian_target_accounts.json`: a local, controlled list of Italian companies classified by segment, warehouse process fit, geography, company-level public contact information, and source notes.
+
+The shortlist should include:
+
+- company name;
+- official website;
+- region and city;
+- matched buyer segment;
+- matched warehouse process;
+- fit score;
+- reason why the company is relevant;
+- recommended buyer roles, such as Operations Director, Warehouse Manager, or Head of Contract Logistics;
+- public contact page or generic company email when available;
+- personalized outreach angle.
+
+The system should prefer company-level public contact details and role-based outreach. It must not promise private personal contacts, personal decision-maker emails, LinkedIn scraping, mass personal-data collection, guaranteed replies, or guaranteed buyers.
+
 ---
 
 ## 15. Pilot Control Room — Expected Output
@@ -564,6 +590,30 @@ The system should generate:
 - objection battlecard;
 - short action plan.
 
+### 15.8 Target Account Shortlist
+
+The system should show 5-10 Italian companies that are highly compatible with the recommended buyer segment and pilot process.
+
+Example for an AMR internal transport product:
+
+> If the recommended segment is mid-size 3PL / e-commerce fulfilment and the recommended process is internal transport between picking and packing, the shortlist should prioritize compatible Italian 3PL or e-commerce fulfilment companies, especially in Lombardy, Veneto, Emilia-Romagna, or Piedmont.
+
+Each account should include:
+
+- company name;
+- website;
+- region and city;
+- matched buyer segment;
+- matched warehouse process;
+- fit score;
+- reason why this company is relevant;
+- recommended buyer roles;
+- public contact page or generic company email when available;
+- personalized outreach angle;
+- confidence level and source notes.
+
+The shortlist is not exhaustive and should not be presented as a guaranteed lead list. If account confidence is low, the dashboard should show `needs verification`.
+
 ---
 
 ## 16. Data Strategy
@@ -642,6 +692,56 @@ Seed a dataset of common proof requirements:
 - pilot proposal;
 - warranty terms.
 
+### 16.6 Curated Target-Account Dataset
+
+The MVP should include a planned curated target-account database:
+
+- `data/italian_target_accounts.json`
+
+This should be a local, controlled MVP seed dataset of Italian target accounts, enriched with public company-level information. It should be classified by compatible buyer segments, likely warehouse process fit, region, company size range, warehouse signals, recommended buyer roles, public contact method, and source notes.
+
+The dataset should not be framed as live scraping of the whole web. It should not contain private personal contact data or personal decision-maker emails.
+
+Indicative structure:
+
+```json
+{
+  "version": "1.0",
+  "market": "Italy",
+  "accounts": [
+    {
+      "id": "it_account_001",
+      "company_name": "Example Logistics S.p.A.",
+      "website": "https://example.com",
+      "region": "Lombardy",
+      "city": "Milan area",
+      "segments": ["it_3pl_ecommerce"],
+      "likely_process_fit": ["internal_transport_picking_to_packing"],
+      "company_size_range": "mid-market",
+      "warehouse_signals": [
+        "e-commerce fulfilment",
+        "contract logistics",
+        "multi-client warehouse"
+      ],
+      "recommended_buyer_roles": [
+        "Operations Director",
+        "Warehouse Manager",
+        "Head of Contract Logistics"
+      ],
+      "public_contact": {
+        "contact_page": "https://example.com/contact",
+        "generic_email": "info@example.com"
+      },
+      "source_notes": [
+        "Official company website",
+        "Manual MVP curation",
+        "Public business information"
+      ]
+    }
+  ]
+}
+```
+
 ---
 
 ## 17. Recommended MVP Technical Architecture
@@ -676,10 +776,11 @@ Suggested pipeline:
 2. Classify product category.
 3. Match product to Italian warehouse segment.
 4. Select best pilot process.
-5. Identify trust gaps.
-6. Generate pilot offer.
-7. Generate sales pack.
-8. Return structured JSON for dashboard rendering.
+5. Find and rank compatible target accounts from the curated target-account database.
+6. Identify trust gaps.
+7. Generate pilot offer.
+8. Generate sales pack.
+9. Return structured JSON for dashboard rendering.
 
 ### Data Layer
 
@@ -688,6 +789,7 @@ For MVP:
 - local JSON seed files;
 - optionally a few curated source snippets;
 - demo product profile;
+- planned curated target-account database for Italian company shortlisting;
 - no need for a complex database.
 
 ---
@@ -715,6 +817,7 @@ AI output:
 
 - best buyer: mid-size Italian 3PL / e-commerce fulfilment warehouses;
 - best pilot process: internal transport between picking and packing;
+- target accounts: 5-10 compatible Italian 3PL / e-commerce fulfilment companies from the curated target-account database, with company-level public contact paths;
 - trust gaps: local maintenance, Italian references, ROI localization, integration clarity;
 - pilot offer: 45-day limited pilot, 2 robots, one mapped route, KPIs on manual walking time and throughput;
 - sales pack: email, one-pager, objection battlecard, checklist.
@@ -734,9 +837,10 @@ Suggested 1–1.5 minute demo:
 7. Highlight best buyer segment.
 8. Highlight best pilot use case.
 9. Highlight trust gaps.
-10. Open recommended pilot offer.
-11. Open ready-to-send outreach email and battlecard.
-12. End with: “Not a market report. A first-pilot entry strategy.”
+10. Highlight Target Account Shortlist.
+11. Open recommended pilot offer.
+12. Open ready-to-send outreach email and battlecard.
+13. End with: “Not a market report. A first-pilot entry strategy.”
 
 ---
 
@@ -763,6 +867,7 @@ Dashboard cards:
 - Best Warehouse Process;
 - Trust Gap Severity;
 - Pilot Offer;
+- Target Account Shortlist;
 - Sales Pack;
 - Next Actions.
 
@@ -782,6 +887,7 @@ PilotOps AI is differentiated because it is not only:
 - market intelligence;
 - compliance navigation;
 - lead generation;
+- account shortlisting;
 - competitive analysis;
 - sales copy generation.
 
@@ -808,7 +914,7 @@ Use this sentence internally to keep the project aligned:
 
 Extended version:
 
-> **PilotOps AI helps Chinese warehouse automation companies identify the right Italian buyer segment, choose the right warehouse process, close the right trust gaps, and generate the right pilot proposal to win their first Italian customer.**
+> **PilotOps AI helps Chinese warehouse automation companies identify the right Italian buyer segment, choose the right warehouse process, close the right trust gaps, shortlist compatible Italian target accounts, and generate the right pilot proposal to win their first Italian customer.**
 
 ---
 
@@ -824,8 +930,8 @@ Confirmed decisions:
 - Main goal: sell the first pilot.
 - Input: product + Chinese documentation.
 - Documentation handling: checklist and readiness analysis, not full certification validation.
-- Output: complete Pilot Control Room.
-- AI functions: product classification, buyer matching, warehouse process selection, trust gap analysis, pilot design, sales pack generation.
+- Output: complete Pilot Control Room, including Target Account Shortlist.
+- AI functions: product classification, buyer matching, warehouse process selection, target-account ranking, trust gap analysis, pilot design, sales pack generation.
 - MVP data: real data where possible, supported by curated/simulated seed data.
 - Interface language: English.
 - Market content: focused on Italian buyers and Italian warehouse/logistics context.
@@ -847,6 +953,7 @@ Still to decide:
 8. Whether to include a simple ROI calculator.
 9. Whether to include real source citations in the dashboard.
 10. How much real-time web research the MVP should perform versus using a curated dataset.
+11. Exact contents and verification workflow for the curated Italian target-account database.
 
 ---
 

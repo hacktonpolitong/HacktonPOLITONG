@@ -1,6 +1,6 @@
 # Code Map
 
-This map reflects the repository during the project foundation phase. It should be updated after the AI/data and frontend setup branches are integrated.
+This map reflects the repository during early MVP setup. It should be updated as AI/backend and frontend implementation branches continue to integrate.
 
 ## Root Files
 
@@ -8,6 +8,7 @@ This map reflects the repository during the project foundation phase. It should 
 - `AGENTS.md`: operating guide for AI coding agents.
 - `pilotops_ai_product_spec.md`: source product specification for PilotOps AI.
 - `pilotops_ai_market_tech_analysis.md`: market, API, plugin, and repository analysis.
+- `package.json`: frontend scaffold scripts and dependencies, when present on the active branch.
 
 ## Docs Directory
 
@@ -15,30 +16,43 @@ This map reflects the repository during the project foundation phase. It should 
 - `docs/project-brief.md`: short product brief and MVP framing.
 - `docs/architecture.md`: planned system architecture and flow.
 - `docs/code-map.md`: this repository map.
+- `docs/ai-pipeline.md`: structured AI pipeline design owned by Jacopo.
+- `docs/data-model.md`: local data and schema documentation owned by Jacopo.
+- `docs/testing-and-evals.md`: planned testing and AI evaluation documentation owned by Jacopo.
+- `docs/ui-system.md`: frontend UI system documentation owned by Matteo.
 - `docs/decisions/ADR-0001-mvp-scope.md`: initial MVP scope decision.
 
-## Planned Directories
+## Data and Schema
 
-These directories are expected from other setup branches, but are not part of Francesco's foundation implementation:
+These directories exist in the current MVP setup and are owned by Jacopo:
 
-- `data/`: planned local JSON seed datasets owned by Jacopo.
-- `schemas/`: planned structured output schemas owned by Jacopo.
-- app/source directory: planned frontend and API scaffold owned by Matteo, exact path to be defined by the chosen Next.js setup.
-- `docs/ai-pipeline.md`: planned AI pipeline documentation owned by Jacopo.
-- `docs/data-model.md`: planned data model documentation owned by Jacopo.
-- `docs/testing-and-evals.md`: planned testing and AI evaluation documentation owned by Jacopo.
-- `docs/ui-system.md`: planned UI system documentation owned by Matteo.
+- `data/italian_segments.json`: Italian warehouse/logistics buyer segments.
+- `data/warehouse_processes.json`: warehouse process options and pilot suitability data.
+- `data/trust_gaps.json`: cross-border buyer trust gaps.
+- `data/proof_checklist.json`: buyer proof and documentation readiness checklist.
+- `data/demo_amr_profile.json`: demo AMR product profile.
+- `schemas/pilot_analysis.schema.json`: structured Pilot Control Room output schema.
+
+Planned but not yet created:
+
+- `data/italian_target_accounts.json`: curated Italian target-account database for the Target Account Shortlist.
+
+## App Source
+
+When present, `src/` contains the frontend scaffold owned by Matteo:
+
+- `src/app/`: Next.js app files.
+- `src/components/`: reusable UI, dashboard, and screen components.
+- `src/lib/`: typed mock data and shared helpers.
 
 ## Current Application State
 
-No runnable application exists yet. There is currently:
+The repository may include a frontend scaffold and package scripts, but the AI endpoint is not complete yet. Current pending areas:
 
-- no `package.json`;
-- no Next.js app scaffold;
 - no API route implementation;
 - no AI pipeline implementation;
-- no local seed data;
-- no test/lint command.
+- no curated `data/italian_target_accounts.json` seed file;
+- automated tests and schema validation scripts may still be pending.
 
 ## Ownership Boundaries
 
@@ -85,4 +99,3 @@ When this file changes, confirm:
 - ownership notes still match `docs/team_setup_plan.md`;
 - README and AGENTS still point to the correct key docs;
 - no implementation promises are made for code that does not exist.
-
