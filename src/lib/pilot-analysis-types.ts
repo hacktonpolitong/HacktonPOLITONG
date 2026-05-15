@@ -1,5 +1,8 @@
 export type ReadinessStatus = "available" | "partial" | "missing" | "recommended";
 export type RiskLevel = "low" | "medium" | "high" | "critical";
+export type AnalysisMode = "live_ai" | "deterministic_fallback";
+export type AnalysisProvider = "openrouter" | "local";
+export type AnalysisKeySource = "primary" | "secondary" | "none";
 
 export type ProductProfile = {
   companyName: string;
@@ -13,12 +16,43 @@ export type ProductProfile = {
   constraints: string[];
 };
 
+export type TargetAccount = {
+  company_name: string;
+  website: string;
+  hq_region: string | null;
+  logistics_category: string;
+  warehouse_signals: string[];
+  likely_process_fit: string[];
+  recommended_buyer_roles: string[];
+  outreach_angle: string;
+  source_note: string;
+};
+
 export type PilotAnalysis = {
+  metadata: {
+    analysis_id: string;
+    created_at: string;
+    target_market: "Italy";
+    pipeline_version: string;
+    dataset_versions: Record<string, string>;
+    assumptions: string[];
+    analysis_mode: AnalysisMode;
+    provider: AnalysisProvider;
+    model: string;
+    key_source: AnalysisKeySource;
+  };
   product_summary: {
     company_name: string;
+    company_country: string;
     product_name: string;
     product_category: string;
+    primary_use_case: string;
     target_market: "Italy";
+    core_benefits: string[];
+    deployment_constraints: string[];
+    available_proof: string[];
+    missing_proof: string[];
+    pilot_complexity: "low" | "medium" | "high";
     confidence_score: number;
   };
   buyer_segment_recommendation: {
@@ -27,6 +61,14 @@ export type PilotAnalysis = {
     typical_buyer_profile: string;
     fit_score: number;
     why_this_segment: string[];
+    key_objections: string[];
+    proof_requirements: string[];
+    alternative_segments: Array<{
+      segment_id: string;
+      segment_name: string;
+      fit_score: number;
+      tradeoff: string;
+    }>;
   };
   warehouse_process_recommendation: {
     process_id: string;
@@ -39,8 +81,8 @@ export type PilotAnalysis = {
       measurement: string;
       target: string;
     }>;
+    constraints: string[];
   };
-  why_now: string[];
   trust_gaps: Array<{
     gap_id: string;
     title: string;
@@ -65,6 +107,7 @@ export type PilotAnalysis = {
     exit_clause: string;
     next_commercial_step: string;
   };
+  target_account_shortlist: TargetAccount[];
   objection_battlecard: Array<{
     objection: string;
     response: string;
