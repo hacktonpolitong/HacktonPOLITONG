@@ -30,6 +30,8 @@ export function ControlRoomScreen({ profile, analysis, onRestart }: ControlRoomS
     ...analysis.buyer_segment_recommendation.why_this_segment.slice(0, 2),
     `${analysis.pilot_offer.duration_days}-day scope with ${analysis.pilot_offer.buyer_risk_reducers[0].toLowerCase()} keeps the first approval focused on measurable operational proof.`
   ];
+  const decisionRows = buildSegmentDecisionRows(analysis);
+  const priorityTrustGaps = getPriorityTrustGaps(analysis);
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-7xl px-5 py-8">
@@ -48,6 +50,76 @@ export function ControlRoomScreen({ profile, analysis, onRestart }: ControlRoomS
       </header>
 
       <div className="grid gap-5 lg:grid-cols-12">
+        <SectionPanel title="Product Evidence Extracted" eyebrow="Input signal" icon={ClipboardCheck} className="lg:col-span-5">
+          <div className="grid gap-3">
+            <div className="flex flex-wrap gap-2">
+              <Badge tone="blue">{analysis.product_summary.product_category}</Badge>
+              <Badge tone="green">{analysis.product_summary.primary_use_case}</Badge>
+              <Badge tone="amber">{analysis.product_summary.confidence_score}% confidence</Badge>
+            </div>
+            <EvidenceList title="Available proof" items={analysis.product_summary.available_proof} />
+            <EvidenceList title="Missing proof" items={analysis.product_summary.missing_proof} />
+            <EvidenceList title="Deployment constraints" items={analysis.product_summary.deployment_constraints} />
+          </div>
+        </SectionPanel>
+
+        <SectionPanel title="Segment Decision Matrix" eyebrow="Market entry wedge" icon={Gauge} className="lg:col-span-7">
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[760px] border-collapse text-left text-sm">
+              <thead className="text-xs uppercase tracking-wide text-muted">
+                <tr>
+                  <th className="border-b border-border pb-3">Segment</th>
+                  <th className="border-b border-border pb-3">Fit</th>
+                  <th className="border-b border-border pb-3">Process fit</th>
+                  <th className="border-b border-border pb-3">Proof readiness</th>
+                  <th className="border-b border-border pb-3">Pilotability</th>
+                  <th className="border-b border-border pb-3">Tradeoff</th>
+                </tr>
+              </thead>
+              <tbody>
+                {decisionRows.map((row) => (
+                  <tr key={row.segment}>
+                    <td className="border-b border-border py-3 font-semibold text-foreground">{row.segment}</td>
+                    <td className="border-b border-border py-3 text-muted">{row.fitScore}</td>
+                    <td className="border-b border-border py-3 text-muted">{row.processFit}</td>
+                    <td className="border-b border-border py-3 text-muted">{row.proofReadiness}</td>
+                    <td className="border-b border-border py-3 text-muted">{row.pilotability}</td>
+                    <td className="border-b border-border py-3 leading-6 text-muted">{row.tradeoff}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </SectionPanel>
+
+        <SectionPanel title="Why This Segment Wins" eyebrow="Decision rationale" icon={Target} className="lg:col-span-12">
+          <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="grid gap-2">
+              {[...analysis.buyer_segment_recommendation.why_this_segment, ...analysis.warehouse_process_recommendation.why_suitable]
+                .slice(0, 5)
+                .map((reason) => (
+                  <p key={reason} className="rounded-md border border-border bg-[#f8faf7] px-3 py-2 text-sm leading-6 text-muted">
+                    {reason}
+                  </p>
+                ))}
+            </div>
+            <div className="rounded-md border border-border bg-[#f8faf7] p-3">
+              <p className="text-xs font-semibold uppercase tracking-wide text-muted">Remaining blockers</p>
+              <div className="mt-3 grid gap-3">
+                {priorityTrustGaps.map((gap) => (
+                  <div key={gap.gap_id} className="grid gap-2 sm:grid-cols-[1fr_auto]">
+                    <div>
+                      <p className="font-semibold text-foreground">{gap.title}</p>
+                      <p className="mt-1 text-sm leading-6 text-muted">{gap.recommended_mitigation}</p>
+                    </div>
+                    <RiskPill level={gap.risk_level} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </SectionPanel>
+
         <SectionPanel title="Pilot Fit Score" eyebrow="Readiness" icon={Gauge} className="lg:col-span-5">
           <FitScore
             value={analysis.buyer_segment_recommendation.fit_score}
@@ -264,4 +336,67 @@ function KeyValue({ label, value }: { label: string; value: string }) {
       <p className="mt-1 leading-6 text-foreground">{value}</p>
     </div>
   );
+}
+
+function EvidenceList({ title, items }: { title: string; items: string[] }) {
+  return (
+    <div>
+      <p className="text-xs font-semibold uppercase tracking-wide text-muted">{title}</p>
+      <div className="mt-2 flex flex-wrap gap-2">
+        {items.length > 0 ? (
+          items.slice(0, 5).map((item) => <Badge key={item}>{item}</Badge>)
+        ) : (
+          <span className="text-sm text-muted">Not provided</span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function buildSegmentDecisionRows(analysis: PilotAnalysis) {
+  const proofReadiness = formatProofReadiness(
+    analysis.product_summary.available_proof.length,
+    analysis.product_summary.missing_proof.length
+  );
+  const selectedProcess = analysis.warehouse_process_recommendation.process_name;
+
+  return [
+    {
+      segment: analysis.buyer_segment_recommendation.segment_name,
+      fitScore: `${analysis.buyer_segment_recommendation.fit_score}/100`,
+      processFit: selectedProcess,
+      proofReadiness,
+      pilotability: `${analysis.warehouse_process_recommendation.pilot_suitability_score}/100`,
+      tradeoff: "Recommended first wedge"
+    },
+    ...analysis.buyer_segment_recommendation.alternative_segments.map((segment) => ({
+      segment: segment.segment_name,
+      fitScore: `${segment.fit_score}/100`,
+      processFit: selectedProcess,
+      proofReadiness,
+      pilotability: "Secondary option",
+      tradeoff: segment.tradeoff
+    }))
+  ];
+}
+
+function formatProofReadiness(availableCount: number, missingCount: number) {
+  const total = availableCount + missingCount;
+
+  if (total === 0) {
+    return "Not mapped";
+  }
+
+  return `${availableCount}/${total} proof items ready`;
+}
+
+function getPriorityTrustGaps(analysis: PilotAnalysis) {
+  const riskPriority = {
+    critical: 4,
+    high: 3,
+    medium: 2,
+    low: 1
+  };
+
+  return [...analysis.trust_gaps].sort((left, right) => riskPriority[right.risk_level] - riskPriority[left.risk_level]).slice(0, 3);
 }
