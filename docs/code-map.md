@@ -31,11 +31,8 @@ These directories exist in the current MVP setup and are owned by Jacopo:
 - `data/trust_gaps.json`: cross-border buyer trust gaps.
 - `data/proof_checklist.json`: buyer proof and documentation readiness checklist.
 - `data/demo_amr_profile.json`: demo AMR product profile.
+- `data/italian_target_accounts.json`: curated Italian target-account dataset for the Target Account Shortlist.
 - `schemas/pilot_analysis.schema.json`: structured Pilot Control Room output schema.
-
-Planned but not yet created:
-
-- `data/italian_target_accounts.json`: curated Italian target-account database for the Target Account Shortlist.
 
 ## App Source
 
@@ -51,7 +48,6 @@ The repository may include a frontend scaffold and package scripts, but the AI e
 
 - no API route implementation;
 - no AI pipeline implementation;
-- no curated `data/italian_target_accounts.json` seed file;
 - automated tests and schema validation scripts may still be pending.
 
 ## Ownership Boundaries

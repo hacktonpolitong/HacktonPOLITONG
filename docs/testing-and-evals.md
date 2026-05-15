@@ -110,7 +110,7 @@ Run these checks on every generated final output:
 - Output validates against `schemas/pilot_analysis.schema.json`.
 - All required top-level dashboard sections are present.
 - `target_account_shortlist` is present.
-- Each target account has `account_id`, `company_name`, `region`, `matched_segment_id`, `matched_process_id`, `why_relevant`, at least one recommended buyer role, and a contact method.
+- Each target account has `company_name`, `website`, `hq_region`, `logistics_category`, `warehouse_signals`, `likely_process_fit`, at least one recommended buyer role, an `outreach_angle`, and `source_note`.
 - No private personal contact data, personal decision-maker emails, or scraped personal profiles are present.
 - Accounts match the recommended buyer segment and warehouse process.
 - Each outreach angle is specific to the selected pilot and account fit.
@@ -170,7 +170,7 @@ These outputs should fail review:
 1. Run the demo AMR fixture through the pipeline.
 2. Validate the output against `schemas/pilot_analysis.schema.json`.
 3. Compare selected segment and process against expected behavior.
-4. Review Target Account Shortlist for segment/process fit, company-level public contact method, source notes, and absence of private personal data.
+4. Review Target Account Shortlist for segment/process fit, company-level public website/source notes, and absence of private personal data.
 5. Review trust gaps for buyer realism and missing proof.
 6. Review pilot offer for operational boundaries and KPIs.
 7. Review sales pack for immediate usability by the Head of International Expansion.
