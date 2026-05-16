@@ -9,7 +9,7 @@ import type { AnalysisKeySource } from "./pilot-analysis-types";
 export const DEFAULT_OPENROUTER_MODEL = "deepseek/deepseek-v4-flash:free";
 
 const OPENROUTER_CHAT_COMPLETIONS_URL = "https://openrouter.ai/api/v1/chat/completions";
-const OPENROUTER_TIMEOUT_MS = 6_000;
+const OPENROUTER_TIMEOUT_MS = 90_000;
 
 type OpenRouterAttemptInput = {
   apiKey: string;

@@ -4,13 +4,26 @@ import { useEffect, useState } from "react";
 import { AnalysisLoadingScreen } from "@/components/screens/analysis-loading-screen";
 import { ControlRoomScreen } from "@/components/screens/control-room-screen";
 import { IntakeScreen, type EvidenceInputs } from "@/components/screens/intake-screen";
-import { StartScreen } from "@/components/screens/start-screen";
 import { isPilotAnalysisUsable } from "@/lib/pilot-analysis-validation";
-import { buildClientFallbackPilotAnalysis, demoProductProfile, mockPilotAnalysis } from "@/lib/mock-pilot-analysis";
-import type { PilotAnalysis } from "@/lib/pilot-analysis-types";
+import { buildClientFallbackPilotAnalysis, mockPilotAnalysis } from "@/lib/mock-pilot-analysis";
+import type { PilotAnalysis, ProductProfile } from "@/lib/pilot-analysis-types";
 
-type FlowStep = "start" | "intake" | "analysis" | "control-room";
+type FlowStep = "intake" | "analysis" | "control-room";
 const ANALYSIS_REQUEST_TIMEOUT_MS = 20000;
+const MINIMUM_LOADING_TIME_MS = 5600;
+
+const emptyProductProfile: ProductProfile = {
+  companyName: "",
+  productName: "",
+  productCategory: "",
+  targetMarket: "Italy / European Union",
+  description: "",
+  benefits: [],
+  currentProof: [],
+  documentationStatus: "",
+  pilotAmbition: "",
+  constraints: []
+};
 
 const emptyEvidenceInputs: EvidenceInputs = {
   chinese_documentation_text: "",
@@ -21,8 +34,8 @@ const emptyEvidenceInputs: EvidenceInputs = {
 };
 
 export function PilotOpsApp() {
-  const [step, setStep] = useState<FlowStep>("start");
-  const [productProfile, setProductProfile] = useState(demoProductProfile);
+  const [step, setStep] = useState<FlowStep>("intake");
+  const [productProfile, setProductProfile] = useState<ProductProfile>(emptyProductProfile);
   const [evidenceInputs, setEvidenceInputs] = useState<EvidenceInputs>(emptyEvidenceInputs);
   const [analysis, setAnalysis] = useState<PilotAnalysis>(mockPilotAnalysis);
 
@@ -43,7 +56,7 @@ export function PilotOpsApp() {
         evidence_inputs: evidenceInputs
       };
       let nextAnalysis = buildClientFallbackPilotAnalysis(requestBody);
-      const minimumLoadingTime = new Promise((resolve) => window.setTimeout(resolve, 1500));
+      const minimumLoadingTime = new Promise((resolve) => window.setTimeout(resolve, MINIMUM_LOADING_TIME_MS));
 
       try {
         const response = await fetch("/api/analyze", {
@@ -97,7 +110,6 @@ export function PilotOpsApp() {
           setEvidenceInputs(updatedEvidenceInputs);
           setStep("analysis");
         }}
-        onBack={() => setStep("start")}
       />
     );
   }
@@ -107,8 +119,18 @@ export function PilotOpsApp() {
   }
 
   if (step === "control-room") {
-    return <ControlRoomScreen profile={productProfile} analysis={analysis} onRestart={() => setStep("start")} />;
+    return (
+      <ControlRoomScreen
+        profile={productProfile}
+        analysis={analysis}
+        onRestart={() => {
+          setProductProfile(emptyProductProfile);
+          setEvidenceInputs(emptyEvidenceInputs);
+          setStep("intake");
+        }}
+      />
+    );
   }
 
-  return <StartScreen onStart={() => setStep("intake")} />;
+  return null;
 }
