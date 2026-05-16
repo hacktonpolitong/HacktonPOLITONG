@@ -1,4 +1,5 @@
 import { ArrowRight, ClipboardCheck, Gauge, Target } from "lucide-react";
+import { BrandLogo } from "@/components/certibridge/BrandLogo";
 import { Button } from "@/components/ui/button";
 
 type StartScreenProps = {
@@ -9,8 +10,8 @@ export function StartScreen({ onStart }: StartScreenProps) {
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-5 py-8">
       <header className="flex items-center justify-between border-b border-border pb-5">
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-wide text-accent">PilotOps AI</p>
+        <div className="flex items-center gap-3">
+          <BrandLogo variant="lockup" size="sm" />
           <h1 className="mt-1 text-2xl font-bold text-foreground">Italian Pilot Entry Control Room</h1>
         </div>
         <Button onClick={onStart}>
