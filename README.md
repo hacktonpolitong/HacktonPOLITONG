@@ -97,6 +97,32 @@ The stable path is:
 
 The default path uses the server-side analysis route and the deterministic market-entry engine when no OpenRouter key is configured.
 
+## Working MVP Deliverable
+
+For the hackathon submission, PilotOps AI should be delivered as a live, clickable, functional MVP, not as a static mockup or screenshot.
+
+Accepted submission links:
+
+- a public live app URL, preferably a Vercel deployment;
+- or a public GitHub repository if live deployment is not available.
+
+Preferred deliverable:
+
+```text
+Working MVP Link: https://your-project-name.vercel.app
+```
+
+Before submitting the link:
+
+1. Deploy the Next.js app to Vercel or another public host.
+2. Make sure the app is accessible without an admin login, password, VPN, or local development server.
+3. Open the final URL in an Incognito Window.
+4. Run the full demo path: landing page, product intake, analysis loading state, and Pilot Control Room.
+5. Confirm that `Run Pilot Analysis` returns a usable dashboard.
+6. Paste the final functional URL into the submission form.
+
+The app is designed to remain demoable even if live AI generation is unavailable. If OpenRouter is not configured, unavailable, rate-limited, or returns invalid output, the server falls back to the deterministic local market-entry engine and still returns a complete Pilot Control Room.
+
 ## Optional Live AI Path
 
 Live AI mode is implemented as an optional server-side enhancement through OpenRouter.
@@ -121,13 +147,36 @@ Optional server-side variables for live AI mode:
 
 Do not add API keys to the repository. Use a local `.env.local` file or Vercel environment variables.
 
+Example local `.env.local`:
+
+```bash
+OPENROUTER_API_KEY=your_openrouter_key_here
+OPENROUTER_MODEL=deepseek/deepseek-v4-flash:free
+OPENROUTER_SITE_URL=http://localhost:3000
+OPENROUTER_APP_NAME=PilotOps AI
+```
+
+For production, configure the same variables in the Vercel project settings instead of committing them to GitHub. `OPENROUTER_API_KEY` must stay server-side only; do not expose it with a `NEXT_PUBLIC_` prefix.
+
 ## Vercel Deployment
 
 The MVP is intended to run on Vercel as a standard Next.js app.
 
 - Build command: `npm run build`.
-- No environment variables are required for the default demo path.
-- Add the optional OpenRouter variables in Vercel only if the team wants to demo live AI mode.
+- Install command: `npm install`.
+- Output directory: use the Vercel default for Next.js.
+- No environment variables are required for the default deterministic demo path.
+- Add `OPENROUTER_API_KEY`, `OPENROUTER_MODEL`, `OPENROUTER_SITE_URL`, and `OPENROUTER_APP_NAME` in Vercel only if the team wants to demo live AI mode.
+- After deployment, test the Vercel URL in an Incognito Window before submitting it as the Working MVP Link.
+
+Recommended production values:
+
+```bash
+OPENROUTER_API_KEY=your_openrouter_key_here
+OPENROUTER_MODEL=deepseek/deepseek-v4-flash:free
+OPENROUTER_SITE_URL=https://your-project-name.vercel.app
+OPENROUTER_APP_NAME=PilotOps AI
+```
 
 ## Key Documents
 
