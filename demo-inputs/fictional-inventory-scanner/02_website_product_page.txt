@@ -1,0 +1,42 @@
+Website Product Page Draft
+
+SB-Inspect 200 - Autonomous Inventory Scanning Robot
+
+SB-Inspect 200 helps warehouse teams verify inventory position, label readability, and stock-location accuracy without adding manual cycle-counting workload during peak shifts.
+
+Designed use cases:
+
+- retail distribution centers with many SKUs;
+- fashion and footwear warehouses;
+- pharma and healthcare logistics warehouses requiring careful stock verification;
+- spare-parts warehouses;
+- manufacturing warehouses with component storage and line-side replenishment areas.
+
+What the system does:
+
+- scans barcode labels, bin locations, and selected pallet/tote labels;
+- drives through mapped aisles during low-traffic windows;
+- compares scan output against a CSV or WMS inventory export;
+- flags missing labels, misplaced items, unreadable labels, and location mismatches;
+- creates a supervisor review report before any official stock update.
+
+Pilot positioning for Italy:
+
+The first Italian pilot should be limited to one aisle group, one SKU family, or one warehouse zone. The recommended pilot output is a report-only exception list, not an automatic change to the buyer's stock records. This lowers IT and operations risk while allowing the buyer to measure scan coverage, inventory accuracy, cycle-counting time, and exception resolution effort.
+
+Buyer roles to involve:
+
+- Logistics Director;
+- Warehouse Manager;
+- Inventory Control Manager;
+- IT/WMS Lead;
+- Quality Manager for regulated warehouses.
+
+Buyer concerns to prepare for:
+
+- CE/safety evidence for operating near people and goods;
+- data security review for WMS export handling;
+- Wi-Fi and barcode readability;
+- local maintenance and spare-part support;
+- proof from similar warehouse environments;
+- ROI model based on the buyer's own cycle-counting baseline.

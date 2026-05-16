@@ -1,0 +1,50 @@
+Case Study, ROI, And Deployment Notes
+
+Fictional Chinese demo context:
+
+Hangzhou ScanBridge Robotics tested SB-Inspect 200 in a fictional Chinese retail warehouse environment. The robot was used for night-shift scan coverage across selected high-SKU aisles. The output was an exception list reviewed by warehouse supervisors. No automatic WMS stock updates were enabled during the first test.
+
+Transferable pilot logic:
+
+The Italian pilot should not promise the same result as the Chinese demo. It should use the buyer's own baseline and measure whether a report-only scanning workflow improves inventory-control visibility.
+
+Recommended Italian pilot:
+
+- duration: 30 days;
+- scope: one aisle group or one SKU category;
+- systems: one SB-Inspect 200 robot;
+- operating window: night shift or low-traffic scanning windows;
+- data mode: CSV inventory export, report-only exception output;
+- buyer review: supervisor checks exceptions before any stock-record update;
+- fallback: manual cycle counting remains active.
+
+Pilot KPIs:
+
+- scan coverage rate in the selected aisle group;
+- inventory accuracy delta against buyer baseline;
+- manual cycle-counting hours reduced;
+- exception resolution time;
+- unreadable label rate;
+- data sync success rate.
+
+ROI notes:
+
+No localized Italian ROI model is available yet. The pilot should collect the buyer's current cycle-counting hours, exception rate, rework effort, and stock-adjustment process. Any ROI argument should be based on the buyer's own baseline after the pilot, not on a generic claim.
+
+Deployment risks:
+
+- poor barcode label visibility;
+- Wi-Fi gaps in warehouse aisles;
+- unclear data security expectations from IT;
+- safety review needed before robot enters live warehouse aisles;
+- no local maintenance partner currently identified;
+- no Italian reference customer.
+
+Recommended risk reducers:
+
+- report-only pilot;
+- one aisle group only;
+- low-traffic scanning windows;
+- manual cycle count remains available;
+- weekly review with inventory supervisor and IT/WMS lead;
+- exit condition after 30 days if scan quality or support expectations are not met.

@@ -1,0 +1,45 @@
+Proof And Certification Notes
+
+This document is fictional test material. It must not be read as real certification evidence.
+
+Available proof:
+
+- technical specifications;
+- barcode scanning test summary;
+- Chinese retail warehouse demo summary;
+- CSV workflow outline;
+- dashboard screenshots;
+- basic safety feature list.
+
+Partial proof:
+
+- CE/safety summary is partial;
+- pilot-area risk assessment template is not buyer-ready;
+- operator quick-start material exists only as an internal English draft;
+- data handling notes exist internally but are not packaged as a data security summary.
+
+Missing proof:
+
+- no Italian reference customer;
+- no buyer-ready CE/safety summary for Italy;
+- no completed data security summary;
+- no local maintenance partner identified;
+- no support SLA for Italian pilot operations;
+- no localized ROI model using Italian cycle-counting assumptions;
+- no Italian-language operator and supervisor training pack.
+
+Buyer-safe language to use:
+
+- "prepare evidence for buyer review";
+- "partial CE/safety summary";
+- "pilot-area risk assessment still required";
+- "report-only pilot before stock updates";
+- "local maintenance model to be defined before launch".
+
+Language to avoid:
+
+- do not say the product is legally compliant;
+- do not say CE approval is complete;
+- do not promise verified ROI;
+- do not promise guaranteed buyers;
+- do not claim live scraping or personal contact discovery.
