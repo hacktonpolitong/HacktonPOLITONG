@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { validateAnalyzeRequestInput } from "@/lib/analysis-input-quality";
 import { buildDeterministicPilotAnalysis } from "@/lib/pilot-analysis-fallback";
 import { getPilotAnalysisValidationIssues, normalizePilotAnalysisCandidate } from "@/lib/pilot-analysis-validation";
 import { callOpenRouterAnalysis, DEFAULT_OPENROUTER_MODEL } from "@/lib/openrouter-client";
@@ -11,6 +10,7 @@ export async function POST(request: Request) {
   const requestId = createAnalyzeRequestId();
   const startedAt = Date.now();
   const requestBody = await readRecoverableJson(request);
+  const fallback = buildDeterministicPilotAnalysis({}, requestBody);
   const primaryApiKey = process.env.OPENROUTER_API_KEY;
   const secondaryApiKey = process.env.OPENROUTER_FALLBACK_API_KEY;
   const model = process.env.OPENROUTER_MODEL || DEFAULT_OPENROUTER_MODEL;
@@ -23,28 +23,6 @@ export async function POST(request: Request) {
   };
 
   logAnalyzeDiagnostic("info", "request_received", baseLogContext);
-
-  const inputQuality = validateAnalyzeRequestInput(requestBody);
-
-  if (!inputQuality.ok) {
-    logAnalyzeDiagnostic("warn", "input_rejected", {
-      ...baseLogContext,
-      issues: inputQuality.issues.map((issue) => issue.code),
-      durationMs: Date.now() - startedAt
-    });
-
-    return NextResponse.json(
-      {
-        error: "invalid_analysis_input",
-        title: "Input is not usable for analysis",
-        message: inputQuality.summary,
-        issues: inputQuality.issues
-      },
-      { status: 422 }
-    );
-  }
-
-  const fallback = buildDeterministicPilotAnalysis({}, requestBody);
 
   if (!primaryApiKey) {
     logAnalyzeDiagnostic("warn", "fallback_returned", {
