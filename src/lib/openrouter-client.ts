@@ -49,7 +49,7 @@ const pilotAnalysisTopLevelFields = [
 const systemPrompt = [
   "You are PilotOps AI, a market-entry decision engine for Chinese warehouse automation vendors entering Italy.",
   "Return strict JSON only. Do not include Markdown, comments, prose outside JSON, or wrapper text.",
-  "The output must be one complete PilotAnalysis object matching the current fallback_template_shape and required_top_level_fields.",
+  "The output must be one complete PilotAnalysis object matching the current deterministic_baseline and required_top_level_fields.",
   "Use the app_request profile and evidence_inputs as the source of product evidence. If evidence is partial, state cautious assumptions inside the allowed output fields.",
   "Classify the product into exactly one canonical category from canonical_product_categories.",
   "Evaluate Italian buyer segment fit, warehouse process fit, proof readiness, support risk, and pilotability using only the provided seed datasets.",
@@ -149,7 +149,7 @@ function buildOpenRouterHeaders(apiKey: string): HeadersInit {
 }
 
 function buildOpenRouterPayload(model: string, requestBody: unknown) {
-  const fallbackTemplate = buildDeterministicPilotAnalysis({}, requestBody);
+  const deterministicBaseline = buildDeterministicPilotAnalysis({}, requestBody);
   const allowedTargetAccounts = targetAccounts;
   const seedDatasets = {
     italian_segments: italianSegments,
@@ -176,23 +176,37 @@ function buildOpenRouterPayload(model: string, requestBody: unknown) {
           task:
             "Generate a complete PilotAnalysis JSON object for the first realistic Italian warehouse automation pilot wedge. Keep the analysis English, Italy-specific, operational, and buyer-ready.",
           app_request: requestBody,
+          decision_engine_requirements: [
+            "Read the profile and evidence_inputs before choosing the product category, buyer segment, warehouse process, trust gaps, pilot package, shortlist, and sales pack.",
+            "Support AMR, AGV, sorting automation, palletizing automation, picking robot, inventory scanning robot, and WMS/orchestration inputs without drifting back to a fixed AMR/3PL answer.",
+            "Changing product category must change the recommended segment, warehouse process, KPIs, pilot offer, and shortlist when the evidence supports a different wedge.",
+            "Missing or partial CE/safety evidence must remain a high or critical trust gap; do not state compliance is complete unless the input explicitly proves buyer-ready evidence.",
+            "Missing local maintenance, support SLA, or spare-parts readiness must remain a high support risk with practical mitigation steps.",
+            "The first pilot must be bounded, measurable, reversible, and realistic; never propose a full warehouse transformation as the first step."
+          ],
+          category_guidance: {
+            AMR: "Prefer bounded internal transport, picking support, or line-side movement depending on the evidence.",
+            AGV: "Prefer pallet movement, line-side replenishment, or controlled internal transport.",
+            "sorting automation": "Prefer parcel/courier/sorting operations and parcel sorting KPIs such as parcels per hour, mis-sort rate, and dispatch cutoff adherence.",
+            "palletizing automation": "Prefer food and beverage or manufacturing-style segments, with safety, footprint, manual-lift, and dispatch-line constraints visible.",
+            "picking robot": "Prefer e-commerce, retail, pharma, or high-SKU picking-support scenarios with operator adoption and WMS constraints.",
+            "inventory scanning robot": "Prefer retail, pharma, or manufacturing inventory accuracy use cases with scan coverage, cycle-count time, and data-review constraints.",
+            "WMS/orchestration": "Prefer workflow optimization where data handoff, task orchestration, and measurable process control are credible."
+          },
           required_metadata_note:
             "Include metadata if useful, but the server will replace metadata with provider metadata after validation.",
           canonical_product_categories: canonicalProductCategories,
           required_top_level_fields: pilotAnalysisTopLevelFields,
           seed_datasets: seedDatasets,
           allowed_target_accounts: allowedTargetAccounts,
-          fallback_template_shape: fallbackTemplate,
-          decision_engine_requirements: [
-            "Read profile and evidence_inputs before selecting category, segment, process, trust gaps, pilot package, and sales pack.",
-            "Classify the product category using canonical_product_categories only.",
-            "Evaluate all Italian segments using italian_segments and return ranked segment_scorecards with reasons and tradeoffs.",
-            "Select the warehouse process using warehouse_processes and the product's operational use case.",
-            "Compare available proof and missing proof against proof_checklist and trust_gaps.",
-            "Prioritize trust gaps for CE/safety evidence, local maintenance and spare parts, WMS/integration, localized ROI, Italian reference, language/documentation readiness, and installation disruption when relevant.",
-            "Generate a bounded pilot package with duration, scope, setup, KPIs, risk reducers, exit clause, and next commercial step.",
-            "Generate a sales pack that is ready to send but does not overclaim certainty, compliance, ROI, or buyer intent.",
-            "If evidence is weak or missing, lower confidence and make the missing proof explicit instead of inventing certainty."
+          deterministic_baseline: deterministicBaseline,
+          output_contract: [
+            "Return only the JSON object, not an explanation wrapper.",
+            "Keep every field required by deterministic_baseline.",
+            "Use only target accounts that appear in allowed_target_accounts, preserving company_name and website exactly.",
+            "Return at least five target_account_shortlist entries.",
+            "Keep target accounts coherent with the selected segment and process; if the dataset is imperfect, prefer the closest curated match and explain caveats in source_note or assumptions.",
+            "Keep sales copy specific to the selected pilot process and trust gaps."
           ],
           target_account_rules: [
             "Use only allowed_target_accounts and preserve each selected account's company_name, website, hq_region, logistics_category, warehouse_signals, likely_process_fit, recommended_buyer_roles, outreach_angle, and source_note.",
@@ -209,7 +223,8 @@ function buildOpenRouterPayload(model: string, requestBody: unknown) {
             "No invented companies; target accounts must exist in allowed_target_accounts.",
             "No exhaustive lead list language; this is a curated target-account shortlist.",
             "No unsupported ROI, throughput, compliance, or safety claims.",
-            "No generic market report structure; every section must support a first-pilot decision."
+            "No generic market report structure; every section must support a first-pilot decision.",
+            "Do not remove missing-proof caveats just to make the answer sound more confident."
           ]
         })
       }

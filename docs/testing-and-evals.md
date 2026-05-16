@@ -18,6 +18,25 @@ The first evaluation set should cover:
 
 The MVP evals should use local fixtures and deterministic checks first. Model-quality scoring can be added later, but the initial bar is whether the generated Pilot Control Room is specific, complete, and usable.
 
+## Current Implementation Notes
+
+The current app has two analysis paths behind `POST /api/analyze`:
+
+- deterministic local engine in `src/lib/market-entry-engine.ts`;
+- optional OpenRouter call through `src/lib/openrouter-client.ts`.
+
+The deterministic engine is the baseline for demo reliability. It reads `profile` and `evidence_inputs`, classifies the product category, scores Italian segments, selects a warehouse process, ranks target accounts from `data/italian_target_accounts.json`, generates trust gaps, and assembles a `PilotAnalysis`-compatible response.
+
+OpenRouter is optional. Its prompt should use the deterministic output as a grounded template, improve only supported reasoning/copy, preserve the same schema shape, and continue to obey the no-scraping/no-personal-contacts/no-guaranteed-buyers/no-certified-compliance guardrails. If OpenRouter fails or returns invalid output, the API returns the deterministic result.
+
+Latest local smoke check, 2026-05-16:
+
+- AMR internal transport returned `AMR`, internal transport, and a retail logistics shortlist.
+- Parcel sorting automation returned `sorting automation`, parcel sorting, and parcel/courier/sorting accounts.
+- Inventory scanning robot returned `inventory scanning robot`, inventory scanning, and retail logistics accounts.
+- Palletizing automation returned `palletizing automation`, pallet movement, and manufacturing/industrial distribution accounts.
+- All four responses used `deterministic_fallback`, kept Target Account Shortlist visible, and produced high or critical trust gaps for missing CE/safety, Italian references, and local maintenance proof.
+
 ## Seed Data QA Audit
 
 P0 audit completed for Jacopo-owned seed datasets:
