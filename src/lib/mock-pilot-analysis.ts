@@ -1,8 +1,9 @@
-import { deterministicPilotAnalysis } from "./pilot-analysis-fallback";
-import type { ProductProfile } from "./pilot-analysis-types";
+import { buildDeterministicPilotAnalysis, deterministicPilotAnalysis } from "./pilot-analysis-fallback";
+import type { AnalyzeRequestBody, ProductProfile } from "./pilot-analysis-types";
 
 export const demoProductProfile: ProductProfile = {
   companyName: "Shenzhen Northstar Mobility",
+  productName: "NSM-300 Autonomous Mobile Robot",
   productCategory: "AMR robots for internal warehouse transport",
   targetMarket: "Italy",
   description:
@@ -30,3 +31,7 @@ export const demoProductProfile: ProductProfile = {
 };
 
 export const mockPilotAnalysis = deterministicPilotAnalysis;
+
+export function buildClientFallbackPilotAnalysis(requestBody: AnalyzeRequestBody) {
+  return buildDeterministicPilotAnalysis({}, requestBody);
+}

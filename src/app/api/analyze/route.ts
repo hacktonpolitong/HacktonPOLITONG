@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { buildDeterministicPilotAnalysis } from "@/lib/pilot-analysis-fallback";
-import { normalizePilotAnalysisCandidate } from "@/lib/pilot-analysis-validation";
+import { getPilotAnalysisValidationIssues, normalizePilotAnalysisCandidate } from "@/lib/pilot-analysis-validation";
 import { callOpenRouterAnalysis, DEFAULT_OPENROUTER_MODEL } from "@/lib/openrouter-client";
+import type { PilotAnalysis } from "@/lib/pilot-analysis-types";
 
 export const dynamic = "force-dynamic";
 
@@ -52,30 +53,46 @@ export async function POST(request: Request) {
       returnedModel: primaryAttempt.model
     });
 
-    const normalized = normalizePilotAnalysisCandidate(primaryAttempt.content, {
-      analysisMode: "live_ai",
-      provider: "openrouter",
-      model: primaryAttempt.model,
-      keySource: primaryAttempt.keySource
-    });
+    const normalized = normalizePilotAnalysisCandidate(
+      primaryAttempt.content,
+      {
+        analysisMode: "live_ai",
+        provider: "openrouter",
+        model: primaryAttempt.model,
+        keySource: primaryAttempt.keySource
+      },
+      fallback
+    );
 
     if (normalized) {
-      logAnalyzeDiagnostic("info", "live_ai_returned", {
+      const consistencyIssues = getLiveAnalysisConsistencyIssues(normalized, fallback);
+
+      if (consistencyIssues.length > 0) {
+        logAnalyzeDiagnostic("warn", "openrouter_consistency_failed", {
+          ...baseLogContext,
+          keySource: primaryAttempt.keySource,
+          returnedModel: primaryAttempt.model,
+          consistencyIssues
+        });
+      } else {
+        logAnalyzeDiagnostic("info", "live_ai_returned", {
+          ...baseLogContext,
+          keySource: primaryAttempt.keySource,
+          returnedModel: primaryAttempt.model,
+          durationMs: Date.now() - startedAt
+        });
+
+        return NextResponse.json(normalized);
+      }
+    } else {
+      logAnalyzeDiagnostic("warn", "openrouter_validation_failed", {
         ...baseLogContext,
         keySource: primaryAttempt.keySource,
         returnedModel: primaryAttempt.model,
-        durationMs: Date.now() - startedAt
+        validationIssues: getPilotAnalysisValidationIssues(primaryAttempt.content),
+        reason: "pilot_analysis_shape_or_guardrail_validation_failed"
       });
-
-      return NextResponse.json(normalized);
     }
-
-    logAnalyzeDiagnostic("warn", "openrouter_validation_failed", {
-      ...baseLogContext,
-      keySource: primaryAttempt.keySource,
-      returnedModel: primaryAttempt.model,
-      reason: "pilot_analysis_shape_or_guardrail_validation_failed"
-    });
   } else {
     logAnalyzeDiagnostic("warn", "openrouter_attempt_failed", {
       ...baseLogContext,
@@ -88,7 +105,8 @@ export async function POST(request: Request) {
 
   const shouldTrySecondary =
     secondaryApiKey &&
-    (!primaryAttempt.ok ? primaryAttempt.shouldTrySecondary : true);
+    !primaryAttempt.ok &&
+    primaryAttempt.shouldTrySecondary;
 
   if (shouldTrySecondary) {
     logAnalyzeDiagnostic("info", "openrouter_attempt_started", {
@@ -110,30 +128,46 @@ export async function POST(request: Request) {
         returnedModel: secondaryAttempt.model
       });
 
-      const normalized = normalizePilotAnalysisCandidate(secondaryAttempt.content, {
-        analysisMode: "live_ai",
-        provider: "openrouter",
-        model: secondaryAttempt.model,
-        keySource: secondaryAttempt.keySource
-      });
+      const normalized = normalizePilotAnalysisCandidate(
+        secondaryAttempt.content,
+        {
+          analysisMode: "live_ai",
+          provider: "openrouter",
+          model: secondaryAttempt.model,
+          keySource: secondaryAttempt.keySource
+        },
+        fallback
+      );
 
       if (normalized) {
-        logAnalyzeDiagnostic("info", "live_ai_returned", {
+        const consistencyIssues = getLiveAnalysisConsistencyIssues(normalized, fallback);
+
+        if (consistencyIssues.length > 0) {
+          logAnalyzeDiagnostic("warn", "openrouter_consistency_failed", {
+            ...baseLogContext,
+            keySource: secondaryAttempt.keySource,
+            returnedModel: secondaryAttempt.model,
+            consistencyIssues
+          });
+        } else {
+          logAnalyzeDiagnostic("info", "live_ai_returned", {
+            ...baseLogContext,
+            keySource: secondaryAttempt.keySource,
+            returnedModel: secondaryAttempt.model,
+            durationMs: Date.now() - startedAt
+          });
+
+          return NextResponse.json(normalized);
+        }
+      } else {
+        logAnalyzeDiagnostic("warn", "openrouter_validation_failed", {
           ...baseLogContext,
           keySource: secondaryAttempt.keySource,
           returnedModel: secondaryAttempt.model,
-          durationMs: Date.now() - startedAt
+          validationIssues: getPilotAnalysisValidationIssues(secondaryAttempt.content),
+          reason: "pilot_analysis_shape_or_guardrail_validation_failed"
         });
-
-        return NextResponse.json(normalized);
       }
-
-      logAnalyzeDiagnostic("warn", "openrouter_validation_failed", {
-        ...baseLogContext,
-        keySource: secondaryAttempt.keySource,
-        returnedModel: secondaryAttempt.model,
-        reason: "pilot_analysis_shape_or_guardrail_validation_failed"
-      });
     } else {
       logAnalyzeDiagnostic("warn", "openrouter_attempt_failed", {
         ...baseLogContext,
@@ -146,7 +180,7 @@ export async function POST(request: Request) {
   } else if (secondaryApiKey) {
     logAnalyzeDiagnostic("info", "secondary_attempt_skipped", {
       ...baseLogContext,
-      reason: "primary_failure_not_retryable"
+      reason: primaryAttempt.ok ? "primary_response_not_usable" : "primary_failure_not_retryable"
     });
   } else {
     logAnalyzeDiagnostic("info", "secondary_attempt_skipped", {
@@ -214,6 +248,36 @@ function logAnalyzeDiagnostic(
   }
 
   console.info(message);
+}
+
+function getLiveAnalysisConsistencyIssues(candidate: PilotAnalysis, fallback: PilotAnalysis): string[] {
+  const issues: string[] = [];
+
+  if (normalizeComparable(candidate.product_summary.company_name) !== normalizeComparable(fallback.product_summary.company_name)) {
+    issues.push("company_name_mismatch");
+  }
+
+  if (normalizeComparable(candidate.product_summary.product_name) !== normalizeComparable(fallback.product_summary.product_name)) {
+    issues.push("product_name_mismatch");
+  }
+
+  if (candidate.product_summary.target_market !== "Italy") {
+    issues.push("target_market_not_italy");
+  }
+
+  if (candidate.product_evidence_profile.canonical_category !== fallback.product_evidence_profile.canonical_category) {
+    issues.push("canonical_category_mismatch");
+  }
+
+  if (candidate.product_summary.product_category !== fallback.product_summary.product_category) {
+    issues.push("product_category_mismatch");
+  }
+
+  return issues;
+}
+
+function normalizeComparable(value: string): string {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

@@ -185,6 +185,7 @@ export function IntakeScreen({ profile, evidenceInputs, onAnalyze, onBack }: Int
 
             <div className="grid gap-4">
               <EditableField label="Company name" value={draft.companyName} onChange={(value) => updateField("companyName", value)} />
+              <EditableField label="Product name" value={draft.productName} onChange={(value) => updateField("productName", value)} />
               <EditableField
                 label="Product category"
                 value={draft.productCategory}

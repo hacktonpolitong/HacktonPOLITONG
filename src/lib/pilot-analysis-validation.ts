@@ -21,7 +21,8 @@ const blockedContentPatterns = [
 
 export function normalizePilotAnalysisCandidate(
   candidate: unknown,
-  metadata: AnalysisMetadataInput
+  metadata: AnalysisMetadataInput,
+  fallbackAnalysis?: PilotAnalysis
 ): PilotAnalysis | null {
   const unwrapped = unwrapCandidate(candidate);
 
@@ -30,10 +31,16 @@ export function normalizePilotAnalysisCandidate(
   }
 
   const result = unwrapped as unknown as PilotAnalysis;
-  const fallback = buildDeterministicPilotAnalysis(metadata);
+  const fallback = fallbackAnalysis ?? buildDeterministicPilotAnalysis(metadata);
 
   return {
-    metadata: fallback.metadata,
+    metadata: {
+      ...fallback.metadata,
+      analysis_mode: metadata.analysisMode ?? fallback.metadata.analysis_mode,
+      provider: metadata.provider ?? fallback.metadata.provider,
+      model: metadata.model ?? fallback.metadata.model,
+      key_source: metadata.keySource ?? fallback.metadata.key_source
+    },
     product_evidence_profile: result.product_evidence_profile,
     segment_scorecards: result.segment_scorecards,
     product_summary: result.product_summary,
@@ -47,6 +54,70 @@ export function normalizePilotAnalysisCandidate(
     next_7_days_plan: result.next_7_days_plan,
     sales_pack: result.sales_pack
   };
+}
+
+export function getPilotAnalysisValidationIssues(candidate: unknown): string[] {
+  const unwrapped = unwrapCandidate(candidate);
+
+  if (!isRecord(unwrapped)) {
+    return ["candidate_not_object"];
+  }
+
+  const issues: string[] = [];
+
+  if (containsBlockedContent(unwrapped)) {
+    issues.push("blocked_content_guardrail");
+  }
+
+  if (!hasProductEvidenceProfile(unwrapped.product_evidence_profile)) {
+    issues.push("product_evidence_profile_invalid");
+  }
+
+  if (!hasSegmentScorecards(unwrapped.segment_scorecards)) {
+    issues.push("segment_scorecards_invalid");
+  }
+
+  if (!hasProductSummary(unwrapped.product_summary)) {
+    issues.push("product_summary_invalid");
+  }
+
+  if (!hasBuyerSegment(unwrapped.buyer_segment_recommendation)) {
+    issues.push("buyer_segment_recommendation_invalid");
+  }
+
+  if (!hasWarehouseProcess(unwrapped.warehouse_process_recommendation)) {
+    issues.push("warehouse_process_recommendation_invalid");
+  }
+
+  if (!hasTrustGaps(unwrapped.trust_gaps)) {
+    issues.push("trust_gaps_invalid");
+  }
+
+  if (!hasPilotOffer(unwrapped.pilot_offer)) {
+    issues.push("pilot_offer_invalid");
+  }
+
+  if (!hasTargetAccountShortlist(unwrapped.target_account_shortlist)) {
+    issues.push("target_account_shortlist_invalid");
+  }
+
+  if (!hasObjectionBattlecard(unwrapped.objection_battlecard)) {
+    issues.push("objection_battlecard_invalid");
+  }
+
+  if (!hasProofChecklist(unwrapped.proof_checklist)) {
+    issues.push("proof_checklist_invalid");
+  }
+
+  if (!hasNextSevenDays(unwrapped.next_7_days_plan)) {
+    issues.push("next_7_days_plan_invalid");
+  }
+
+  if (!hasSalesPack(unwrapped.sales_pack)) {
+    issues.push("sales_pack_invalid");
+  }
+
+  return issues;
 }
 
 export function isPilotAnalysisUsable(candidate: unknown): candidate is PilotAnalysis {
