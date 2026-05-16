@@ -46,17 +46,21 @@ export function StartScreen({ onStart }: StartScreenProps) {
               { icon: Target, title: "Buyer segment", body: "Find the Italian warehouse buyer most likely to approve a first pilot." },
               { icon: Gauge, title: "Pilot process", body: "Choose one measurable workflow instead of proposing broad automation." },
               { icon: ClipboardCheck, title: "Trust gaps", body: "Surface missing proof, support concerns and documentation readiness." }
-            ].map((item) => (
-              <div key={item.title} className="flex gap-4 rounded-md border border-border bg-[#f8faf7] p-4">
-                <div className="grid h-10 w-10 shrink-0 place-items-center rounded-md bg-[#e7f3ed] text-accent">
-                  <item.icon size={20} aria-hidden="true" />
+            ].map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <div key={item.title} className="flex gap-4 rounded-md border border-border bg-[#f8faf7] p-4">
+                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-md bg-[#e7f3ed] text-accent">
+                    <Icon size={20} aria-hidden="true" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground">{item.title}</h3>
+                    <p className="mt-1 text-sm leading-6 text-muted">{item.body}</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold text-foreground">{item.title}</h3>
-                  <p className="mt-1 text-sm leading-6 text-muted">{item.body}</p>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
