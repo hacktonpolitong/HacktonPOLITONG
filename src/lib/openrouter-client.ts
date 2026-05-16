@@ -105,7 +105,7 @@ function buildOpenRouterHeaders(apiKey: string): HeadersInit {
 }
 
 function buildOpenRouterPayload(model: string, requestBody: unknown) {
-  const fallbackTemplate = buildDeterministicPilotAnalysis({}, requestBody);
+  const deterministicBaseline = buildDeterministicPilotAnalysis({}, requestBody);
   const allowedTargetAccounts = targetAccounts;
 
   return {
@@ -118,7 +118,7 @@ function buildOpenRouterPayload(model: string, requestBody: unknown) {
       {
         role: "system",
         content:
-          "You are the PilotOps AI market-entry decision engine. Return strict JSON only. The output must be a complete PilotAnalysis object with the same top-level fields as fallback_template_shape, including product_evidence_profile, segment_scorecards, target_account_shortlist, and sales_pack. Do not include Markdown. Do not claim live scraping, guaranteed buyers, personal contacts, legal compliance certification, or verified outreach permission."
+          "You are the PilotOps AI market-entry decision engine for Chinese warehouse automation vendors entering Italy. Return strict JSON only. The output must be a complete PilotAnalysis object with the same top-level fields and nested shape as deterministic_baseline, including product_evidence_profile, segment_scorecards, target_account_shortlist, and sales_pack. Do not include Markdown. Use the deterministic baseline as the grounded minimum answer, then improve wording and reasoning only when the provided product profile, evidence inputs, and curated account data support it. Do not claim live scraping, guaranteed buyers, personal contacts, legal compliance certification, or verified outreach permission."
       },
       {
         role: "user",
@@ -126,17 +126,43 @@ function buildOpenRouterPayload(model: string, requestBody: unknown) {
           task:
             "Generate a complete PilotAnalysis JSON object. Keep the analysis English, Italy-specific, warehouse-automation-specific, and focused on choosing the first realistic Italian pilot wedge, not a generic market report.",
           app_request: requestBody,
+          decision_engine_requirements: [
+            "Read the profile and evidence_inputs before choosing the product category, buyer segment, warehouse process, trust gaps, pilot package, shortlist, and sales pack.",
+            "Support AMR, AGV, sorting automation, palletizing automation, picking robot, inventory scanning robot, and WMS/orchestration inputs without drifting back to a fixed AMR/3PL answer.",
+            "Changing product category must change the recommended segment, warehouse process, KPIs, pilot offer, and shortlist when the evidence supports a different wedge.",
+            "Missing or partial CE/safety evidence must remain a high or critical trust gap; do not state compliance is complete unless the input explicitly proves buyer-ready evidence.",
+            "Missing local maintenance, support SLA, or spare-parts readiness must remain a high support risk with practical mitigation steps.",
+            "The first pilot must be bounded, measurable, reversible, and realistic; never propose a full warehouse transformation as the first step."
+          ],
+          category_guidance: {
+            AMR: "Prefer bounded internal transport, picking support, or line-side movement depending on the evidence.",
+            AGV: "Prefer pallet movement, line-side replenishment, or controlled internal transport.",
+            "sorting automation": "Prefer parcel/courier/sorting operations and parcel sorting KPIs such as parcels per hour, mis-sort rate, and dispatch cutoff adherence.",
+            "palletizing automation": "Prefer food and beverage or manufacturing-style segments, with safety, footprint, manual-lift, and dispatch-line constraints visible.",
+            "picking robot": "Prefer e-commerce, retail, pharma, or high-SKU picking-support scenarios with operator adoption and WMS constraints.",
+            "inventory scanning robot": "Prefer retail, pharma, or manufacturing inventory accuracy use cases with scan coverage, cycle-count time, and data-review constraints.",
+            "WMS/orchestration": "Prefer workflow optimization where data handoff, task orchestration, and measurable process control are credible."
+          },
           required_metadata_note:
             "Include metadata if useful, but the server will replace metadata with provider metadata after validation.",
           allowed_target_accounts: allowedTargetAccounts,
-          fallback_template_shape: fallbackTemplate,
+          deterministic_baseline: deterministicBaseline,
+          output_contract: [
+            "Return only the JSON object, not an explanation wrapper.",
+            "Keep every field required by deterministic_baseline.",
+            "Use only target accounts that appear in allowed_target_accounts, preserving company_name and website exactly.",
+            "Return at least five target_account_shortlist entries.",
+            "Keep target accounts coherent with the selected segment and process; if the dataset is imperfect, prefer the closest curated match and explain caveats in source_note or assumptions.",
+            "Keep sales copy specific to the selected pilot process and trust gaps."
+          ],
           safety_rules: [
             "Use only company-level target account data from allowed_target_accounts.",
-            "Return at least five target_account_shortlist entries.",
             "Target accounts must match the selected segment and warehouse process as much as the curated dataset allows.",
             "Do not invent personal emails, phone numbers, LinkedIn profiles, or private contact data.",
             "Do not describe the shortlist as scraped, exhaustive, verified outreach permission, or guaranteed buyers.",
-            "Do not claim CE/legal compliance is certified; frame safety items as readiness proof for buyer review."
+            "Do not claim CE/legal compliance is certified; frame safety items as readiness proof for buyer review.",
+            "Do not invent companies or account evidence outside the curated target account dataset.",
+            "Do not remove missing-proof caveats just to make the answer sound more confident."
           ]
         })
       }
