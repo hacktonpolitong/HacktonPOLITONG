@@ -7,11 +7,14 @@
   "additionalProperties": false,
   "required": [
     "metadata",
+    "product_evidence_profile",
+    "segment_scorecards",
     "product_summary",
     "buyer_segment_recommendation",
     "warehouse_process_recommendation",
     "trust_gaps",
     "pilot_offer",
+    "target_account_shortlist",
     "objection_battlecard",
     "proof_checklist",
     "next_7_days_plan",
@@ -96,6 +99,151 @@
             "secondary",
             "none"
           ]
+        }
+      }
+    },
+    "product_evidence_profile": {
+      "type": "object",
+      "description": "Lightweight parsed evidence profile used by the market-entry decision engine.",
+      "additionalProperties": false,
+      "required": [
+        "canonical_category",
+        "evidence_summary",
+        "operational_use_case",
+        "infrastructure_needs",
+        "integration_needs",
+        "safety_assumptions",
+        "support_model",
+        "region_preference",
+        "detected_keywords"
+      ],
+      "properties": {
+        "canonical_category": {
+          "type": "string",
+          "enum": [
+            "AMR",
+            "AGV",
+            "sorting automation",
+            "palletizing automation",
+            "picking robot",
+            "inventory scanning robot",
+            "WMS/orchestration"
+          ]
+        },
+        "evidence_summary": {
+          "type": "string"
+        },
+        "operational_use_case": {
+          "type": "string"
+        },
+        "infrastructure_needs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "integration_needs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "safety_assumptions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "support_model": {
+          "type": "string"
+        },
+        "region_preference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "detected_keywords": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "segment_scorecards": {
+      "type": "array",
+      "description": "Decision matrix inputs used to rank Italian buyer segments.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "segment_id",
+          "segment_name",
+          "score",
+          "rank",
+          "process_matches",
+          "proof_burden",
+          "support_risk",
+          "reasons",
+          "tradeoffs"
+        ],
+        "properties": {
+          "segment_id": {
+            "type": "string"
+          },
+          "segment_name": {
+            "type": "string"
+          },
+          "score": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "rank": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "process_matches": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "proof_burden": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          "support_risk": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high",
+              "critical"
+            ]
+          },
+          "reasons": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "tradeoffs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
         }
       }
     },
@@ -520,6 +668,7 @@
     "target_account_shortlist": {
       "type": "array",
       "description": "Ranked shortlist of Italian target accounts matched to the selected segment and process",
+      "minItems": 5,
       "items": {
         "type": "object",
         "additionalProperties": false,

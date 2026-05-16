@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   const requestBody = await readRecoverableJson(request);
-  const fallback = buildDeterministicPilotAnalysis();
+  const fallback = buildDeterministicPilotAnalysis({}, requestBody);
   const primaryApiKey = process.env.OPENROUTER_API_KEY;
   const secondaryApiKey = process.env.OPENROUTER_FALLBACK_API_KEY;
   const model = process.env.OPENROUTER_MODEL || DEFAULT_OPENROUTER_MODEL;

@@ -5,7 +5,7 @@ import type { AnalysisKeySource } from "./pilot-analysis-types";
 export const DEFAULT_OPENROUTER_MODEL = "deepseek/deepseek-v4-flash:free";
 
 const OPENROUTER_CHAT_COMPLETIONS_URL = "https://openrouter.ai/api/v1/chat/completions";
-const OPENROUTER_TIMEOUT_MS = 14_000;
+const OPENROUTER_TIMEOUT_MS = 6_000;
 
 type OpenRouterAttemptInput = {
   apiKey: string;
@@ -82,7 +82,7 @@ export async function callOpenRouterAnalysis(input: OpenRouterAttemptInput): Pro
       keySource: input.keySource,
       model: input.model,
       failureKind: isTimeout ? "timeout" : "network",
-      shouldTrySecondary: true
+      shouldTrySecondary: !isTimeout
     };
   } finally {
     clearTimeout(timeoutId);
@@ -105,12 +105,8 @@ function buildOpenRouterHeaders(apiKey: string): HeadersInit {
 }
 
 function buildOpenRouterPayload(model: string, requestBody: unknown) {
-  const fallbackTemplate = buildDeterministicPilotAnalysis();
-  const allowedTargetAccounts = targetAccounts.filter(
-    (account) =>
-      account.logistics_category === "3PL and e-commerce fulfilment" &&
-      account.likely_process_fit.includes("internal transport")
-  );
+  const fallbackTemplate = buildDeterministicPilotAnalysis({}, requestBody);
+  const allowedTargetAccounts = targetAccounts;
 
   return {
     model,
@@ -122,25 +118,22 @@ function buildOpenRouterPayload(model: string, requestBody: unknown) {
       {
         role: "system",
         content:
-          "You are the PilotOps AI analysis engine. Return strict JSON only. The output must be a complete PilotAnalysis object for a Chinese warehouse automation vendor entering Italy with a low-risk first pilot package. Do not include Markdown. Do not claim live scraping, guaranteed buyers, personal contacts, legal compliance certification, or verified outreach permission."
+          "You are the PilotOps AI market-entry decision engine. Return strict JSON only. The output must be a complete PilotAnalysis object with the same top-level fields as fallback_template_shape, including product_evidence_profile, segment_scorecards, target_account_shortlist, and sales_pack. Do not include Markdown. Do not claim live scraping, guaranteed buyers, personal contacts, legal compliance certification, or verified outreach permission."
       },
       {
         role: "user",
         content: JSON.stringify({
           task:
-            "Generate a complete PilotAnalysis JSON object. Keep the analysis English, Italy-specific, warehouse-automation-specific, and focused on the first pilot package.",
+            "Generate a complete PilotAnalysis JSON object. Keep the analysis English, Italy-specific, warehouse-automation-specific, and focused on choosing the first realistic Italian pilot wedge, not a generic market report.",
           app_request: requestBody,
           required_metadata_note:
             "Include metadata if useful, but the server will replace metadata with provider metadata after validation.",
-          required_seed_ids: {
-            recommended_segment_id: "it_3pl_ecommerce",
-            process_id: "internal_transport"
-          },
           allowed_target_accounts: allowedTargetAccounts,
           fallback_template_shape: fallbackTemplate,
           safety_rules: [
             "Use only company-level target account data from allowed_target_accounts.",
             "Return at least five target_account_shortlist entries.",
+            "Target accounts must match the selected segment and warehouse process as much as the curated dataset allows.",
             "Do not invent personal emails, phone numbers, LinkedIn profiles, or private contact data.",
             "Do not describe the shortlist as scraped, exhaustive, verified outreach permission, or guaranteed buyers.",
             "Do not claim CE/legal compliance is certified; frame safety items as readiness proof for buyer review."

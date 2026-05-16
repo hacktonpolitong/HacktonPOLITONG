@@ -97,12 +97,15 @@ Optional live AI mode can be shown only if the API integration is ready and stab
 Behavior:
 
 - the app sends intake data to a server-side API route or server action;
+- the API route first builds a deterministic market-entry analysis from the submitted profile, pasted evidence, and local seed datasets;
 - the server calls the selected AI provider using environment variables;
 - the provider returns structured pilot analysis JSON;
 - the dashboard renders the generated result;
-- if the API fails, the app falls back to the stable local MVP analysis.
+- if the API fails or provider output is invalid, the app falls back to the stable deterministic market-entry analysis.
 
 This mode should never expose API keys in frontend code.
+
+The backend returns `product_evidence_profile` and `segment_scorecards` for the decision matrix. Target accounts come only from the curated seed dataset; the demo must not describe them as scraped leads, guaranteed buyers, personal contacts, or certified outreach permission.
 
 Expected environment variables, if live AI is enabled:
 
