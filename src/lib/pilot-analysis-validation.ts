@@ -49,6 +49,70 @@ export function normalizePilotAnalysisCandidate(
   };
 }
 
+export function getPilotAnalysisValidationIssues(candidate: unknown): string[] {
+  const unwrapped = unwrapCandidate(candidate);
+
+  if (!isRecord(unwrapped)) {
+    return ["candidate_not_object"];
+  }
+
+  const issues: string[] = [];
+
+  if (containsBlockedContent(unwrapped)) {
+    issues.push("blocked_content_guardrail");
+  }
+
+  if (!hasProductEvidenceProfile(unwrapped.product_evidence_profile)) {
+    issues.push("product_evidence_profile_invalid");
+  }
+
+  if (!hasSegmentScorecards(unwrapped.segment_scorecards)) {
+    issues.push("segment_scorecards_invalid");
+  }
+
+  if (!hasProductSummary(unwrapped.product_summary)) {
+    issues.push("product_summary_invalid");
+  }
+
+  if (!hasBuyerSegment(unwrapped.buyer_segment_recommendation)) {
+    issues.push("buyer_segment_recommendation_invalid");
+  }
+
+  if (!hasWarehouseProcess(unwrapped.warehouse_process_recommendation)) {
+    issues.push("warehouse_process_recommendation_invalid");
+  }
+
+  if (!hasTrustGaps(unwrapped.trust_gaps)) {
+    issues.push("trust_gaps_invalid");
+  }
+
+  if (!hasPilotOffer(unwrapped.pilot_offer)) {
+    issues.push("pilot_offer_invalid");
+  }
+
+  if (!hasTargetAccountShortlist(unwrapped.target_account_shortlist)) {
+    issues.push("target_account_shortlist_invalid");
+  }
+
+  if (!hasObjectionBattlecard(unwrapped.objection_battlecard)) {
+    issues.push("objection_battlecard_invalid");
+  }
+
+  if (!hasProofChecklist(unwrapped.proof_checklist)) {
+    issues.push("proof_checklist_invalid");
+  }
+
+  if (!hasNextSevenDays(unwrapped.next_7_days_plan)) {
+    issues.push("next_7_days_plan_invalid");
+  }
+
+  if (!hasSalesPack(unwrapped.sales_pack)) {
+    issues.push("sales_pack_invalid");
+  }
+
+  return issues;
+}
+
 export function isPilotAnalysisUsable(candidate: unknown): candidate is PilotAnalysis {
   return isRecord(candidate) && !containsBlockedContent(candidate) && hasUsableAnalysisShape(candidate);
 }

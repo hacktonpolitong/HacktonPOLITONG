@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { buildDeterministicPilotAnalysis } from "@/lib/pilot-analysis-fallback";
-import { normalizePilotAnalysisCandidate } from "@/lib/pilot-analysis-validation";
+import { getPilotAnalysisValidationIssues, normalizePilotAnalysisCandidate } from "@/lib/pilot-analysis-validation";
 import { callOpenRouterAnalysis, DEFAULT_OPENROUTER_MODEL } from "@/lib/openrouter-client";
 
 export const dynamic = "force-dynamic";
@@ -74,6 +74,7 @@ export async function POST(request: Request) {
       ...baseLogContext,
       keySource: primaryAttempt.keySource,
       returnedModel: primaryAttempt.model,
+      validationIssues: getPilotAnalysisValidationIssues(primaryAttempt.content),
       reason: "pilot_analysis_shape_or_guardrail_validation_failed"
     });
   } else {
@@ -88,7 +89,8 @@ export async function POST(request: Request) {
 
   const shouldTrySecondary =
     secondaryApiKey &&
-    (!primaryAttempt.ok ? primaryAttempt.shouldTrySecondary : true);
+    !primaryAttempt.ok &&
+    primaryAttempt.shouldTrySecondary;
 
   if (shouldTrySecondary) {
     logAnalyzeDiagnostic("info", "openrouter_attempt_started", {
@@ -132,6 +134,7 @@ export async function POST(request: Request) {
         ...baseLogContext,
         keySource: secondaryAttempt.keySource,
         returnedModel: secondaryAttempt.model,
+        validationIssues: getPilotAnalysisValidationIssues(secondaryAttempt.content),
         reason: "pilot_analysis_shape_or_guardrail_validation_failed"
       });
     } else {
@@ -146,7 +149,7 @@ export async function POST(request: Request) {
   } else if (secondaryApiKey) {
     logAnalyzeDiagnostic("info", "secondary_attempt_skipped", {
       ...baseLogContext,
-      reason: "primary_failure_not_retryable"
+      reason: primaryAttempt.ok ? "primary_response_failed_validation" : "primary_failure_not_retryable"
     });
   } else {
     logAnalyzeDiagnostic("info", "secondary_attempt_skipped", {
