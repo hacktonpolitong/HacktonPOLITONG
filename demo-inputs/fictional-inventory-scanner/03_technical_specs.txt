@@ -1,0 +1,69 @@
+Technical Specifications - SB-Inspect 200
+
+Product category:
+Inventory scanning robot
+
+Navigation:
+SLAM navigation with mapped aisle routes and obstacle detection
+
+Payload:
+Not designed for goods transport. Sensor mast and onboard scanning module only.
+
+Max speed:
+1.2 m/s in mapped warehouse aisles
+
+Battery runtime:
+9 hours under standard scanning profile
+
+Charging:
+Manual docking for pilot phase; automatic charging dock optional after pilot
+
+Scanning:
+
+- barcode scanning camera;
+- shelf-label and bin-location scanning;
+- optional pallet/tote label scan when labels are visible;
+- scan confidence score per item;
+- exception list for unreadable labels or mismatched locations.
+
+Connectivity:
+
+- Wi-Fi;
+- CSV import/export;
+- REST API available after IT review;
+- dashboard export in CSV and PDF format.
+
+Data workflow for first pilot:
+
+1. Buyer exports inventory location file from WMS.
+2. ScanBridge imports CSV into the pilot dashboard.
+3. Robot scans selected aisle group.
+4. System compares scan result with WMS export.
+5. System produces exception report.
+6. Buyer reviews exceptions before any official stock update.
+
+Safety features:
+
+- emergency stop button;
+- obstacle detection;
+- configurable speed zones;
+- audible motion alert;
+- restricted area mapping;
+- low-speed mode for supervised pilot.
+
+Installation requirements:
+
+- mapped aisle group;
+- readable barcode labels;
+- Wi-Fi coverage;
+- safe route review;
+- charging or staging point;
+- WMS inventory export file;
+- supervisor review process for exceptions.
+
+Known technical constraints:
+
+- poor label placement reduces scan reliability;
+- reflective packaging can require scan-angle adjustment;
+- dense mixed traffic can reduce scan window availability;
+- report-only pilot is recommended before API-driven inventory updates.

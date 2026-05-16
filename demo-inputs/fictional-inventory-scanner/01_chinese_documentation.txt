@@ -1,0 +1,52 @@
+Internal Product Documentation Summary
+
+Vendor: Hangzhou ScanBridge Robotics
+Product: SB-Inspect 200 Inventory Scanning Robot
+Product category: inventory scanning robot
+Target market for this test: Italy
+
+SB-Inspect 200 is an autonomous mobile scanning robot designed for warehouse inventory checks. The system is intended for high-SKU retail distribution centers, pharma logistics warehouses, spare-parts warehouses, and industrial distribution sites where inventory accuracy and cycle-counting workload are recurring operational problems.
+
+The robot navigates a mapped warehouse aisle group and scans barcode shelf labels, bin locations, tote labels, and selected pallet labels. It then compares the scan result against a WMS export file and creates an exception report. The first pilot should be report-only: the robot should not automatically update official inventory records until the Italian buyer validates exception logic and data quality.
+
+Main operating mode:
+
+- map one aisle group or one SKU family;
+- run during night shift or low-traffic windows;
+- scan barcode labels and shelf/bin positions;
+- compare scan results against CSV inventory export;
+- create exception list for buyer review;
+- review exceptions with warehouse supervisor before updating official records.
+
+Operational value:
+
+- improve scan coverage in selected aisles;
+- reduce manual cycle-counting hours;
+- detect missing, misplaced, duplicate, or unreadable labels;
+- produce a repeatable inventory-control workflow;
+- support a low-risk pilot because the first output is a report, not an automatic stock correction.
+
+Current limitations:
+
+- barcode labels must be visible and readable;
+- Wi-Fi coverage is required along the mapped aisle group;
+- reflective packaging and poor label placement can reduce scan quality;
+- the buyer must provide a WMS inventory export or CSV file;
+- the robot needs a safe route and pedestrian interaction review;
+- official inventory records should not be updated automatically during the pilot.
+
+Available internal materials:
+
+- technical specifications;
+- barcode scanning test summary;
+- sample dashboard screenshots;
+- Chinese retail warehouse demo summary;
+- CSV export workflow outline.
+
+Missing or incomplete proof:
+
+- no Italian reference customer;
+- CE/safety summary is partial and not buyer-ready for Italy;
+- data security summary is not prepared;
+- no local maintenance partner identified;
+- no localized ROI model using Italian warehouse assumptions.
