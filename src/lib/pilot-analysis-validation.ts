@@ -21,7 +21,8 @@ const blockedContentPatterns = [
 
 export function normalizePilotAnalysisCandidate(
   candidate: unknown,
-  metadata: AnalysisMetadataInput
+  metadata: AnalysisMetadataInput,
+  fallbackAnalysis?: PilotAnalysis
 ): PilotAnalysis | null {
   const unwrapped = unwrapCandidate(candidate);
 
@@ -30,10 +31,16 @@ export function normalizePilotAnalysisCandidate(
   }
 
   const result = unwrapped as unknown as PilotAnalysis;
-  const fallback = buildDeterministicPilotAnalysis(metadata);
+  const fallback = fallbackAnalysis ?? buildDeterministicPilotAnalysis(metadata);
 
   return {
-    metadata: fallback.metadata,
+    metadata: {
+      ...fallback.metadata,
+      analysis_mode: metadata.analysisMode ?? fallback.metadata.analysis_mode,
+      provider: metadata.provider ?? fallback.metadata.provider,
+      model: metadata.model ?? fallback.metadata.model,
+      key_source: metadata.keySource ?? fallback.metadata.key_source
+    },
     product_evidence_profile: result.product_evidence_profile,
     segment_scorecards: result.segment_scorecards,
     product_summary: result.product_summary,

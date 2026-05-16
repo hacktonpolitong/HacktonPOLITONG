@@ -6,7 +6,7 @@ import { ControlRoomScreen } from "@/components/screens/control-room-screen";
 import { IntakeScreen, type EvidenceInputs } from "@/components/screens/intake-screen";
 import { StartScreen } from "@/components/screens/start-screen";
 import { isPilotAnalysisUsable } from "@/lib/pilot-analysis-validation";
-import { demoProductProfile, mockPilotAnalysis } from "@/lib/mock-pilot-analysis";
+import { buildClientFallbackPilotAnalysis, demoProductProfile, mockPilotAnalysis } from "@/lib/mock-pilot-analysis";
 import type { PilotAnalysis } from "@/lib/pilot-analysis-types";
 
 type FlowStep = "start" | "intake" | "analysis" | "control-room";
@@ -38,7 +38,11 @@ export function PilotOpsApp() {
     }, ANALYSIS_REQUEST_TIMEOUT_MS);
 
     async function runAnalysis() {
-      let nextAnalysis = mockPilotAnalysis;
+      const requestBody = {
+        profile: productProfile,
+        evidence_inputs: evidenceInputs
+      };
+      let nextAnalysis = buildClientFallbackPilotAnalysis(requestBody);
       const minimumLoadingTime = new Promise((resolve) => window.setTimeout(resolve, 1500));
 
       try {
@@ -47,10 +51,7 @@ export function PilotOpsApp() {
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({
-            profile: productProfile,
-            evidence_inputs: evidenceInputs
-          }),
+          body: JSON.stringify(requestBody),
           signal: controller.signal
         });
 
@@ -62,7 +63,7 @@ export function PilotOpsApp() {
           }
         }
       } catch {
-        nextAnalysis = mockPilotAnalysis;
+        nextAnalysis = buildClientFallbackPilotAnalysis(requestBody);
       } finally {
         window.clearTimeout(requestTimeoutId);
       }

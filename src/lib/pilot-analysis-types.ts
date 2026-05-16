@@ -14,6 +14,7 @@ export type CanonicalProductCategory =
 
 export type ProductProfile = {
   companyName: string;
+  productName: string;
   productCategory: string;
   targetMarket: string;
   description: string;

@@ -106,6 +106,7 @@ type SegmentCandidate = {
 
 const DEFAULT_PROFILE: ProductProfile = {
   companyName: "Shenzhen Northstar Mobility",
+  productName: "NSM-300 Autonomous Mobile Robot",
   productCategory: "AMR robots for internal warehouse transport",
   targetMarket: "Italy",
   description:
@@ -196,7 +197,7 @@ export function buildMarketEntryPilotAnalysis(
     product_summary: {
       company_name: product.profile.companyName,
       company_country: "China",
-      product_name: product.profile.companyName,
+      product_name: product.profile.productName,
       product_category: product.category,
       primary_use_case: product.operationalUseCase,
       target_market: "Italy",
@@ -270,6 +271,7 @@ function parseProductProfile(request: AnalyzeRequestBody): ParsedProduct {
   const evidenceInputs = request.evidence_inputs ?? {};
   const evidenceText = [
     profile.productCategory,
+    profile.productName,
     profile.description,
     profile.documentationStatus,
     profile.pilotAmbition,
@@ -326,6 +328,7 @@ function parseProductProfile(request: AnalyzeRequestBody): ParsedProduct {
 function normalizeProductProfile(value: Partial<ProductProfile> | undefined): ProductProfile {
   return {
     companyName: nonEmptyString(value?.companyName) ?? DEFAULT_PROFILE.companyName,
+    productName: nonEmptyString(value?.productName) ?? DEFAULT_PROFILE.productName,
     productCategory: nonEmptyString(value?.productCategory) ?? DEFAULT_PROFILE.productCategory,
     targetMarket: nonEmptyString(value?.targetMarket) ?? "Italy",
     description: nonEmptyString(value?.description) ?? DEFAULT_PROFILE.description,
@@ -541,7 +544,7 @@ function generateSalesPack(
     outreach_email: {
       subject: `${pilotOffer.duration_days}-day ${process.process_name.toLowerCase()} pilot for Italian operations`,
       body:
-        `Hello,\n\n${product.profile.companyName} is preparing a bounded Italian pilot for ${process.process_name.toLowerCase()} in ${segment.segment_name.toLowerCase()}. ` +
+        `Hello,\n\n${product.profile.companyName} is preparing a bounded Italian pilot for ${product.profile.productName}, focused on ${process.process_name.toLowerCase()} in ${segment.segment_name.toLowerCase()}. ` +
         `The proposal is deliberately narrow: ${pilotOffer.scope} Success would be measured through ${kpis.join(", ")}.\n\n` +
         `A first discussion with operations and IT would confirm baseline data, proof readiness, and whether a site like ${firstAccount} is a useful reference profile.\n\nBest regards,\nPilotOps AI sales pack`
     },
@@ -897,7 +900,7 @@ function estimateComplexity(
 function estimateConfidenceScore(profile: ProductProfile, availableProof: string[], text: string): number {
   const textScore = Math.min(Math.floor(text.length / 120), 20);
   const proofScore = Math.min(availableProof.length * 5, 25);
-  const profileScore = [profile.companyName, profile.productCategory, profile.description].filter(Boolean).length * 10;
+  const profileScore = [profile.companyName, profile.productName, profile.productCategory, profile.description].filter(Boolean).length * 8;
 
   return clampScore(35 + textScore + proofScore + profileScore);
 }
