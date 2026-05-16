@@ -2,7 +2,7 @@
 
 import { useMemo, useRef, useState } from "react";
 import type { ChangeEvent, DragEvent, KeyboardEvent } from "react";
-import { ArrowDown, ArrowRight, CheckCircle2, Edit3, FileText, Sparkles, UploadCloud, X } from "lucide-react";
+import { AlertTriangle, ArrowDown, ArrowRight, CheckCircle2, Edit3, FileText, Sparkles, UploadCloud, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { BrandLogo } from "@/components/certibridge/BrandLogo";
 import { ElectricButton, SecondaryGlassButton } from "@/components/certibridge/ElectricButton";
@@ -30,6 +30,7 @@ type IntakeScreenProps = {
   profile: ProductProfile;
   evidenceInputs: EvidenceInputs;
   onAnalyze: (payload: IntakeSubmitPayload) => void;
+  analysisError?: string[];
 };
 
 type UploadedEvidenceDocument = {
@@ -52,7 +53,7 @@ const demoEvidenceDocument: UploadedEvidenceDocument = {
     "AMR fleet used for tote movement between picking and packing in Chinese fulfilment operations.\nPayload 300 kg, SLAM navigation, obstacle detection, fleet dashboard, REST API and CSV task import.\nPartial CE/safety summary available; Italian support model and localized ROI assumptions still need buyer-ready packaging."
 };
 
-export function IntakeScreen({ profile, evidenceInputs, onAnalyze }: IntakeScreenProps) {
+export function IntakeScreen({ profile, evidenceInputs, onAnalyze, analysisError = [] }: IntakeScreenProps) {
   const [companyName, setCompanyName] = useState(profile.companyName);
   const [isCompanyLocked, setIsCompanyLocked] = useState(Boolean(profile.companyName.trim()));
   const [productTypeId, setProductTypeId] = useState("");
@@ -251,6 +252,22 @@ export function IntakeScreen({ profile, evidenceInputs, onAnalyze }: IntakeScree
                     Load demo AMR
                   </button>
                 </div>
+
+                {analysisError.length > 0 ? (
+                  <div className="mb-5 rounded-2xl border border-red-300/25 bg-red-500/10 p-4 text-red-50">
+                    <div className="flex gap-3">
+                      <AlertTriangle className="mt-0.5 shrink-0 text-red-200" size={18} aria-hidden="true" />
+                      <div>
+                        <p className="font-semibold">Input not usable for analysis</p>
+                        <ul className="mt-2 grid gap-1 text-sm leading-6 text-red-100/90">
+                          {analysisError.slice(0, 5).map((message) => (
+                            <li key={message}>{message}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
 
                 <div className="grid gap-4">
                   <CompanyStep
