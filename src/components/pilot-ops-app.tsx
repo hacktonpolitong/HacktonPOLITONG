@@ -10,7 +10,7 @@ import { demoProductProfile, mockPilotAnalysis } from "@/lib/mock-pilot-analysis
 import type { PilotAnalysis } from "@/lib/pilot-analysis-types";
 
 type FlowStep = "start" | "intake" | "analysis" | "control-room";
-const ANALYSIS_REQUEST_TIMEOUT_MS = 8000;
+const ANALYSIS_REQUEST_TIMEOUT_MS = 20000;
 
 const emptyEvidenceInputs: EvidenceInputs = {
   chinese_documentation_text: "",
