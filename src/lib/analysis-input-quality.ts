@@ -195,10 +195,10 @@ function looksLikeKeyboardTrash(value: string) {
   }
 
   const uniqueChars = new Set(compact).size;
-  const letters = compact.replace(/[^a-z]/g, "");
-  const vowelCount = (letters.match(/[aeiou]/g) ?? []).length;
+  const latinLetters = compact.replace(/[^a-z]/g, "");
+  const vowelCount = (latinLetters.match(/[aeiou]/g) ?? []).length;
 
-  return compact.length >= 8 && (uniqueChars <= 3 || (letters.length >= 8 && vowelCount === 0));
+  return compact.length >= 8 && (uniqueChars <= 3 || (latinLetters.length >= 8 && vowelCount === 0));
 }
 
 function countDomainSignals(value: string) {
@@ -206,11 +206,11 @@ function countDomainSignals(value: string) {
 }
 
 function countUsefulTokens(value: string) {
-  return value.split(/\s+/).filter((token) => token.length >= 3 && /[a-z0-9]/.test(token)).length;
+  return value.split(/\s+/u).filter((token) => token.length >= 2 && /[\p{L}\p{N}]/u.test(token)).length;
 }
 
 function hasUsefulLetters(value: string, minLetters: number) {
-  return (value.match(/[a-zA-ZÀ-ÿ]/g) ?? []).length >= minLetters && !containsJunkTerm(value) && !looksLikeKeyboardTrash(value);
+  return (value.match(/\p{L}/gu) ?? []).length >= minLetters && !containsJunkTerm(value) && !looksLikeKeyboardTrash(value);
 }
 
 function dedupeIssues(issues: InputQualityIssue[]) {
@@ -236,7 +236,7 @@ function arrayValue(value: unknown) {
 }
 
 function normalizeText(value: string) {
-  return value.toLowerCase().replace(/[^a-z0-9À-ÿ]+/g, " ").replace(/\s+/g, " ").trim();
+  return value.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ").replace(/\s+/g, " ").trim();
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
