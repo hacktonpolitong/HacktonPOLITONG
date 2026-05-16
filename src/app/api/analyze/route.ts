@@ -8,11 +8,12 @@ export const dynamic = "force-dynamic";
 export async function POST(request: Request) {
   const requestBody = await readRecoverableJson(request);
   const fallback = buildDeterministicPilotAnalysis({}, requestBody);
+  const forceLocalEngine = process.env.PILOTOPS_FORCE_LOCAL_ENGINE === "1";
   const primaryApiKey = process.env.OPENROUTER_API_KEY;
   const secondaryApiKey = process.env.OPENROUTER_FALLBACK_API_KEY;
   const model = process.env.OPENROUTER_MODEL || DEFAULT_OPENROUTER_MODEL;
 
-  if (!primaryApiKey) {
+  if (forceLocalEngine || !primaryApiKey) {
     return NextResponse.json(fallback);
   }
 

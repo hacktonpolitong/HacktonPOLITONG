@@ -19,6 +19,7 @@ This map reflects the repository after the demo-flow, target-account, and analys
 - `docs/ai-pipeline.md`: structured AI pipeline design owned by Jacopo.
 - `docs/data-model.md`: local data and schema documentation owned by Jacopo.
 - `docs/testing-and-evals.md`: testing and AI evaluation documentation owned by Jacopo.
+- `docs/parallel-implementation-plan.md`: current cross-workstream implementation status and final merge checklist.
 - `docs/ui-system.md`: frontend UI system documentation owned by Matteo.
 - `docs/decisions/ADR-0001-mvp-scope.md`: initial MVP scope decision.
 
@@ -36,11 +37,11 @@ These directories exist in the current MVP setup and are owned by Jacopo:
 
 ## App Source
 
-`src/` contains the Next.js app, frontend flow, server-side analysis route, deterministic fallback, and shared validation helpers:
+`src/` contains the Next.js app, frontend flow, server-side analysis route, deterministic market-entry engine, optional OpenRouter client, and shared validation helpers:
 
 - `src/app/`: Next.js app files, including `src/app/api/analyze/route.ts`.
 - `src/components/`: reusable UI, dashboard, and screen components.
-- `src/lib/`: demo profile, deterministic fallback analysis, OpenRouter client, Pilot Analysis types, and response validation helpers.
+- `src/lib/`: demo profile, deterministic market-entry analysis, OpenRouter client, Pilot Analysis types, and response validation helpers.
 
 ## Current Application State
 
@@ -48,11 +49,11 @@ The current MVP includes:
 
 - a clickable Start Screen -> Product Intake -> Analysis Loading -> Pilot Control Room flow;
 - a server-side `POST /api/analyze` route;
-- a deterministic AMR/3PL fallback that works without environment variables;
+- a deterministic multi-category market-entry engine that works without environment variables;
 - optional OpenRouter live AI mode through server-side environment variables;
 - Target Account Shortlist rendering from curated company-level seed data.
 
-Automated tests and schema validation scripts may still be pending.
+Fixture evals and schema validation are available through `npm run eval:fixtures` and `npm run validate:schema`.
 
 ## Ownership Boundaries
 

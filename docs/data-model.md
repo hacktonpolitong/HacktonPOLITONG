@@ -11,7 +11,7 @@ This document describes the local JSON files owned by the AI/data pipeline and t
 | `data/trust_gaps.json` | Cross-border trust risks for Chinese vendors entering Italy | Trust Gap Analyzer |
 | `data/proof_checklist.json` | Proof and documentation requirements for Italian market entry pilots | Trust Gap Analyzer, Sales Pack Generator |
 | `data/demo_amr_profile.json` | Complete demo product intake for the AMR walkthrough | Product Parser, demo mode |
-| `data/italian_target_accounts.json` | Curated Italian warehouse/logistics companies for AMR/AGV pilot prospecting | Target Account Finder |
+| `data/italian_target_accounts.json` | Curated Italian warehouse/logistics companies for warehouse automation pilot prospecting | Target Account Finder |
 | `schemas/pilot_analysis.schema.json` | Draft-07 schema for final Pilot Control Room output | Backend, frontend, evals |
 
 ## `italian_segments.json`
@@ -162,7 +162,7 @@ Notes:
 
 ## `italian_target_accounts.json`
 
-Purpose: curated Italian warehouse and logistics companies for AMR/AGV pilot prospecting. The file gives the Pilot Control Room a concrete target-account shortlist after the pipeline has selected the best buyer segment and warehouse process.
+Purpose: curated Italian warehouse and logistics companies for warehouse automation pilot prospecting. The file gives the Pilot Control Room a concrete target-account shortlist after the pipeline has selected the best buyer segment and warehouse process.
 
 Shape:
 
@@ -221,7 +221,7 @@ Filtering logic:
 - `warehouse_process_recommendation`
 - `trust_gaps`
 - `pilot_offer`
-- `target_account_shortlist` (optional)
+- `target_account_shortlist`
 - `objection_battlecard`
 - `proof_checklist`
 - `next_7_days_plan`

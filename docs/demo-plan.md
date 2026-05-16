@@ -44,9 +44,9 @@ Minimum requirement:
 
 - the app is deployed at a public live URL;
 - the user can click through the full flow;
-- the intake step shows a prefilled product/company profile and allows the presenter to rename the demo vendor without invalidating the AMR scenario;
-- the analysis result is generated through `POST /api/analyze`, with a deterministic AMR/3PL fallback when no live AI key is configured;
-- the dashboard remains coherent with the locked AMR/3PL demo scenario and renders a complete structured Pilot Control Room;
+- the intake step shows a prefilled product/company profile but allows product, proof, constraints, and text-readable evidence inputs to be changed;
+- the analysis result is generated through `POST /api/analyze`, with a deterministic multi-category market-entry engine when no live AI key is configured;
+- the dashboard remains coherent with the submitted product profile and renders a complete structured Pilot Control Room;
 - the result uses the structured Pilot Control Room schema;
 - the app can be tested by judges without private credentials;
 - any AI API integration is server-side and optional for the default test path.
@@ -77,9 +77,9 @@ Behavior:
 
 - the app loads from the public Vercel link;
 - the user can start a pilot analysis;
-- the intake screen is prefilled for speed and keeps the AMR/3PL scenario locked for demo consistency;
+- the intake screen is prefilled for speed but supports editable product fields and text-readable evidence uploads;
 - the app shows an AI-style analysis loading state;
-- the app calls `POST /api/analyze`, which returns the deterministic AMR/3PL analysis when no live AI key is configured;
+- the app calls `POST /api/analyze`, which returns a deterministic market-entry analysis when no live AI key is configured;
 - the Pilot Control Room appears with structured output generated from the fallback analysis or a validated live AI response;
 - no external AI API call is required.
 
@@ -166,7 +166,9 @@ Recommended fields:
 - pilot ambition;
 - known constraints.
 
-For the live presentation, this step should be fast. The demo uses prefilled data so the presenter does not spend time typing. The company name can be edited, while the product category, proof inputs, and constraints remain locked so the deterministic AMR/3PL fallback stays coherent.
+For the live presentation, this step should be fast. The demo uses prefilled data so the presenter does not spend time typing, but the product category, proof inputs, constraints, and evidence files remain editable so judges can see that the engine is not locked to one scenario.
+
+Current behavior: the fields are editable, and text-readable evidence files can be uploaded for Chinese documentation, website/product copy, technical specs, proof/certification notes, and case study or ROI notes. The target market remains fixed to Italy for MVP scope control.
 
 ### Step 3: Documentation Readiness Signals
 
@@ -228,12 +230,12 @@ To avoid looking like a static mockup, the MVP routes every analysis through `PO
 
 Current MVP behavior:
 
-1. The demo scenario is intentionally locked to a Chinese AMR vendor entering the Italian 3PL/e-commerce fulfilment market.
-2. Without OpenRouter keys, `POST /api/analyze` returns the deterministic AMR/3PL fallback Pilot Control Room.
+1. The demo starts from a Chinese AMR vendor entering the Italian 3PL/e-commerce fulfilment market, but the intake can be changed for other warehouse automation categories.
+2. Without OpenRouter keys, `POST /api/analyze` returns the deterministic market-entry Pilot Control Room using the submitted profile, evidence text, and local seed datasets.
 3. With valid OpenRouter keys, the route attempts live AI generation and validates the response before rendering it.
-4. If live AI fails, times out, returns invalid structure, or produces unsafe content, the deterministic AMR/3PL fallback is shown.
+4. If live AI fails, times out, returns invalid structure, or produces unsafe content, the deterministic local market-entry result is shown.
 5. The Target Account Shortlist is built from curated company-level data, not scraped leads or guaranteed buyers.
-6. Dynamic product/category classification can be treated as a future evolution after the hackathon MVP.
+6. Dynamic product/category classification currently covers AMR, AGV, sorting automation, palletizing automation, picking robot, inventory scanning robot, and WMS/orchestration.
 
 ## Presentation Script
 
@@ -304,7 +306,7 @@ The demo is successful when:
 
 - the Vercel link opens reliably;
 - the main flow can be completed by a judge;
-- the prefilled intake keeps the AMR/3PL demo scenario coherent;
+- the prefilled intake is demo-ready while remaining editable for judge testing;
 - output is generated through the analysis route and remains usable without API keys;
 - live AI, when configured, is optional and falls back safely;
 - the output clearly matches the AMR-to-Italy use case;
@@ -312,6 +314,7 @@ The demo is successful when:
 - the result contains concrete buyer, process, trust, pilot, proof, and sales recommendations;
 - the app remains usable without external AI calls;
 - optional live AI does not break the default flow.
+- `npm run eval:fixtures` and `npm run validate:schema` pass before the final demo build.
 
 ## Pre-Presentation Checklist
 
@@ -319,14 +322,16 @@ Before presenting:
 
 1. Run `npm run lint` if available and expected to pass.
 2. Run `npm run build`.
-3. Deploy to Vercel.
-4. Open the production Vercel URL.
-5. Complete the demo flow once from start to dashboard.
-6. Verify that no API key is committed to Git.
-7. Verify that required environment variables are configured only in Vercel if live AI is used.
-8. Test the link from a different browser or device.
-9. Prepare the local fallback with `npm run dev`.
-10. Keep the demo AMR scenario ready for the spoken pitch.
+3. Run `npm run eval:fixtures`.
+4. Run `npm run validate:schema`.
+5. Deploy to Vercel.
+6. Open the production Vercel URL.
+7. Complete the demo flow once from start to dashboard.
+8. Verify that no API key is committed to Git.
+9. Verify that required environment variables are configured only in Vercel if live AI is used.
+10. Test the link from a different browser or device.
+11. Prepare the local fallback with `npm run dev`.
+12. Keep the demo AMR scenario ready for the spoken pitch.
 
 ## Open Decisions
 
@@ -334,7 +339,6 @@ The team still needs to decide:
 
 - whether the presentation should show live AI mode or only the stable deterministic path;
 - which OpenRouter model should be used if live AI is shown;
-- how many product categories the local MVP analysis should support beyond the demo AMR profile;
 - whether to expose copy/export actions in the first live MVP;
 - whether to include source citations in the Pilot Control Room;
 - whether the live URL should use the default Vercel domain or a custom project name.

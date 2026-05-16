@@ -1,10 +1,10 @@
 # Architecture
 
-This document describes the MVP architecture for PilotOps AI. The repository currently contains documentation, seed datasets, a structured output schema, and a frontend scaffold. The AI endpoint and complete backend integration are still to be added by their respective setup branches.
+This document describes the MVP architecture for PilotOps AI. The repository currently contains documentation, seed datasets, a structured output schema, a frontend app, a server-side analysis route, a deterministic market-entry engine, and optional OpenRouter integration.
 
 ## System Overview
 
-PilotOps AI is planned as a web app with:
+PilotOps AI is a web app with:
 
 - a product intake flow;
 - a documentation readiness step;
@@ -25,7 +25,7 @@ Product intake + docs summary
 
 ## Frontend
 
-Planned frontend direction:
+Current frontend direction:
 
 - React / Next.js;
 - TypeScript;
@@ -33,7 +33,7 @@ Planned frontend direction:
 - dashboard-oriented UI;
 - copy/export actions for generated materials.
 
-Expected screens:
+Implemented screens:
 
 1. Landing or start screen.
 2. Product intake screen.
@@ -43,11 +43,11 @@ Expected screens:
 
 The frontend should not be a plain chat interface. The primary output should feel like an operational dashboard for first-pilot decision-making.
 
-Frontend implementation belongs to Matteo's setup scope.
+Frontend implementation belongs to Matteo's scope.
 
 ## Backend / API Layer
 
-The backend/API layer is planned to receive product intake data, call the AI pipeline, and return structured JSON for dashboard rendering.
+The backend/API layer receives product intake data plus evidence text, builds a deterministic market-entry analysis from local seed data, optionally calls OpenRouter, validates live AI output, and returns structured JSON for dashboard rendering.
 
 Expected responsibilities:
 
@@ -58,13 +58,13 @@ Expected responsibilities:
 - return a complete Pilot Control Room payload;
 - handle analysis errors in a way the UI can display clearly.
 
-The exact implementation mechanism is still to be defined. The product spec recommends Node.js with Next.js API routes or Express. The current technical direction favors Next.js API routes or server actions if the app scaffold uses Next.js.
+The current implementation uses a Next.js API route at `src/app/api/analyze/route.ts`.
 
 ## AI Pipeline
 
 The AI should be called through structured steps, not one generic prompt.
 
-Planned pipeline:
+Implemented deterministic pipeline:
 
 1. Product parser: understand product type, warehouse use case, operational value, constraints, documentation state, and likely pilot scale.
 2. Segment matcher: match the product to the most suitable Italian warehouse/logistics buyer segment.
@@ -75,13 +75,13 @@ Planned pipeline:
 7. Sales pack generator: produce outreach email, meeting pitch, one-page proposal, proof checklist, objection battlecard, and action plan.
 8. Structured output formatter: return a predictable JSON object for the dashboard.
 
-The product and market analysis recommend OpenAI Responses API with structured outputs for the AI layer. Exact prompts, schema, and evaluation fixtures belong to Jacopo's setup scope.
+OpenRouter is implemented as an optional live AI layer through `src/lib/openrouter-client.ts`. The deterministic engine remains the stable default and is used whenever no key is configured, `PILOTOPS_FORCE_LOCAL_ENGINE=1`, the provider fails, or live output fails validation.
 
 ## Seed Datasets
 
 The MVP should use local seed datasets where possible instead of depending on broad live scraping.
 
-Expected seed data areas:
+Implemented seed data areas:
 
 - Italian warehouse/logistics buyer segments;
 - warehouse automation process options;
@@ -90,7 +90,7 @@ Expected seed data areas:
 - buyer objections;
 - competitor or alternative categories;
 - demo AMR product profile.
-- planned curated Italian target accounts in `data/italian_target_accounts.json`.
+- curated Italian target accounts in `data/italian_target_accounts.json`.
 
 The target-account dataset should support company-level public contact paths and role-based outreach. It must not be treated as live web scraping, personal lead harvesting, or a source of private personal emails.
 
@@ -126,12 +126,9 @@ The dashboard should include:
 - Ready-to-Send Sales Pack;
 - Next 7 Days Action Plan.
 
-## Current Non-Implementation Notes
+## Current QA Notes
 
-The following are still pending or incomplete:
+The repository exposes:
 
-- API routes;
-- AI prompts;
-- automated tests.
-- curated `data/italian_target_accounts.json` dataset;
-- AI integration for generating the Target Account Shortlist.
+- `npm run eval:fixtures`: starts the local app with the deterministic engine forced, runs AMR, parcel sorting, inventory scanning, palletizing, strong-proof, and region-preference scenarios, and checks expected behavior.
+- `npm run validate:schema`: runs the same fixtures and validates every response against `schemas/pilot_analysis.schema.json` using the local schema subset needed by the MVP.

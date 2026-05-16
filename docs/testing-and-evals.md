@@ -29,13 +29,14 @@ The deterministic engine is the baseline for demo reliability. It reads `profile
 
 OpenRouter is optional. Its prompt should use the deterministic output as a grounded template, improve only supported reasoning/copy, preserve the same schema shape, and continue to obey the no-scraping/no-personal-contacts/no-guaranteed-buyers/no-certified-compliance guardrails. If OpenRouter fails or returns invalid output, the API returns the deterministic result.
 
-Latest local smoke check, 2026-05-16:
+Latest local fixture eval, 2026-05-16:
 
-- AMR internal transport returned `AMR`, internal transport, and a retail logistics shortlist.
+- AMR internal transport returned `AMR`, internal transport, and a 3PL/e-commerce shortlist.
 - Parcel sorting automation returned `sorting automation`, parcel sorting, and parcel/courier/sorting accounts.
 - Inventory scanning robot returned `inventory scanning robot`, inventory scanning, and retail logistics accounts.
 - Palletizing automation returned `palletizing automation`, pallet movement, and manufacturing/industrial distribution accounts.
-- All four responses used `deterministic_fallback`, kept Target Account Shortlist visible, and produced high or critical trust gaps for missing CE/safety, Italian references, and local maintenance proof.
+- Strong-proof and Lombardy region-preference scenarios are also covered by `npm run eval:fixtures`.
+- All responses use `deterministic_fallback` during evals, keep Target Account Shortlist visible, and produce high or critical trust gaps for missing CE/safety, Italian references, and local maintenance proof.
 
 ## Seed Data QA Audit
 
@@ -267,14 +268,14 @@ Run these checks on every generated final output:
 
 ## Recommended Local Commands
 
-Use these after the backend validation script exists:
+Run these before opening demo-readiness PRs:
 
 ```bash
 npm run eval:fixtures
 npm run validate:schema
 ```
 
-Until those scripts exist, use a simple JSON parse check and a schema validator in the backend task. The schema file is draft-07 and is compatible with common validators such as Ajv.
+Both commands start the local Next.js app on a temporary eval port with `PILOTOPS_FORCE_LOCAL_ENGINE=1`, so they do not require OpenRouter keys and do not spend API credits. `eval:fixtures` checks product/category behavior, safety guardrails, target-account coherence, and selected-process expectations. `validate:schema` validates all fixture responses against the local `schemas/pilot_analysis.schema.json` contract.
 
 ## Human Review Rubric
 

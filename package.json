@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "lint": "eslint . --max-warnings=0"
+    "lint": "eslint . --max-warnings=0",
+    "eval:fixtures": "node scripts/eval-fixtures.mjs",
+    "validate:schema": "node scripts/eval-fixtures.mjs --schema-only"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",

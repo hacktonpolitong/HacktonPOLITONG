@@ -12,6 +12,12 @@ This document defines the structured AI workflow for turning a Chinese warehouse
 - Target accounts come from a local curated target-account database with company-level public contact paths, not broad live scraping or personal-data harvesting.
 - The final response must match `schemas/pilot_analysis.schema.json`.
 
+## Current Implementation Status
+
+The deterministic version of this pipeline is implemented in `src/lib/market-entry-engine.ts` and is exposed through `POST /api/analyze`. It reads `profile` and `evidence_inputs`, uses the local seed datasets, ranks target accounts from `data/italian_target_accounts.json`, and returns the full `PilotAnalysis` contract.
+
+OpenRouter is optional. `src/lib/openrouter-client.ts` sends the request, seed datasets, deterministic baseline, required top-level fields, target-account rules, and safety guardrails to the provider. The API route validates live output and falls back to the deterministic engine if the provider fails or returns unusable content.
+
 ## Inputs
 
 Required user inputs:

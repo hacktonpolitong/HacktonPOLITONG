@@ -82,6 +82,13 @@ Run lint checks:
 npm run lint
 ```
 
+Run deterministic fixture evals and schema validation:
+
+```bash
+npm run eval:fixtures
+npm run validate:schema
+```
+
 ## Default Stable Demo Path
 
 No environment variables are required for the default demo.
@@ -118,8 +125,10 @@ Optional server-side variables for live AI mode:
 - `OPENROUTER_MODEL` (optional): model override. If omitted, the app uses the default model from `src/lib/openrouter-client.ts`.
 - `OPENROUTER_SITE_URL` (optional): sent as the OpenRouter HTTP referer header.
 - `OPENROUTER_APP_NAME` (optional): sent as the OpenRouter app title header.
+- `PILOTOPS_FORCE_LOCAL_ENGINE=1` (optional): forces the deterministic local engine even when OpenRouter keys exist. This is mainly for evals and demo rehearsal.
 
 Do not add API keys to the repository. Use a local `.env.local` file or Vercel environment variables.
+Use `.env.example` as the safe template for local configuration.
 
 ## Vercel Deployment
 
@@ -135,7 +144,7 @@ The MVP is intended to run on Vercel as a standard Next.js app.
 - [Market and tech analysis](./pilotops_ai_market_tech_analysis.md): similar tools, recommended APIs, and useful repositories.
 - [Team setup plan](./docs/team_setup_plan.md): ownership split across Francesco, Jacopo, and Matteo.
 - [Project brief](./docs/project-brief.md): short product summary for contributors.
-- [Architecture](./docs/architecture.md): planned system boundaries and data flow.
+- [Architecture](./docs/architecture.md): current system boundaries and data flow.
 - [Code map](./docs/code-map.md): current repository map and future integration notes.
 - [Agent guide](./AGENTS.md): working rules for AI coding agents.
 - [ADR 0001](./docs/decisions/ADR-0001-mvp-scope.md): initial MVP scope decision.

@@ -348,9 +348,10 @@ function scoreItalianSegments(product: ParsedProduct): SegmentCandidate[] {
       );
       const rankBoost = preferredSegments.includes(segment.id) ? 24 - preferredSegments.indexOf(segment.id) * 5 : 0;
       const processBoost = processMatches.length * 10;
+      const textAffinityBoost = segmentTextAffinityBoost(segment.id, product.combinedText);
       const proofPenalty = proofBurdenPenalty(segment, product);
       const supportPenalty = hasMissingProof(product, "support SLA") || hasMissingProof(product, "maintenance plan and spare parts") ? 4 : 0;
-      const score = clampScore(46 + rankBoost + processBoost - proofPenalty - supportPenalty);
+      const score = clampScore(46 + rankBoost + processBoost + textAffinityBoost - proofPenalty - supportPenalty);
       const supportRisk: RiskLevel = supportPenalty > 0 ? "high" : "medium";
 
       return {
@@ -375,6 +376,20 @@ function scoreItalianSegments(product: ParsedProduct): SegmentCandidate[] {
       };
     })
     .sort((a, b) => b.scorecard.score - a.scorecard.score);
+}
+
+function segmentTextAffinityBoost(segmentId: string, text: string): number {
+  const segmentSignals: Record<string, string[]> = {
+    it_3pl_ecommerce: ["3pl", "third party logistics", "e commerce", "ecommerce", "fulfilment", "fulfillment", "picking", "packing"],
+    it_retail_logistics: ["retail", "fashion", "store replenishment", "omnichannel", "high sku"],
+    it_food_beverage: ["food", "beverage", "grocery", "cold chain", "fresh", "frozen"],
+    it_pharma_logistics: ["pharma", "healthcare", "medical", "gdp", "regulated", "traceability"],
+    it_parcel_sorting: ["parcel", "courier", "sortation", "sorting", "depot", "dispatch cutoff"],
+    it_manufacturing_warehouses: ["manufacturing", "industrial", "line side", "production", "spare parts"]
+  };
+  const matches = segmentSignals[segmentId]?.filter((signal) => text.includes(normalizeText(signal))).length ?? 0;
+
+  return Math.min(matches * 4, 12);
 }
 
 function selectWarehouseProcess(product: ParsedProduct, segment: ItalianSegment): WarehouseProcess {
@@ -675,6 +690,10 @@ function classifyCategory(text: string): CanonicalProductCategory {
     return "AGV";
   }
 
+  if (hasAny(text, ["amr", "autonomous mobile robot", "mobile robot"])) {
+    return "AMR";
+  }
+
   if (hasAny(text, ["wms", "orchestration", "fleet orchestration", "ai orchestration", "warehouse management software"])) {
     return "WMS/orchestration";
   }
@@ -782,7 +801,7 @@ function detectSafetyAssumptions(text: string, missingProof: string[]): string[]
   const assumptions = ["Buyer safety review required before live pilot launch"];
 
   if (missingProof.some((proof) => sameProof(proof, "CE and safety summary")) || hasAny(text, ["partial ce", "ce missing", "safety needs"])) {
-    assumptions.push("CE/safety evidence should be framed as readiness proof, not certified compliance");
+    assumptions.push("CE/safety evidence should be framed as buyer-readiness proof, not a formal compliance conclusion");
   }
 
   return assumptions;
