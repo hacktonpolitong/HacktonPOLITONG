@@ -16,11 +16,9 @@ export type InputQualityResult =
       issues: InputQualityIssue[];
     };
 
-const requiredProfileFields: Array<keyof Pick<ProductProfile, "companyName" | "productName" | "productCategory" | "description">> = [
+const requiredProfileFields: Array<keyof Pick<ProductProfile, "companyName" | "productName">> = [
   "companyName",
-  "productName",
-  "productCategory",
-  "description"
+  "productName"
 ];
 
 const junkTerms = [
@@ -73,6 +71,25 @@ const domainSignals = [
   "fleet"
 ];
 
+const unrelatedSignals = [
+  "restaurant",
+  "menu",
+  "pizza",
+  "fashion",
+  "cosmetic",
+  "skincare",
+  "hotel",
+  "tourism",
+  "real estate",
+  "wedding",
+  "school",
+  "dentist",
+  "blockchain",
+  "crypto casino",
+  "music festival",
+  "pet grooming"
+];
+
 export function validateAnalyzeRequestInput(value: unknown): InputQualityResult {
   const issues: InputQualityIssue[] = [];
 
@@ -97,7 +114,7 @@ export function validateAnalyzeRequestInput(value: unknown): InputQualityResult 
   for (const field of requiredProfileFields) {
     const content = stringValue(profile[field]);
 
-    if (!hasUsefulLetters(content, field === "description" ? 18 : 2)) {
+    if (!hasUsefulLetters(content, 2)) {
       issues.push({
         field,
         code: "missing_required_field",
@@ -124,20 +141,22 @@ export function validateAnalyzeRequestInput(value: unknown): InputQualityResult 
   const normalizedEvidence = normalizeText(evidenceText);
   const usefulTokenCount = countUsefulTokens(normalizedEvidence);
   const domainSignalCount = countDomainSignals(normalizedEvidence);
+  const unrelatedSignalCount = countSignals(normalizedEvidence, unrelatedSignals);
+  const hasSubstantialBusinessContext = usefulTokenCount >= 6 || normalizedEvidence.length >= 40;
 
-  if (usefulTokenCount < 10 || normalizedEvidence.length < 80) {
+  if (!hasSubstantialBusinessContext) {
     issues.push({
       field: "profile",
       code: "too_short",
-      message: "The input is too short to support a reliable market-entry analysis."
+      message: "Add at least a short real description or some product documentation before running the analysis."
     });
   }
 
-  if (domainSignalCount < 2) {
+  if (hasSubstantialBusinessContext && domainSignalCount === 0 && unrelatedSignalCount > 0) {
     issues.push({
       field: "productCategory",
       code: "not_domain_relevant",
-      message: "The input does not contain enough warehouse automation, robotics, logistics, or WMS signals."
+      message: "The uploaded material looks unrelated to warehouse automation, logistics, robotics, or WMS."
     });
   }
 
@@ -145,7 +164,7 @@ export function validateAnalyzeRequestInput(value: unknown): InputQualityResult 
     return {
       ok: false,
       summary:
-        "I cannot produce a reliable Pilot Control Room from this input. Replace placeholders or joke text with a real warehouse automation product, use case, and available proof.",
+        "I can only block clearly unusable input here: empty requests, placeholder text, or material that looks unrelated to the product domain.",
       issues: dedupeIssues(issues)
     };
   }
@@ -183,7 +202,7 @@ function buildFieldTexts(profile: Partial<ProductProfile>, evidenceInputs: Evide
 function containsJunkTerm(value: string) {
   const normalized = normalizeText(value);
 
-  return junkTerms.some((term) => normalized.includes(term));
+  return junkTerms.some((term) => normalized.split(/\s+/u).includes(term));
 }
 
 function looksLikeKeyboardTrash(value: string) {
@@ -197,12 +216,25 @@ function looksLikeKeyboardTrash(value: string) {
   const uniqueChars = new Set(compact).size;
   const latinLetters = compact.replace(/[^a-z]/g, "");
   const vowelCount = (latinLetters.match(/[aeiou]/g) ?? []).length;
+  const hasWhitespace = /\s/u.test(normalized);
 
-  return compact.length >= 8 && (uniqueChars <= 3 || (latinLetters.length >= 8 && vowelCount === 0));
+  if (compact.length < 8) {
+    return false;
+  }
+
+  if (uniqueChars <= 3) {
+    return true;
+  }
+
+  return !hasWhitespace && latinLetters.length >= 8 && vowelCount === 0;
 }
 
 function countDomainSignals(value: string) {
-  return domainSignals.filter((signal) => value.includes(signal)).length;
+  return countSignals(value, domainSignals);
+}
+
+function countSignals(value: string, signals: string[]) {
+  return signals.filter((signal) => value.includes(signal)).length;
 }
 
 function countUsefulTokens(value: string) {
