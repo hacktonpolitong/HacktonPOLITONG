@@ -4,6 +4,7 @@ import { useMemo, useRef, useState } from "react";
 import type { ChangeEvent, DragEvent, KeyboardEvent } from "react";
 import { ArrowDown, ArrowRight, CheckCircle2, Edit3, FileText, Sparkles, UploadCloud, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
+import { BrandLogo } from "@/components/certibridge/BrandLogo";
 import { ElectricButton, SecondaryGlassButton } from "@/components/certibridge/ElectricButton";
 import { GlassCard } from "@/components/certibridge/GlassCard";
 import { BlurFade } from "@/components/ui/blur-fade";
@@ -220,8 +221,8 @@ export function IntakeScreen({ profile, evidenceInputs, onAnalyze }: IntakeScree
 
       <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-10 px-4 py-6 sm:px-6 lg:px-8">
         <header className="flex items-center justify-between">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-200/80">CertiBridge AI</p>
+          <div className="flex items-center gap-3">
+            <BrandLogo variant="lockup" size="sm" />
             <p className="mt-1 text-sm text-slate-500">EU readiness engine for warehouse automation suppliers</p>
           </div>
           <button

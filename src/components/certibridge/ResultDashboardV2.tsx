@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { CalendarDays, ExternalLink, FileStack, PackageCheck, RefreshCw } from "lucide-react";
 import { BestBuyerSegmentCard } from "@/components/certibridge/BestBuyerSegmentCard";
+import { BrandLogo } from "@/components/certibridge/BrandLogo";
 import { FullPackPdfButton } from "@/components/certibridge/FullPackPdfButton";
 import { GlassCard } from "@/components/certibridge/GlassCard";
 import { ObjectionBattlecards } from "@/components/certibridge/ObjectionBattlecards";
@@ -37,7 +38,7 @@ export function ResultDashboardV2({ profile, analysis, onRestart }: ResultDashbo
         <BlurFade delay={0.02}>
           <header className="flex flex-col gap-4 rounded-3xl border border-cyan-300/15 bg-white/[0.035] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl lg:flex-row lg:items-center lg:justify-between">
             <div className="min-w-0">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-200/75">CertiBridge AI</p>
+              <BrandLogo variant="lockup" size="sm" className="mb-3" />
               <h1 className="mt-1 text-2xl font-semibold leading-tight text-white sm:text-3xl">{dashboard.productSummary.name}</h1>
               <p className="mt-1 text-sm text-slate-400">{dashboard.productSummary.company}</p>
               <div className="mt-3 flex flex-wrap gap-2">

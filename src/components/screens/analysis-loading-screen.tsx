@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { CheckCircle2, Loader2, PackageCheck, Radar, ScanSearch, ShieldCheck, Sparkles, Target, UploadCloud } from "lucide-react";
 import { motion } from "motion/react";
+import { BrandLogo } from "@/components/certibridge/BrandLogo";
 import { GlassCard } from "@/components/certibridge/GlassCard";
 
 const loadingSteps = [
@@ -92,10 +93,10 @@ export function AnalysisLoadingScreen() {
                   animate={{ rotate: 360 }}
                   transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
                 />
-                <Loader2 className="relative animate-spin text-cyan-100" size={36} aria-hidden="true" />
+                <BrandLogo variant="mark" size="lg" className="relative rounded-full" />
               </div>
 
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-200/75">CertiBridge AI</p>
+              <BrandLogo variant="lockup" size="sm" className="mb-4" />
               <h1 className="mt-2 text-3xl font-semibold leading-tight text-white sm:text-4xl">Building your EU market-entry pack</h1>
               <p className="mt-4 text-sm leading-7 text-slate-400">
                 CertiBridge is reading your evidence, compressing the details, and preparing an executive dashboard.
