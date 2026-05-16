@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { FormEvent } from "react";
-import { ArrowRight, FileText, RotateCcw } from "lucide-react";
+import { AlertTriangle, ArrowRight, FileText, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { ProductProfile } from "@/lib/pilot-analysis-types";
 
@@ -24,6 +24,7 @@ type IntakeScreenProps = {
   evidenceInputs: EvidenceInputs;
   onAnalyze: (payload: IntakeSubmitPayload) => void;
   onBack: () => void;
+  analysisError?: string[];
 };
 
 type ArrayField = "benefits" | "currentProof" | "constraints";
@@ -70,7 +71,7 @@ const evidenceFileFields: Array<{
 
 const readableEvidenceFileTypes = ".txt,.md,.csv,.json,.html,.htm,text/*,application/json,text/markdown,text/csv,text/html";
 
-export function IntakeScreen({ profile, evidenceInputs, onAnalyze, onBack }: IntakeScreenProps) {
+export function IntakeScreen({ profile, evidenceInputs, onAnalyze, onBack, analysisError = [] }: IntakeScreenProps) {
   const [draft, setDraft] = useState<ProductProfile>({ ...profile, targetMarket: "Italy" });
   const [arrayDraft, setArrayDraft] = useState<Record<ArrayField, string>>({
     benefits: profile.benefits.join("\n"),
@@ -171,6 +172,22 @@ export function IntakeScreen({ profile, evidenceInputs, onAnalyze, onBack }: Int
       </header>
 
       <form className="grid gap-5" onSubmit={handleSubmit}>
+        {analysisError.length > 0 ? (
+          <section className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-900 shadow-panel">
+            <div className="flex gap-3">
+              <AlertTriangle className="mt-0.5 shrink-0" size={20} aria-hidden="true" />
+              <div>
+                <h2 className="font-semibold">Input not usable for analysis</h2>
+                <ul className="mt-2 grid gap-1 text-sm leading-6">
+                  {analysisError.slice(0, 5).map((message) => (
+                    <li key={message}>{message}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </section>
+        ) : null}
+
         <section className="grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="rounded-lg border border-border bg-panel p-5 shadow-panel">
             <div className="mb-5 flex items-center gap-3">

@@ -5,6 +5,7 @@ import { AnalysisLoadingScreen } from "@/components/screens/analysis-loading-scr
 import { ControlRoomScreen } from "@/components/screens/control-room-screen";
 import { IntakeScreen, type EvidenceInputs } from "@/components/screens/intake-screen";
 import { StartScreen } from "@/components/screens/start-screen";
+import { formatInputQualityIssues, validateAnalyzeRequestInput } from "@/lib/analysis-input-quality";
 import { isPilotAnalysisUsable } from "@/lib/pilot-analysis-validation";
 import { buildClientFallbackPilotAnalysis, demoProductProfile, mockPilotAnalysis } from "@/lib/mock-pilot-analysis";
 import type { PilotAnalysis } from "@/lib/pilot-analysis-types";
@@ -25,6 +26,7 @@ export function PilotOpsApp() {
   const [productProfile, setProductProfile] = useState(demoProductProfile);
   const [evidenceInputs, setEvidenceInputs] = useState<EvidenceInputs>(emptyEvidenceInputs);
   const [analysis, setAnalysis] = useState<PilotAnalysis>(mockPilotAnalysis);
+  const [analysisError, setAnalysisError] = useState<string[]>([]);
 
   useEffect(() => {
     if (step !== "analysis") {
@@ -55,6 +57,21 @@ export function PilotOpsApp() {
           signal: controller.signal
         });
 
+        if (response.status === 422) {
+          const payload = await response.json().catch(() => null);
+          const message =
+            isInvalidInputResponse(payload)
+              ? [payload.message, ...payload.issues.map((issue) => issue.message)]
+              : ["The input is not usable for analysis. Add a real product, use case, and proof notes."];
+
+          if (!isCancelled) {
+            setAnalysisError(message);
+            setStep("intake");
+          }
+
+          return;
+        }
+
         if (response.ok) {
           const candidate: unknown = await response.json();
 
@@ -74,6 +91,7 @@ export function PilotOpsApp() {
         return;
       }
 
+      setAnalysisError([]);
       setAnalysis(nextAnalysis);
       setStep("control-room");
     }
@@ -93,11 +111,24 @@ export function PilotOpsApp() {
         profile={productProfile}
         evidenceInputs={evidenceInputs}
         onAnalyze={({ profile: updatedProfile, evidenceInputs: updatedEvidenceInputs }) => {
+          const requestBody = {
+            profile: updatedProfile,
+            evidence_inputs: updatedEvidenceInputs
+          };
+          const inputQuality = validateAnalyzeRequestInput(requestBody);
+
+          if (!inputQuality.ok) {
+            setAnalysisError(formatInputQualityIssues(inputQuality));
+            return;
+          }
+
+          setAnalysisError([]);
           setProductProfile(updatedProfile);
           setEvidenceInputs(updatedEvidenceInputs);
           setStep("analysis");
         }}
         onBack={() => setStep("start")}
+        analysisError={analysisError}
       />
     );
   }
@@ -111,4 +142,15 @@ export function PilotOpsApp() {
   }
 
   return <StartScreen onStart={() => setStep("intake")} />;
+}
+
+function isInvalidInputResponse(value: unknown): value is { message: string; issues: Array<{ message: string }> } {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    "message" in value &&
+    typeof value.message === "string" &&
+    "issues" in value &&
+    Array.isArray(value.issues)
+  );
 }
