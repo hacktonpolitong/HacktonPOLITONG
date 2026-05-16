@@ -34,6 +34,8 @@ export function normalizePilotAnalysisCandidate(
 
   return {
     metadata: fallback.metadata,
+    product_evidence_profile: result.product_evidence_profile,
+    segment_scorecards: result.segment_scorecards,
     product_summary: result.product_summary,
     buyer_segment_recommendation: result.buyer_segment_recommendation,
     warehouse_process_recommendation: result.warehouse_process_recommendation,
@@ -69,6 +71,8 @@ function unwrapCandidate(candidate: unknown): unknown {
 
 function hasUsableAnalysisShape(candidate: UnknownRecord): boolean {
   return (
+    hasProductEvidenceProfile(candidate.product_evidence_profile) &&
+    hasSegmentScorecards(candidate.segment_scorecards) &&
     hasProductSummary(candidate.product_summary) &&
     hasBuyerSegment(candidate.buyer_segment_recommendation) &&
     hasWarehouseProcess(candidate.warehouse_process_recommendation) &&
@@ -79,6 +83,42 @@ function hasUsableAnalysisShape(candidate: UnknownRecord): boolean {
     hasProofChecklist(candidate.proof_checklist) &&
     hasNextSevenDays(candidate.next_7_days_plan) &&
     hasSalesPack(candidate.sales_pack)
+  );
+}
+
+function hasProductEvidenceProfile(value: unknown): boolean {
+  return (
+    isRecord(value) &&
+    isNonEmptyString(value.canonical_category) &&
+    isNonEmptyString(value.evidence_summary) &&
+    isNonEmptyString(value.operational_use_case) &&
+    isNonEmptyStringArray(value.infrastructure_needs) &&
+    isNonEmptyStringArray(value.integration_needs) &&
+    isNonEmptyStringArray(value.safety_assumptions) &&
+    isNonEmptyString(value.support_model) &&
+    (typeof value.region_preference === "string" || value.region_preference === null) &&
+    Array.isArray(value.detected_keywords)
+  );
+}
+
+function hasSegmentScorecards(value: unknown): boolean {
+  return (
+    Array.isArray(value) &&
+    value.length > 0 &&
+    value.every(
+      (scorecard) =>
+        isRecord(scorecard) &&
+        isNonEmptyString(scorecard.segment_id) &&
+        isNonEmptyString(scorecard.segment_name) &&
+        isScore(scorecard.score) &&
+        typeof scorecard.rank === "number" &&
+        scorecard.rank > 0 &&
+        Array.isArray(scorecard.process_matches) &&
+        ["low", "medium", "high"].includes(String(scorecard.proof_burden)) &&
+        riskLevels.has(scorecard.support_risk as RiskLevel) &&
+        isNonEmptyStringArray(scorecard.reasons) &&
+        Array.isArray(scorecard.tradeoffs)
+    )
   );
 }
 
@@ -178,8 +218,6 @@ function hasTargetAccountShortlist(value: unknown): boolean {
         isNonEmptyStringArray(account.recommended_buyer_roles) &&
         isNonEmptyString(account.outreach_angle) &&
         isNonEmptyString(account.source_note) &&
-        account.logistics_category === "3PL and e-commerce fulfilment" &&
-        account.likely_process_fit.includes("internal transport") &&
         curatedAccountKeys.has(`${account.company_name}::${account.website}`)
     )
   );

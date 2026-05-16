@@ -3,6 +3,14 @@ export type RiskLevel = "low" | "medium" | "high" | "critical";
 export type AnalysisMode = "live_ai" | "deterministic_fallback";
 export type AnalysisProvider = "openrouter" | "local";
 export type AnalysisKeySource = "primary" | "secondary" | "none";
+export type CanonicalProductCategory =
+  | "AMR"
+  | "AGV"
+  | "sorting automation"
+  | "palletizing automation"
+  | "picking robot"
+  | "inventory scanning robot"
+  | "WMS/orchestration";
 
 export type ProductProfile = {
   companyName: string;
@@ -14,6 +22,44 @@ export type ProductProfile = {
   documentationStatus: string;
   pilotAmbition: string;
   constraints: string[];
+};
+
+export type EvidenceInputs = {
+  chinese_documentation_text?: string;
+  website_product_text?: string;
+  technical_specs_text?: string;
+  proof_certification_notes?: string;
+  case_study_roi_notes?: string;
+  region_preference?: string;
+};
+
+export type AnalyzeRequestBody = {
+  profile?: Partial<ProductProfile>;
+  evidence_inputs?: EvidenceInputs;
+};
+
+export type ProductEvidenceProfile = {
+  canonical_category: CanonicalProductCategory;
+  evidence_summary: string;
+  operational_use_case: string;
+  infrastructure_needs: string[];
+  integration_needs: string[];
+  safety_assumptions: string[];
+  support_model: string;
+  region_preference: string | null;
+  detected_keywords: string[];
+};
+
+export type SegmentScoreCard = {
+  segment_id: string;
+  segment_name: string;
+  score: number;
+  rank: number;
+  process_matches: string[];
+  proof_burden: "low" | "medium" | "high";
+  support_risk: RiskLevel;
+  reasons: string[];
+  tradeoffs: string[];
 };
 
 export type TargetAccount = {
@@ -39,8 +85,10 @@ export type PilotAnalysis = {
     analysis_mode: AnalysisMode;
     provider: AnalysisProvider;
     model: string;
-    key_source: AnalysisKeySource;
+      key_source: AnalysisKeySource;
   };
+  product_evidence_profile: ProductEvidenceProfile;
+  segment_scorecards: SegmentScoreCard[];
   product_summary: {
     company_name: string;
     company_country: string;

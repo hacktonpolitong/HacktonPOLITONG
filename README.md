@@ -13,7 +13,7 @@ This repository contains the hackathon MVP for PilotOps AI:
 - a Next.js, React, TypeScript, and Tailwind frontend;
 - a prefilled demo intake for the AMR-to-Italy scenario;
 - a server-side `POST /api/analyze` route;
-- a deterministic local fallback analysis that requires no API key;
+- a deterministic local market-entry decision engine that requires no API key;
 - optional live AI generation through OpenRouter when server-side environment variables are configured;
 - local seed datasets, including a curated Italian Target Account Shortlist dataset;
 - the structured Pilot Control Room schema and supporting docs.
@@ -50,8 +50,8 @@ The MVP should not attempt to:
 - Frontend: Next.js, React, TypeScript, and Tailwind CSS.
 - UI: dashboard-oriented Pilot Control Room with local component primitives.
 - Backend/API layer: `POST /api/analyze` implemented as a Next.js route.
-- Default analysis path: deterministic local fallback built from the AMR demo profile and seed data.
-- Optional live AI path: OpenRouter chat completions, server-side only, with response validation and fallback to the deterministic result.
+- Default analysis path: deterministic local market-entry engine built from the submitted profile, pasted evidence, and seed data.
+- Optional live AI path: OpenRouter chat completions, server-side only, with response validation and fallback to the deterministic local engine.
 - Data layer: local JSON seed datasets, including `data/italian_target_accounts.json` for the Target Account Shortlist.
 
 ## Install Dependencies
@@ -95,13 +95,15 @@ The stable path is:
 5. Wait for the `Building the Pilot Control Room` loading state.
 6. Review the `Pilot Control Room`: Pilot Fit Score, Best First Buyer Segment, Best Warehouse Process, Why Now, Trust Gap Analysis, Recommended Pilot Offer, Target Account Shortlist, Buyer Objection Battlecard, Documentation Checklist, Sales Pack, and Next 7 Days Action Plan.
 
-The default path uses the server-side analysis route, then falls back to the deterministic AMR/3PL result when no OpenRouter key is configured.
+The default path uses the server-side analysis route and the deterministic market-entry engine when no OpenRouter key is configured.
 
 ## Optional Live AI Path
 
 Live AI mode is implemented as an optional server-side enhancement through OpenRouter.
 
-If `OPENROUTER_API_KEY` is configured, `POST /api/analyze` attempts to generate a structured Pilot Control Room response with OpenRouter. The server validates the response and falls back to the deterministic local result if the provider fails, times out, returns invalid JSON, or produces unsafe content.
+If `OPENROUTER_API_KEY` is configured, `POST /api/analyze` attempts to generate a structured Pilot Control Room response with OpenRouter. The server validates the response and falls back to the deterministic local market-entry result if the provider fails, times out, returns invalid JSON, or produces unsafe content.
+
+The route accepts `profile` plus optional `evidence_inputs`. It returns the standard Pilot Control Room sections plus `product_evidence_profile` and `segment_scorecards` for the decision matrix. Target accounts always come from the curated local dataset; the app does not scrape, collect personal contacts, guarantee buyers, or certify compliance.
 
 The frontend never requires a key for the demo path.
 

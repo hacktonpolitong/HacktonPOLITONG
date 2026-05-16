@@ -8,6 +8,7 @@ The first evaluation set should cover:
 
 - Product parsing accuracy
 - Italian segment matching
+- Segment scorecard quality
 - Warehouse process selection
 - Trust gap prioritization
 - Target Account Shortlist quality
@@ -84,6 +85,7 @@ Expected behavior:
 Pass criteria:
 
 - Output validates against `schemas/pilot_analysis.schema.json`.
+- Output includes `product_evidence_profile` and `segment_scorecards`.
 - Output includes `target_account_shortlist`.
 - The pilot does not require a full warehouse redesign.
 - Shortlisted accounts match the recommended buyer segment and warehouse process.
@@ -232,6 +234,7 @@ Run these checks on every generated final output:
 - Output validates against `schemas/pilot_analysis.schema.json`.
 - All required top-level dashboard sections are present.
 - `target_account_shortlist` is present.
+- `product_evidence_profile` and `segment_scorecards` are present.
 - Each target account has `company_name`, `website`, `hq_region`, `logistics_category`, `warehouse_signals`, `likely_process_fit`, at least one `recommended_buyer_roles` entry, `outreach_angle`, and `source_note`.
 - No private personal contact data, personal decision-maker emails, or scraped personal profiles are present.
 - Accounts match the recommended buyer segment and warehouse process.
