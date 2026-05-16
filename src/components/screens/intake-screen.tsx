@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { FormEvent } from "react";
-import { ArrowRight, FileText, RotateCcw } from "lucide-react";
+import { ArrowRight, FileText, RotateCcw, Wand2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { ProductProfile } from "@/lib/pilot-analysis-types";
 
@@ -70,6 +70,101 @@ const evidenceFileFields: Array<{
 
 const readableEvidenceFileTypes = ".txt,.md,.csv,.json,.html,.htm,text/*,application/json,text/markdown,text/csv,text/html";
 
+const scenarioPresets: Array<{
+  label: string;
+  profile: ProductProfile;
+  evidenceInputs: EvidenceInputs;
+}> = [
+  {
+    label: "AMR transport",
+    profile: {
+      companyName: "Shenzhen Northstar Mobility",
+      productCategory: "AMR",
+      targetMarket: "Italy",
+      description:
+        "Autonomous mobile robot for moving totes, cartons and small carts between picking, packing and dispatch staging zones.",
+      benefits: ["Reduce manual walking time", "Deploy in one bounded route", "Avoid fixed conveyor redesign"],
+      currentProof: ["Technical specifications", "API summary", "Chinese fulfilment workflow case outline"],
+      documentationStatus:
+        "CE/safety summary partial; Italian reference missing; local maintenance model missing; ROI model not localized.",
+      pilotAmbition: "Win a 45-day pilot with a mid-size Italian 3PL or e-commerce fulfilment warehouse.",
+      constraints: ["No Italian reference customer", "No local maintenance partner identified"]
+    },
+    evidenceInputs: {
+      chinese_documentation_text: "AMR fleet used for tote movement between picking and packing in Chinese fulfilment operations.",
+      website_product_text: "SLAM navigation AMR for internal warehouse transport with fleet dashboard and obstacle detection.",
+      technical_specs_text: "Payload 300 kg, max speed 1.6 m/s, battery runtime 10 hours, Wi-Fi, REST API, CSV task import.",
+      proof_certification_notes: "Partial CE/safety summary available; buyer-ready risk assessment not prepared.",
+      case_study_roi_notes: "Chinese case outline available; Italian ROI assumptions still missing."
+    }
+  },
+  {
+    label: "Parcel sorting",
+    profile: {
+      companyName: "Guangzhou SortLine Automation",
+      productCategory: "sorting automation",
+      targetMarket: "Italy",
+      description: "Modular parcel sorter for courier depots handling mixed small parcels, e-commerce parcels and returns.",
+      benefits: ["Increase parcels per hour", "Reduce manual sorting errors", "Add modular sorting lanes"],
+      currentProof: ["Technical specifications", "Chinese parcel hub case study", "Throughput test video"],
+      documentationStatus:
+        "CE/safety summary partial; barcode/WMS integration notes partial; Italian reference missing; maintenance plan missing.",
+      pilotAmbition: "Pilot one parcel sorting lane in an Italian courier depot.",
+      constraints: ["Requires conveyor interface", "Needs barcode scan integration", "Installation can only occur over a weekend"]
+    },
+    evidenceInputs: {
+      chinese_documentation_text: "Sorter deployed in Chinese parcel hub for mixed parcel and returns flow.",
+      website_product_text: "Modular sortation system for courier depots and e-commerce parcel operations.",
+      technical_specs_text: "Lane-based sorter, barcode scan handoff, modular diverts, weekend installation option.",
+      proof_certification_notes: "Partial safety file; CE/safety summary not yet buyer-ready for Italy.",
+      case_study_roi_notes: "Throughput video available; Italian labor and mis-sort baseline not yet localized."
+    }
+  },
+  {
+    label: "Inventory scan",
+    profile: {
+      companyName: "Hangzhou ScanFleet Robotics",
+      productCategory: "inventory scanning robot",
+      targetMarket: "Italy",
+      description: "Autonomous inventory scanning robot for barcode and shelf-location checks in high-SKU warehouses.",
+      benefits: ["Improve inventory accuracy", "Reduce manual cycle count time", "Increase scan coverage outside peak shifts"],
+      currentProof: ["Technical specifications", "Scanning accuracy test report", "Chinese retail warehouse case summary"],
+      documentationStatus:
+        "CE/safety evidence partial; data security summary missing; Italian reference missing; local support model missing.",
+      pilotAmbition: "Pilot autonomous cycle counting in one Italian retail or pharma warehouse zone.",
+      constraints: ["Needs barcode visibility", "Requires Wi-Fi coverage", "Must avoid interfering with picking operations"]
+    },
+    evidenceInputs: {
+      chinese_documentation_text: "Robot used for night-shift cycle counting and barcode scan coverage in Chinese retail warehouses.",
+      website_product_text: "Inventory scanning robot for barcode checks, location verification and cycle-count automation.",
+      technical_specs_text: "Autonomous navigation, barcode camera, scan logs, dashboard export, Wi-Fi connectivity.",
+      proof_certification_notes: "Partial safety summary; data handling and IT security note not ready.",
+      case_study_roi_notes: "Chinese case claims faster cycle counts; Italian accuracy and labor baseline missing."
+    }
+  },
+  {
+    label: "Palletizing",
+    profile: {
+      companyName: "Suzhou PalletFlex Robotics",
+      productCategory: "palletizing automation",
+      targetMarket: "Italy",
+      description: "Robotic palletizing cell for boxed beverage and packaged food warehouse dispatch lines.",
+      benefits: ["Reduce manual lifting", "Improve pallet consistency", "Support repetitive end-of-line flows"],
+      currentProof: ["Technical specifications", "Safety enclosure design", "Chinese food factory case study"],
+      documentationStatus: "CE/safety summary partial; installation plan available; Italian reference missing; ROI model partial.",
+      pilotAmbition: "Pilot one palletizing cell after packing for a food and beverage warehouse or manufacturing site.",
+      constraints: ["Needs end-of-line space", "Requires safety fencing", "Must avoid disruption to dispatch"]
+    },
+    evidenceInputs: {
+      chinese_documentation_text: "Palletizing cell used for boxed beverage end-of-line handling in Chinese food manufacturing.",
+      website_product_text: "Robotic palletizing cell for repetitive cartons, cases and boxed product flows.",
+      technical_specs_text: "Safety enclosure, gripper options, pallet pattern configuration, end-of-line footprint.",
+      proof_certification_notes: "Safety enclosure design available; CE/safety summary still partial for buyer review.",
+      case_study_roi_notes: "Chinese case study available; Italian manual-lift reduction and dispatch baseline incomplete."
+    }
+  }
+];
+
 export function IntakeScreen({ profile, evidenceInputs, onAnalyze, onBack }: IntakeScreenProps) {
   const [draft, setDraft] = useState<ProductProfile>({ ...profile, targetMarket: "Italy" });
   const [arrayDraft, setArrayDraft] = useState<Record<ArrayField, string>>({
@@ -93,6 +188,27 @@ export function IntakeScreen({ profile, evidenceInputs, onAnalyze, onBack }: Int
 
   function updateArrayField(field: ArrayField, value: string) {
     setArrayDraft((current) => ({ ...current, [field]: value }));
+  }
+
+  function updateEvidenceField(field: EvidenceField, value: string) {
+    setEvidenceDraft((current) => ({ ...current, [field]: value }));
+  }
+
+  function applyScenario(profile: ProductProfile, evidenceInputs: EvidenceInputs) {
+    setDraft({ ...profile, targetMarket: "Italy" });
+    setArrayDraft({
+      benefits: profile.benefits.join("\n"),
+      currentProof: profile.currentProof.join("\n"),
+      constraints: profile.constraints.join("\n")
+    });
+    setEvidenceDraft(evidenceInputs);
+    setEvidenceFiles({
+      chinese_documentation_text: null,
+      website_product_text: null,
+      technical_specs_text: null,
+      proof_certification_notes: null,
+      case_study_roi_notes: null
+    });
   }
 
   async function handleEvidenceFileChange(field: EvidenceField, file: File | null) {
@@ -163,6 +279,9 @@ export function IntakeScreen({ profile, evidenceInputs, onAnalyze, onBack }: Int
         <div>
           <p className="text-sm font-semibold uppercase tracking-wide text-accent">Product Intake</p>
           <h1 className="mt-1 text-3xl font-bold text-foreground">Build a market entry analysis</h1>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-muted">
+            Change the product category or load a scenario to watch the engine select a different Italian wedge.
+          </p>
         </div>
         <Button type="button" variant="ghost" onClick={onBack}>
           <RotateCcw size={16} aria-hidden="true" />
@@ -171,6 +290,28 @@ export function IntakeScreen({ profile, evidenceInputs, onAnalyze, onBack }: Int
       </header>
 
       <form className="grid gap-5" onSubmit={handleSubmit}>
+        <section className="rounded-lg border border-border bg-[#17201b] p-5 text-white shadow-panel">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wide text-[#9ad7bd]">Scenario switcher</p>
+              <h2 className="mt-1 text-xl font-semibold">Run a different product through the same Italy engine</h2>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {scenarioPresets.map((scenario) => (
+                <button
+                  key={scenario.label}
+                  type="button"
+                  className="inline-flex items-center gap-2 rounded-md border border-white/15 bg-white/10 px-3 py-2 text-sm font-semibold text-white transition hover:bg-white/20"
+                  onClick={() => applyScenario(scenario.profile, scenario.evidenceInputs)}
+                >
+                  <Wand2 size={15} aria-hidden="true" />
+                  {scenario.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section className="grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="rounded-lg border border-border bg-panel p-5 shadow-panel">
             <div className="mb-5 flex items-center gap-3">
@@ -239,12 +380,25 @@ export function IntakeScreen({ profile, evidenceInputs, onAnalyze, onBack }: Int
             <p className="text-xs font-semibold uppercase tracking-wide text-muted">Evidence inputs</p>
             <h2 className="mt-1 text-lg font-semibold text-foreground">Documentation and proof</h2>
             <p className="mt-2 text-sm leading-6 text-muted">
-              Upload text-readable files. Files are read in the browser for this session and sent as text to the analysis API;
-              nothing is stored in a database.
+              Paste evidence directly or upload text-readable files. Files are read in the browser for this session and sent as
+              text to the analysis API; nothing is stored in a database.
             </p>
           </div>
 
-          <div className="grid gap-5 lg:grid-cols-2">
+          <div className="mb-6 grid gap-5 lg:grid-cols-2">
+            {evidenceFileFields.map((item) => (
+              <TextAreaField
+                key={item.field}
+                label={item.label.replace(" file", " text")}
+                value={evidenceDraft[item.field]}
+                minHeightClass={item.field === "case_study_roi_notes" ? "min-h-32" : "min-h-28"}
+                className={item.field === "case_study_roi_notes" ? "lg:col-span-2" : ""}
+                onChange={(value) => updateEvidenceField(item.field, value)}
+              />
+            ))}
+          </div>
+
+          <div className="grid gap-5 border-t border-border pt-5 lg:grid-cols-2">
             {evidenceFileFields.map((item) => (
               <EvidenceFileField
                 key={item.field}

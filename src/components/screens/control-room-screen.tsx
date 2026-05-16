@@ -1,4 +1,5 @@
 import {
+  BrainCircuit,
   CalendarDays,
   ClipboardCheck,
   ExternalLink,
@@ -33,6 +34,8 @@ export function ControlRoomScreen({ profile, analysis, onRestart }: ControlRoomS
   const decisionRows = buildSegmentDecisionRows(analysis);
   const priorityTrustGaps = getPriorityTrustGaps(analysis);
   const pilotFitRationale = `${analysis.product_summary.product_category} maps to ${analysis.warehouse_process_recommendation.process_name}, so the first pilot can stay focused on ${analysis.product_summary.primary_use_case.toLowerCase()}, measurable KPIs and a limited operational scope.`;
+  const topAccountCategory = analysis.target_account_shortlist[0]?.logistics_category ?? "curated Italian accounts";
+  const analysisModeLabel = analysis.metadata.provider === "local" ? "Local deterministic engine" : `OpenRouter ${analysis.metadata.model}`;
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-7xl px-5 py-8">
@@ -49,6 +52,45 @@ export function ControlRoomScreen({ profile, analysis, onRestart }: ControlRoomS
           <Button onClick={onRestart}>New Analysis</Button>
         </div>
       </header>
+
+      <section className="mb-5 overflow-hidden rounded-lg border border-[#253329] bg-[#17201b] text-white shadow-panel">
+        <div className="grid gap-5 p-5 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div>
+            <div className="mb-3 flex flex-wrap gap-2">
+              <span className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#9ad7bd]">
+                {analysisModeLabel}
+              </span>
+              <span className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white/70">
+                {analysis.metadata.pipeline_version}
+              </span>
+            </div>
+            <h2 className="max-w-4xl text-3xl font-bold leading-tight">
+              {analysis.buyer_segment_recommendation.segment_name} - {analysis.warehouse_process_recommendation.process_name}
+            </h2>
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-white/70">
+              The selected wedge turns {analysis.product_summary.product_category} evidence into a bounded Italian pilot with
+              account targets, proof gaps and ready sales material.
+            </p>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-3">
+            <DecisionMetric label="Segment fit" value={`${analysis.buyer_segment_recommendation.fit_score}/100`} />
+            <DecisionMetric label="Pilotability" value={`${analysis.warehouse_process_recommendation.pilot_suitability_score}/100`} />
+            <DecisionMetric label="Account focus" value={topAccountCategory} />
+          </div>
+        </div>
+        <div className="grid border-t border-white/10 bg-white/[0.04] md:grid-cols-3">
+          {[
+            { label: "Evidence", value: `${analysis.product_summary.available_proof.length} ready / ${analysis.product_summary.missing_proof.length} missing` },
+            { label: "Critical blockers", value: `${priorityTrustGaps.filter((gap) => gap.risk_level === "critical").length} critical` },
+            { label: "Shortlist", value: `${analysis.target_account_shortlist.length} curated accounts` }
+          ].map((item) => (
+            <div key={item.label} className="border-white/10 p-4 md:border-r md:last:border-r-0">
+              <p className="text-xs font-semibold uppercase tracking-wide text-white/50">{item.label}</p>
+              <p className="mt-1 font-semibold text-white">{item.value}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
       <div className="grid gap-5 lg:grid-cols-12">
         <SectionPanel title="Product Evidence Extracted" eyebrow="Input signal" icon={ClipboardCheck} className="lg:col-span-5">
@@ -312,6 +354,18 @@ export function ControlRoomScreen({ profile, analysis, onRestart }: ControlRoomS
         </SectionPanel>
       </div>
     </main>
+  );
+}
+
+function DecisionMetric({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-md border border-white/10 bg-white/[0.06] p-3">
+      <div className="mb-2 flex items-center gap-2 text-[#9ad7bd]">
+        <BrainCircuit size={16} aria-hidden="true" />
+        <p className="text-xs font-semibold uppercase tracking-wide">{label}</p>
+      </div>
+      <p className="text-sm font-semibold leading-5 text-white">{value}</p>
+    </div>
   );
 }
 
