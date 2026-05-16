@@ -1,7 +1,12 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import {
   BrainCircuit,
   CalendarDays,
+  CheckCircle2,
   ClipboardCheck,
+  Download,
   ExternalLink,
   FileStack,
   Gauge,
@@ -18,6 +23,7 @@ import { SectionPanel } from "@/components/dashboard/section-panel";
 import { ReadinessPill, RiskPill } from "@/components/dashboard/status-pill";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { buildPilotPackFilename, buildPilotPackMarkdown } from "@/lib/pilot-pack-export";
 import type { PilotAnalysis, ProductProfile } from "@/lib/pilot-analysis-types";
 
 type ControlRoomScreenProps = {
@@ -27,6 +33,8 @@ type ControlRoomScreenProps = {
 };
 
 export function ControlRoomScreen({ profile, analysis, onRestart }: ControlRoomScreenProps) {
+  const [exportStatus, setExportStatus] = useState<"idle" | "exported">("idle");
+  const exportStatusTimeoutRef = useRef<number | null>(null);
   const timingSignals = [
     ...analysis.buyer_segment_recommendation.why_this_segment.slice(0, 2),
     `${analysis.pilot_offer.duration_days}-day scope with ${analysis.pilot_offer.buyer_risk_reducers[0].toLowerCase()} keeps the first approval focused on measurable operational proof.`
@@ -36,6 +44,27 @@ export function ControlRoomScreen({ profile, analysis, onRestart }: ControlRoomS
   const pilotFitRationale = `${analysis.product_summary.product_category} maps to ${analysis.warehouse_process_recommendation.process_name}, so the first pilot can stay focused on ${analysis.product_summary.primary_use_case.toLowerCase()}, measurable KPIs and a limited operational scope.`;
   const topAccountCategory = analysis.target_account_shortlist[0]?.logistics_category ?? "curated Italian accounts";
   const analysisModeLabel = analysis.metadata.provider === "local" ? "Local deterministic engine" : `OpenRouter ${analysis.metadata.model}`;
+  const handleExportPack = () => {
+    downloadMarkdownFile(buildPilotPackFilename(profile, analysis), buildPilotPackMarkdown(profile, analysis));
+    setExportStatus("exported");
+
+    if (exportStatusTimeoutRef.current !== null) {
+      window.clearTimeout(exportStatusTimeoutRef.current);
+    }
+
+    exportStatusTimeoutRef.current = window.setTimeout(() => {
+      setExportStatus("idle");
+      exportStatusTimeoutRef.current = null;
+    }, 2400);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (exportStatusTimeoutRef.current !== null) {
+        window.clearTimeout(exportStatusTimeoutRef.current);
+      }
+    };
+  }, []);
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-7xl px-5 py-8">
@@ -48,7 +77,14 @@ export function ControlRoomScreen({ profile, analysis, onRestart }: ControlRoomS
           </p>
         </div>
         <div className="flex gap-3">
-          <Button variant="secondary">Export Pack</Button>
+          <Button variant="secondary" onClick={handleExportPack} aria-live="polite">
+            {exportStatus === "exported" ? (
+              <CheckCircle2 size={16} aria-hidden="true" />
+            ) : (
+              <Download size={16} aria-hidden="true" />
+            )}
+            {exportStatus === "exported" ? "Pack Downloaded" : "Export Pack"}
+          </Button>
           <Button onClick={onRestart}>New Analysis</Button>
         </div>
       </header>
@@ -454,4 +490,17 @@ function getPriorityTrustGaps(analysis: PilotAnalysis) {
   };
 
   return [...analysis.trust_gaps].sort((left, right) => riskPriority[right.risk_level] - riskPriority[left.risk_level]).slice(0, 3);
+}
+
+function downloadMarkdownFile(filename: string, content: string) {
+  const blob = new Blob([content], { type: "text/markdown;charset=utf-8" });
+  const objectUrl = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = objectUrl;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(objectUrl), 0);
 }
